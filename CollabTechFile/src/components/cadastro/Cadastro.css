@@ -1,0 +1,109 @@
+.voltar {
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #222;
+}
+
+.seta {
+  width: 34px;
+  height: 34px;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #0a1a3f;
+  margin-bottom: 5%;
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #7a1a1a;
+  font-weight: 500;
+}
+
+.formulario {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 6px;
+}
+
+.campo label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.campo input {
+  border: none;
+  border-bottom: 1px solid #444;
+  background: transparent;
+  padding: 1%;
+  outline: none;
+  font-size: 14px;
+}
+
+.campo select {
+  border: none;
+  border-bottom: 1px solid #444;
+  background: transparent;
+  padding: 1%;
+  outline: none;
+  font-size: 14px;
+}
+
+.campo input::placeholder {
+  font-size: 12px;
+  color: #777;
+}
+
+
+.cadastrar {
+  width: 100%;
+  background: #7a1a1a;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.cadastrar:hover {
+  background: #5c1111;
+}
+
+.areaSenha {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.areaSenha input {
+  width: 100%;
+}
+
+.areaSenha button {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}

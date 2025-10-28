@@ -1,0 +1,125 @@
+.modalSobreposicao {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, #0d0d0d, #001f3f, #0a2a6c);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.modalContainer {
+    background: #f8f1ed;
+    border-radius: 18px;
+    width: 800px;
+    max-width: 95vw;
+    padding: 32px 32px 24px 32px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    overflow: auto  /* scroll para aparecer quando necessario */
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+     gap: 280px;   /*Espaçamento entre o ícone de voltar e o título por preguiça */
+}
+
+.modalVoltar img{
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+}
+
+.modalTitulo {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #222;
+    margin: 0;
+}
+
+.modalDivisor {
+    margin: 18px 0 0 0;
+    border: none;
+    border-top: 2px solid #bdb7b7;
+}
+
+.modalForm {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.modalRow {
+    display: flex;
+    gap: 26px;
+}
+
+.modalField {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 180px;
+}
+
+.modalLabel {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #6a0d0d;
+    margin-bottom: 4px;
+}
+
+.modalInput, .modalInputIcone input {
+    border: none;
+    border-bottom: 2px solid #222;
+    background: transparent;
+    font-size: 1rem;
+    padding: 6px 0;
+    margin-bottom: 8px;
+    outline: none;
+    color: #222;
+    cursor: pointer;
+}
+
+.modalInputIcone {
+    display: flex;
+    align-items: center;
+}
+
+.modalInputIcone img {
+    width: 20px;
+    height: 20px;
+}
+
+.modalDocumentos {
+    margin-top: 32px;
+}
+
+.modalDocumentosTitulo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 16px;
+}
+
+.modalTabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.1rem;
+}
+
+.modalTabela th {
+    text-align: left;
+    padding-bottom: 12px;
+    font-weight: 700;
+    color: #222;
+}
+
+.modalTabela td {
+    padding: 12px 8px;
+    border-bottom: 2px solid #bdb7b7;
+    color: #222;
+}

@@ -1,0 +1,76 @@
+.docAndamento {
+    text-align: center;
+}
+
+.documento {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 600px;
+    margin-bottom: 4%;
+    padding: 4%;
+    border-radius: 20px;
+
+    background-color: aliceblue;
+}
+
+.tituloRN,
+.tituloRF,
+.tituloRNF {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tituloRF,
+.tituloRNF {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5%;
+}
+
+.tituloRN h2 {
+    font-size: 48px;
+    font-weight: 500;
+}
+
+.tituloRF h2 {
+    font-size: 48px;
+    font-weight: 500;
+}
+
+.tituloRNF h2 {
+    font-size: 48px;
+    font-weight: 500;
+}
+
+.listaRN,
+.listaRF,
+.listaRNF {
+    display: flex;
+    justify-content: space-between;
+
+    background-color: rgb(88, 129, 163);
+    color: white;
+
+    border-radius: 10px;
+    padding: 2%;
+    margin-top: 2%;
+    width: 100%;
+}
+
+.listaRF p {
+    width: 80%;
+    text-align: start;
+}
+
+.comentarioDisplay {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    font-size: 17px;
+    font-weight: 500;
+    margin-top: 5%;
+}
