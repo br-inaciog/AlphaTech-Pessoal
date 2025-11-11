@@ -1,0 +1,3 @@
+Comando Banco de Dados
+
+Scaffold-DbContext "Server=NOTE06-S28\SQLEXPRESS;Database=GaleriaOnlineDB;user ID = sa; PWD= Senai@134;TrustServerCerificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir DbContextImagem -Context GaleriaOnlineDbContext -DataAnnotations
