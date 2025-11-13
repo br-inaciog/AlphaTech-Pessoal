@@ -1,0 +1,1970 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "CollabTechFile",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Comentario": {
+      "get": {
+        "tags": [
+          "Comentario"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Comentario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comentario"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comentario"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comentario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Comentario/{id}": {
+      "delete": {
+        "tags": [
+          "Comentario"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos": {
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/Lixeira": {
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/Inativar/{id}": {
+      "put": {
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/Restaurar/{id}": {
+      "put": {
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/Excluir/{id}": {
+      "delete": {
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/upload-ocr": {
+      "post": {
+        "tags": [
+          "Documentos"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Arquivo": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "documento.IdDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.IdUsuario": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.IdCliente": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.Nome": {
+                    "maxLength": 200,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Prazo": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "documento.Status": {
+                    "type": "boolean"
+                  },
+                  "documento.Versao": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "documento.Arquivo": {
+                    "type": "string",
+                    "format": "byte"
+                  },
+                  "documento.MimeType": {
+                    "maxLength": 100,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.VersaoAtual": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "documento.CriadoEm": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "documento.NovoStatus": {
+                    "maxLength": 20,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.AssinadoEm": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "documento.FinalizadoEm": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "documento.Comentarios": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Comentario"
+                    }
+                  },
+                  "documento.DocumentoVersos": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DocumentoVersoes"
+                    }
+                  },
+                  "documento.Funcionario.IdUsuario": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.Funcionario.IdTipoUsuario": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.Funcionario.IdEmpresa": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.Funcionario.Nome": {
+                    "maxLength": 200,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Funcionario.Email": {
+                    "maxLength": 200,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Funcionario.Senha": {
+                    "maxLength": 255,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Funcionario.Ativo": {
+                    "type": "boolean"
+                  },
+                  "documento.Funcionario.DocumentosFuncionario": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Documento"
+                    }
+                  },
+                  "documento.Funcionario.DocumentosCliente": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Documento"
+                    }
+                  },
+                  "documento.Funcionario.Comentarios": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Comentario"
+                    }
+                  },
+                  "documento.Funcionario.Feedbacks": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Feedback"
+                    }
+                  },
+                  "documento.Funcionario.IdEmpresaNavigation.IdEmpresa": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.Funcionario.IdEmpresaNavigation.Nome": {
+                    "maxLength": 200,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Funcionario.IdEmpresaNavigation.Cnpj": {
+                    "maxLength": 18,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Funcionario.IdEmpresaNavigation.Ativo": {
+                    "type": "boolean"
+                  },
+                  "documento.Funcionario.IdEmpresaNavigation.Usuarios": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Usuario"
+                    }
+                  },
+                  "documento.Funcionario.IdTipoUsuarioNavigation.IdTipoUsuario": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.Funcionario.IdTipoUsuarioNavigation.TituloTipoUsuario": {
+                    "maxLength": 200,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Funcionario.IdTipoUsuarioNavigation.Usuarios": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Usuario"
+                    }
+                  },
+                  "documento.Cliente.IdUsuario": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.Cliente.IdTipoUsuario": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.Cliente.IdEmpresa": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.Cliente.Nome": {
+                    "maxLength": 200,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Cliente.Email": {
+                    "maxLength": 200,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Cliente.Senha": {
+                    "maxLength": 255,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Cliente.Ativo": {
+                    "type": "boolean"
+                  },
+                  "documento.Cliente.DocumentosFuncionario": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Documento"
+                    }
+                  },
+                  "documento.Cliente.DocumentosCliente": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Documento"
+                    }
+                  },
+                  "documento.Cliente.Comentarios": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Comentario"
+                    }
+                  },
+                  "documento.Cliente.Feedbacks": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Feedback"
+                    }
+                  },
+                  "documento.Cliente.IdEmpresaNavigation.IdEmpresa": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.Cliente.IdEmpresaNavigation.Nome": {
+                    "maxLength": 200,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Cliente.IdEmpresaNavigation.Cnpj": {
+                    "maxLength": 18,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Cliente.IdEmpresaNavigation.Ativo": {
+                    "type": "boolean"
+                  },
+                  "documento.Cliente.IdEmpresaNavigation.Usuarios": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Usuario"
+                    }
+                  },
+                  "documento.Cliente.IdTipoUsuarioNavigation.IdTipoUsuario": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "documento.Cliente.IdTipoUsuarioNavigation.TituloTipoUsuario": {
+                    "maxLength": 200,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "documento.Cliente.IdTipoUsuarioNavigation.Usuarios": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Usuario"
+                    }
+                  },
+                  "documento.RegrasDocs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/RegrasDoc"
+                    }
+                  },
+                  "documento.ReqDocs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ReqDoc"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "Arquivo": {
+                  "style": "form"
+                },
+                "documento.IdDocumento": {
+                  "style": "form"
+                },
+                "documento.IdUsuario": {
+                  "style": "form"
+                },
+                "documento.IdCliente": {
+                  "style": "form"
+                },
+                "documento.Nome": {
+                  "style": "form"
+                },
+                "documento.Prazo": {
+                  "style": "form"
+                },
+                "documento.Status": {
+                  "style": "form"
+                },
+                "documento.Versao": {
+                  "style": "form"
+                },
+                "documento.Arquivo": {
+                  "style": "form"
+                },
+                "documento.MimeType": {
+                  "style": "form"
+                },
+                "documento.VersaoAtual": {
+                  "style": "form"
+                },
+                "documento.CriadoEm": {
+                  "style": "form"
+                },
+                "documento.NovoStatus": {
+                  "style": "form"
+                },
+                "documento.AssinadoEm": {
+                  "style": "form"
+                },
+                "documento.FinalizadoEm": {
+                  "style": "form"
+                },
+                "documento.Comentarios": {
+                  "style": "form"
+                },
+                "documento.DocumentoVersos": {
+                  "style": "form"
+                },
+                "documento.Funcionario.IdUsuario": {
+                  "style": "form"
+                },
+                "documento.Funcionario.IdTipoUsuario": {
+                  "style": "form"
+                },
+                "documento.Funcionario.IdEmpresa": {
+                  "style": "form"
+                },
+                "documento.Funcionario.Nome": {
+                  "style": "form"
+                },
+                "documento.Funcionario.Email": {
+                  "style": "form"
+                },
+                "documento.Funcionario.Senha": {
+                  "style": "form"
+                },
+                "documento.Funcionario.Ativo": {
+                  "style": "form"
+                },
+                "documento.Funcionario.DocumentosFuncionario": {
+                  "style": "form"
+                },
+                "documento.Funcionario.DocumentosCliente": {
+                  "style": "form"
+                },
+                "documento.Funcionario.Comentarios": {
+                  "style": "form"
+                },
+                "documento.Funcionario.Feedbacks": {
+                  "style": "form"
+                },
+                "documento.Funcionario.IdEmpresaNavigation.IdEmpresa": {
+                  "style": "form"
+                },
+                "documento.Funcionario.IdEmpresaNavigation.Nome": {
+                  "style": "form"
+                },
+                "documento.Funcionario.IdEmpresaNavigation.Cnpj": {
+                  "style": "form"
+                },
+                "documento.Funcionario.IdEmpresaNavigation.Ativo": {
+                  "style": "form"
+                },
+                "documento.Funcionario.IdEmpresaNavigation.Usuarios": {
+                  "style": "form"
+                },
+                "documento.Funcionario.IdTipoUsuarioNavigation.IdTipoUsuario": {
+                  "style": "form"
+                },
+                "documento.Funcionario.IdTipoUsuarioNavigation.TituloTipoUsuario": {
+                  "style": "form"
+                },
+                "documento.Funcionario.IdTipoUsuarioNavigation.Usuarios": {
+                  "style": "form"
+                },
+                "documento.Cliente.IdUsuario": {
+                  "style": "form"
+                },
+                "documento.Cliente.IdTipoUsuario": {
+                  "style": "form"
+                },
+                "documento.Cliente.IdEmpresa": {
+                  "style": "form"
+                },
+                "documento.Cliente.Nome": {
+                  "style": "form"
+                },
+                "documento.Cliente.Email": {
+                  "style": "form"
+                },
+                "documento.Cliente.Senha": {
+                  "style": "form"
+                },
+                "documento.Cliente.Ativo": {
+                  "style": "form"
+                },
+                "documento.Cliente.DocumentosFuncionario": {
+                  "style": "form"
+                },
+                "documento.Cliente.DocumentosCliente": {
+                  "style": "form"
+                },
+                "documento.Cliente.Comentarios": {
+                  "style": "form"
+                },
+                "documento.Cliente.Feedbacks": {
+                  "style": "form"
+                },
+                "documento.Cliente.IdEmpresaNavigation.IdEmpresa": {
+                  "style": "form"
+                },
+                "documento.Cliente.IdEmpresaNavigation.Nome": {
+                  "style": "form"
+                },
+                "documento.Cliente.IdEmpresaNavigation.Cnpj": {
+                  "style": "form"
+                },
+                "documento.Cliente.IdEmpresaNavigation.Ativo": {
+                  "style": "form"
+                },
+                "documento.Cliente.IdEmpresaNavigation.Usuarios": {
+                  "style": "form"
+                },
+                "documento.Cliente.IdTipoUsuarioNavigation.IdTipoUsuario": {
+                  "style": "form"
+                },
+                "documento.Cliente.IdTipoUsuarioNavigation.TituloTipoUsuario": {
+                  "style": "form"
+                },
+                "documento.Cliente.IdTipoUsuarioNavigation.Usuarios": {
+                  "style": "form"
+                },
+                "documento.RegrasDocs": {
+                  "style": "form"
+                },
+                "documento.ReqDocs": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/{id}/pdf": {
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/{id}/upload": {
+      "put": {
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "arquivo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "arquivo": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/{id}": {
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentoVersoes": {
+      "post": {
+        "tags": [
+          "DocumentoVersoes"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentoVersoes"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentoVersoes"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentoVersoes"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "DocumentoVersoes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentoVersoes/documento/{IdDocumento}": {
+      "get": {
+        "tags": [
+          "DocumentoVersoes"
+        ],
+        "parameters": [
+          {
+            "name": "IdDocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Empresa": {
+      "post": {
+        "tags": [
+          "Empresa"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empresa"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empresa"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empresa"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Empresa"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Regra": {
+      "get": {
+        "tags": [
+          "Regra"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Regra"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Regra"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Regra"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Regra"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Regra/{id}": {
+      "delete": {
+        "tags": [
+          "Regra"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Regra"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Regra"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Regra"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Regra"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/RegraDoc": {
+      "get": {
+        "tags": [
+          "RegraDoc"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RegraDoc"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegrasDoc"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegrasDoc"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegrasDoc"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/RegraDoc/{id}": {
+      "delete": {
+        "tags": [
+          "RegraDoc"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RegraDoc"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegrasDoc"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegrasDoc"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegrasDoc"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ReqDoc": {
+      "get": {
+        "tags": [
+          "ReqDoc"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ReqDoc"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReqDoc"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReqDoc"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReqDoc"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ReqDoc/{id}": {
+      "delete": {
+        "tags": [
+          "ReqDoc"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ReqDoc"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReqDoc"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReqDoc"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReqDoc"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Requisito": {
+      "get": {
+        "tags": [
+          "Requisito"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Requisito"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Requisito"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Requisito"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Requisito"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Requisito/{id}": {
+      "put": {
+        "tags": [
+          "Requisito"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Requisito"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Requisito"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Requisito"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Requisito"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Suporte": {
+      "post": {
+        "tags": [
+          "Suporte"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Suporte"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Suporte"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Suporte"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Suporte"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Suporte/{id}": {
+      "delete": {
+        "tags": [
+          "Suporte"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TipoUsuario": {
+      "post": {
+        "tags": [
+          "TipoUsuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoUsuario"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoUsuario"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoUsuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "TipoUsuario"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuario": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuario/{id}": {
+      "put": {
+        "tags": [
+          "Usuario"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuario/BuscarPorEmailESenha": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "senha",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Comentario": {
+        "type": "object",
+        "properties": {
+          "idComentario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idDocumento": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "texto": {
+            "maxLength": 2000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "idDocumentoNavigation": {
+            "$ref": "#/components/schemas/Documento"
+          },
+          "idUsuarioNavigation": {
+            "$ref": "#/components/schemas/Usuario"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Documento": {
+        "type": "object",
+        "properties": {
+          "idDocumento": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idCliente": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nome": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "prazo": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "versao": {
+            "type": "number",
+            "format": "double"
+          },
+          "arquivo": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "mimeType": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "versaoAtual": {
+            "type": "number",
+            "format": "double"
+          },
+          "criadoEm": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "novoStatus": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "assinadoEm": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "finalizadoEm": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "comentarios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comentario"
+            },
+            "nullable": true
+          },
+          "documentoVersos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentoVersoes"
+            },
+            "nullable": true
+          },
+          "funcionario": {
+            "$ref": "#/components/schemas/Usuario"
+          },
+          "cliente": {
+            "$ref": "#/components/schemas/Usuario"
+          },
+          "regrasDocs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RegrasDoc"
+            },
+            "nullable": true
+          },
+          "reqDocs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReqDoc"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentoVersoes": {
+        "type": "object",
+        "properties": {
+          "idDocumentoVersoes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idDocumento": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numeroVersao": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Empresa": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "cnpj": {
+            "maxLength": 18,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "ativo": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "usuarios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Usuario"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Feedback": {
+        "type": "object",
+        "properties": {
+          "idFeedback": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mensagem": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataEnvio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "idUsuarioNavigation": {
+            "$ref": "#/components/schemas/Usuario"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginDTO": {
+        "required": [
+          "email",
+          "senha"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "senha": {
+            "maxLength": 8,
+            "minLength": 6,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Regra": {
+        "type": "object",
+        "properties": {
+          "idRegras": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "regrasDocs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RegrasDoc"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegrasDoc": {
+        "type": "object",
+        "properties": {
+          "idRegrasDoc": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idRegras": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idDocumento": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idDocumentoNavigation": {
+            "$ref": "#/components/schemas/Documento"
+          },
+          "idRegrasNavigation": {
+            "$ref": "#/components/schemas/Regra"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReqDoc": {
+        "type": "object",
+        "properties": {
+          "idReqDoc": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idRequisito": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idDocumento": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idDocumentoNavigation": {
+            "$ref": "#/components/schemas/Documento"
+          },
+          "idRequisitoNavigation": {
+            "$ref": "#/components/schemas/Requisito"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Requisito": {
+        "type": "object",
+        "properties": {
+          "idRequisito": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tipo": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "textoReq": {
+            "maxLength": 250,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "reqDocs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReqDoc"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Suporte": {
+        "type": "object",
+        "properties": {
+          "idSuporte": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "mensagem": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TipoUsuario": {
+        "type": "object",
+        "properties": {
+          "idTipoUsuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tituloTipoUsuario": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "usuarios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Usuario"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idTipoUsuario": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idEmpresa": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nome": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "senha": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "ativo": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "documentosFuncionario": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Documento"
+            },
+            "nullable": true
+          },
+          "documentosCliente": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Documento"
+            },
+            "nullable": true
+          },
+          "comentarios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comentario"
+            },
+            "nullable": true
+          },
+          "feedbacks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Feedback"
+            },
+            "nullable": true
+          },
+          "idEmpresaNavigation": {
+            "$ref": "#/components/schemas/Empresa"
+          },
+          "idTipoUsuarioNavigation": {
+            "$ref": "#/components/schemas/TipoUsuario"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Value: Bearer {token}",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}

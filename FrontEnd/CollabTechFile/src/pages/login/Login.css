@@ -1,126 +1,126 @@
 .mainLogin {
-    width: 100%;
-    height: 100vh;
-    padding: 2%;
-    background: linear-gradient(135deg, #0d0d0d, #001f3f, #0a2a6c);
+  width: 100%;
+  height: 100vh;
+  padding: 2%;
+  background: linear-gradient(135deg, #0d0d0d, #001f3f, #0a2a6c);
 
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .userTitulo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .userTitulo img {
-    width: 191px;
-    height: 123px;
+  width: 191px;
+  height: 123px;
 }
 
 .campoLogin {
-    width: 480px;
-    height: 650px;
-    border-radius: 20px;
-    padding: 40px;
-    background-color: white;
+  width: 480px;
+  height: 650px;
+  border-radius: 20px;
+  padding: 40px;
+  background-color: white;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .campoInput {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .inputLogin {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
 }
 
 .inputLogin input {
-    width: 400px;
-    height: 41px;
-    padding: 15px 5px 5px 5px;
-    font-size: 18px;
-    outline: none;
+  width: 400px;
+  height: 41px;
+  padding: 15px 5px 5px 5px;
+  font-size: 18px;
+  outline: none;
 
-    border: none;
-    border-bottom: 1px solid black;
-    background: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  background: transparent;
 }
 
 .grupoEmail,
 .grupoSenha {
-    position: relative;
+  position: relative;
 }
 
-.grupoEmail label {
-    position: absolute;
-    left: 5px;
-    top: -5px;
-    transition: 0.5s;
-    color: #9D9D9D;
-}
-
-.grupoEmail input:focus~label {
-    top: -20px;
-    font-size: 14px;
-    color: #0a2a6c;
-}
-
-.grupoEmail input:focus {
-    border-width: 2px;
-    border-bottom-color: #0a2a6c;
-}
-
-.grupoSenha input:focus {
-    border-bottom-color: #0a2a6c;
-}
-
+.grupoEmail label,
 .grupoSenha label {
-    position: absolute;
-    left: 5px;
-    top: -5px;
-    transition: 0.5s;
-    color: #9D9D9D;
+  position: absolute;
+  left: 5px;
+  top: 10px;
+  transition: 0.3s ease;
+  color: #9D9D9D;
+  pointer-events: none;
 }
 
-.grupoSenha input:focus~label {
-    top: -20px;
-    font-size: 14px;
-    color: #0a2a6c;
-    border-bottom: #0a2a6c;
+.grupoEmail input:focus~label,
+.grupoEmail input:not(:placeholder-shown)~label,
+.grupoSenha input:focus~label,
+.grupoSenha input:not(:placeholder-shown)~label {
+  top: -10px;
+  font-size: 14px;
+  color: #0a2a6c;
+}
+
+.grupoEmail input:focus,
+.grupoSenha input:focus {
+  border-bottom: 2px solid #0a2a6c;
 }
 
 .inputCheckbox {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .inputCheckbox input {
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
 }
 
+.areaSenhaLogin {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.areaSenhaLogin button {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
 
 @media (max-width: 768px) {
   .mainLogin {
     flex-direction: column;
-    justify-content: center; /* centraliza verticalmente */
-    align-items: center; /* centraliza horizontalmente */
+    justify-content: center;
+    align-items: center;
     padding: 40px 20px;
-    height: 100vh; /* ocupa a altura total */
+    height: 100vh;
     overflow-y: auto;
     background: linear-gradient(135deg, #0d0d0d, #001f3f, #0a2a6c);
   }
@@ -154,7 +154,8 @@
     display: none;
   }
 
-  body, html {
+  body,
+  html {
     overflow-x: hidden;
   }
 }

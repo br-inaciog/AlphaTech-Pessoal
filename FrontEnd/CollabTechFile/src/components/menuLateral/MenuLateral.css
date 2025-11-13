@@ -15,7 +15,6 @@
   z-index: 1000;
 }
 
-
 .logoMenu {
   width: 105px;
   height: 105px;
@@ -58,13 +57,14 @@
   padding: 2%;
   text-decoration: none;
   color: #fff;
+  border: none;
+  background-color: transparent;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .logout:hover {
   background-color: #d9d9d927;
 }
-
 
 .menuHb {
   position: fixed;

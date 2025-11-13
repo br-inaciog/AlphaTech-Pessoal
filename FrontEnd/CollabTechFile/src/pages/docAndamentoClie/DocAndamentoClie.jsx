@@ -1,9 +1,9 @@
 import "./docAndamentoClie.css"
 
 import MenuLateral from "../../components/menuLateral/MenuLateral"
-import CabecalhoCliente from "../../components/cabecalhoCliente/CabecalhoCliente"
 
 import Comentar from "../../assets/img/Comentario.png"
+import Cabecalho from "../../components/cabecalho/Cabecalho"
 
 export default function DocFinalizadoClie() {
     return (
@@ -11,11 +11,11 @@ export default function DocFinalizadoClie() {
             <MenuLateral />
             <main className="conteudoPrincipal">
                 <section className="areaTrabalho">
-                    <CabecalhoCliente />
+                    <Cabecalho />
 
                     <section className="docAndamento">
                         <div className="titulo">
-                            <h1>Documento Finalizado</h1>
+                            <h1>Documento em Andamento</h1>
                         </div>
 
                         <div className="documento">

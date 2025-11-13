@@ -1,7 +1,7 @@
 import "./docFinalizadoClie.css"
 
 import MenuLateral from "../../components/menuLateral/MenuLateral"
-import CabecalhoCliente from "../../components/cabecalhoCliente/CabecalhoCliente"
+import Cabecalho from "../../components/cabecalho/Cabecalho"
 
 import Assinatura from "../../assets/img/Assinatura.png"
 
@@ -11,7 +11,7 @@ export default function DocFinalizadoClie() {
             <MenuLateral />
             <main className="conteudoPrincipal">
                 <section className="areaTrabalho">
-                    <CabecalhoCliente />
+                    <Cabecalho />
 
                     <section className="docAndamento">
                         <div className="titulo">

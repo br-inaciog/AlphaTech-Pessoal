@@ -14,8 +14,17 @@ export default function Inicio() {
     const [nomeArquivo, setNomeArquivo] = useState("");
     const [nomeDoc, setNomeDoc] = useState("")
     const [pdf, setPdf] = useState("")
-    const [dataDoc, setDataDoc] = useState("")
+    const [prazoDoc, setprazoDoc] = useState("")
     const [destinatarioDoc, setDestinatarioDoc] = useState("")
+    const [novoStatus, setNovoStatus] = useState("Pendente")
+    const [criadoEm, setCriadoEm] = useState(() => {
+        const agora = new Date();
+        const data = agora.toISOString().slice(0, 19).replace("T", " ");
+        return data;
+    });
+    const [versaoInicial, setVersaoInicial] = useState(1);
+    const [statusDoc, setStatusDoc] = useState(1)
+
 
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
@@ -70,13 +79,7 @@ export default function Inicio() {
     async function cadastrarDoc(e) {
         e.preventDefault();
 
-        console.log(nomeDoc);
-        console.log(pdf);
-        console.log(nomeArquivo);
-        console.log(destinatarioDoc);
-        console.log(dataDoc);
-
-        if (!nomeDoc.trim() || !pdf || !nomeArquivo.trim() || !destinatarioDoc || !dataDoc) {
+        if (!nomeDoc.trim() || !pdf || !nomeArquivo.trim() || !destinatarioDoc || !prazoDoc) {
             alertar("warning", "Preencha todos os campos antes de enviar!");
             return;
         }
@@ -85,10 +88,14 @@ export default function Inicio() {
             const formData = new FormData();
             formData.append("nomeDocumento", nomeDoc);
             formData.append("destinatario", destinatarioDoc);
-            formData.append("prazo", dataDoc);
+            formData.append("prazo", prazoDoc);
             formData.append("arquivo", pdf);
+            formData.append("status", novoStatus);
+            formData.append("criadoEm", criadoEm);
+            formData.append("versaoInicial", versaoInicial);
+            formData.append("statusDoc", statusDoc);
 
-            await api.post("Documentos", formData, {
+            await api.post("Documentos/upload-ocr", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
@@ -97,14 +104,13 @@ export default function Inicio() {
             setPdf("");
             setNomeArquivo("");
             setDestinatarioDoc("");
-            setDataDoc("");
+            setprazoDoc("");
+
         } catch (error) {
             alertar("error", "Erro ao enviar documento!");
             console.error(error);
         }
     }
-
-
 
     useEffect(() => {
         listarCliente();
@@ -217,8 +223,8 @@ export default function Inicio() {
                                     <label>Prazo de Entrega:</label>
                                     <input
                                         type="date"
-                                        value={dataDoc}
-                                        onChange={(e) => setDataDoc(e.target.value)}
+                                        value={prazoDoc}
+                                        onChange={(e) => setprazoDoc(e.target.value)}
                                     />
                                 </div>
 

@@ -1,7 +1,7 @@
 import "./InicioCliente.css"
 
 import MenuLateral from "../../components/menuLateral/MenuLateral"
-import CabecalhoCliente from "../../components/cabecalhoCliente/CabecalhoCliente"
+import Cabecalho from "../../components/cabecalho/Cabecalho"
 
 import Pdf from "../../assets/img/PDF.png"
 
@@ -31,7 +31,7 @@ export default function InicioCliente() {
             <MenuLateral />
             <main className="conteudoPrincipal">
                 <section className="areaTrabalho">
-                    <CabecalhoCliente />
+                    <Cabecalho />
 
                     <div className="titulo">
                         <h1>Documentos</h1>

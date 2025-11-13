@@ -126,6 +126,7 @@ export default function Login() {
             <div className="grupoEmail">
               <input
                 type="email"
+                placeholder=" "
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -136,6 +137,7 @@ export default function Login() {
             <div className="grupoSenha">
               <input
                 type="password"
+                placeholder=" "
                 minLength={6}
                 maxLength={8}
                 value={senha}

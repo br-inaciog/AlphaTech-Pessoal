@@ -4,8 +4,6 @@ import Cabecalho from "../../components/cabecalho/Cabecalho"
 import ModalSalvarDocumento from "../../components/salvarDocumento/ModalSalvarDocumento";
 import ModalPDF from "../../components/documento/Documento";
 
-
-
 import Adicionar from "../../assets/img/Adicionar.svg"
 import Deletar from "../../assets/img/Delete.svg";
 import Editar from "../../assets/img/Editar.png"
@@ -39,6 +37,23 @@ export default function DocAndamentoFunc() {
         setShowModal(true);
     }
 
+    const [documentoInfo, setDocumentoInfo] = useState(null);
+    async function buscarDocumento() {
+        try {
+            const resposta = await api.get(`Documentos/${idDocumento}`);
+            const doc = resposta.data;
+
+            setDocumentoInfo({
+                versaoAtual: doc.versaoAtual,
+                prazo: doc.prazo,
+                remetente: doc.cliente?.nome || "Sem destinatário"
+            });
+        } catch (error) {
+            console.error("Erro ao buscar informações do documento:", error);
+        }
+    }
+
+
     const [prazo, setPrazo] = useState("");
 
     const [listaCliente, setListaCliente] = useState([]);
@@ -59,7 +74,7 @@ export default function DocAndamentoFunc() {
     const [listaReqNaoFunc, setListaReqNaoFunc] = useState([])
     const [requisitoNaoFuncional, setRequisitoNaoFuncional] = useState("");
     const [reqNaoFuncional] = useState("RNF")
-    const [reqNaoFuncionalText] = useState("Edite seu Requisito não Funcional.")
+    const [reqNaoFuncionalText] = useState("Edite seu Requisito Não Funcional.")
 
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
@@ -94,7 +109,6 @@ export default function DocAndamentoFunc() {
             console.error("Erro ao abrir PDF", err);
         }
     }
-
     function fecharPDF() {
         if (pdfUrl) URL.revokeObjectURL(pdfUrl);
         setPdfUrl(null);
@@ -228,7 +242,6 @@ export default function DocAndamentoFunc() {
         }
     }
 
-
     //Requisito Funcional
     async function listarReqFunc() {
         try {
@@ -357,6 +370,7 @@ export default function DocAndamentoFunc() {
         listarRN();
         listarReqFunc();
         listarReqNaoFunc();
+        buscarDocumento();
     }, [])
 
     return (
@@ -371,10 +385,28 @@ export default function DocAndamentoFunc() {
                             <h1>Documento em Andamento</h1>
                         </div>
 
-                        <button className="abrirDoc" onClick={abrirPDF}>
-                            <img src={Abrir} alt="" />
-                            <p>Abrir PDF</p>
-                        </button>
+                        <div className="PDFeVersao">
+                            <button className="abrirDoc" onClick={abrirPDF}>
+                                <img src={Abrir} alt="" />
+                                <p>Abrir PDF</p>
+                            </button>
+
+                            <div className="botaoFiltrarVersoesDoc">
+                                <p>Versões:</p>
+                                <select>
+                                    <option disabled selected>Versões</option>
+                                    {listaVersaoDoc.length > 0 ? (
+                                        listaVersaoDoc.map(versao => (
+                                            <option key={versao.idVersaoDocumento} value={versao.idVersaoDocumento}>
+                                                {versao.numeroVersao}
+                                            </option>
+                                        ))
+                                    ) : (
+                                        <option disabled>S/Versões</option>
+                                    )}
+                                </select>
+                            </div>
+                        </div>
 
                         <form action="" className="documento">
                             <div className="nomeDoc">
@@ -382,42 +414,19 @@ export default function DocAndamentoFunc() {
                             </div>
 
                             <div className="infDocumento">
-                                <div className="botaoFiltrarVersoesDoc">
-                                    <p>Versão Documento</p>
-                                    <select>
-                                        <option disabled selected>Versões</option>
-                                        {listaVersaoDoc.length > 0 ? (
-                                            listaVersaoDoc.map(versao => (
-                                                <option key={versao.idVersaoDocumento} value={versao.idVersaoDocumento}>
-                                                    {versao.numeroVersao}
-                                                </option>
-                                            ))
-                                        ) : (
-                                            <option disabled>S/Versões</option>
-                                        )}
-                                    </select>
-                                </div>
-
                                 <div className="botaoSelectRementente">
-                                    <p>Rementente</p>
-                                    <select>
-                                        <option disabled selected>Destinatário</option>
-                                        {clienteFiltrado.length > 0 ? (
-                                            clienteFiltrado.map((usuario) =>
-                                                <option key={usuario.idUsuario} value={usuario.idUsuario}>
-                                                    {usuario.nome}
-                                                </option>
-                                            )
-                                        ) : (
-                                            <option disabled>Nenhum cliente encontrado</option>
-                                        )}
-                                    </select>
+                                    <label>Rementente:</label>
+                                    <span>{documentoInfo?.remetente}</span>
                                 </div>
-
 
                                 <div className="prazoEntrega">
-                                    <label>Prazo de Entrega:</label>
-                                    <input type="date" />
+                                    <label>Prazo:</label>
+                                    <span>{documentoInfo?.prazo}</span>
+                                </div>
+
+                                <div className="botaoFiltrarVersoesDoc">
+                                    <p>Versão Atual:</p>
+                                    <span>{documentoInfo?.versaoAtual}</span>
                                 </div>
                             </div>
 
@@ -516,9 +525,9 @@ export default function DocAndamentoFunc() {
                                 </section>
                             </div>
 
-                            <div className="buttonFinalizar">
+                            <div className="">
                                 <button onClick={cadDocumento} className="finalizarDoc">
-                                    Finalizar
+                                    Finalizar/Salvar
                                 </button>
                             </div>
 

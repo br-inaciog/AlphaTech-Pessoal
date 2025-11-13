@@ -1,6 +1,5 @@
 import "./Cabecalho.css"
 
-import Lupa from "../../assets/img/Lupa.png"
 import User from "../../assets/img/User.png"
 
 import Seta from "../../assets/img/Seta.png"

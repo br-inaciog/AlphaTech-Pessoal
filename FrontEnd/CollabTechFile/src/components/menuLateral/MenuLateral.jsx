@@ -10,19 +10,20 @@ import FeedBack from "../../assets/img/Feedback.png";
 import Logout from "../../assets/img/Logout.png";
 import MenuHb from "../../assets/img/Menu.png";
 import fonezinho from "../../assets/img/fone.png";
-
-const acesso = "funcionario"; // ou "cliente", se quiser trocar
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function MenuLateral() {
   const [menuAberto, setMenuAberto] = useState(false);
+  const { usuario, logout } = useAuth();
 
   const handleLogout = () => {
-    console.log("Usuário deslogado"); // aqui tu coloca tua função real de logout
+    logout();
+    setMenuAberto(false);
   };
 
   return (
     <>
-      {/* Botão hamburguer (mobile) */}
+      {/* Botão hamburguer visível apenas no mobile */}
       <button className="menuHb" onClick={() => setMenuAberto(!menuAberto)}>
         <img src={MenuHb} alt="Abrir menu" />
       </button>
@@ -30,16 +31,46 @@ export default function MenuLateral() {
       {/* Sidebar */}
       <header className={`menuLateral ${menuAberto ? "ativo" : ""}`}>
         <img src={LogoMenu} alt="Logo CollabTech Menu" className="logoMenu" />
+        
+        {usuario?.tipoUsuario === "Cliente" ? (
+          /* Menu para CLIENTES */
+          <div className="linksLateral">
+            <Link
+              to="/InicioCliente"
+              className="links"
+              onClick={() => setMenuAberto(false)}
+            >
+              <img src={Casinha} alt="Início" />
+              Início
+            </Link>
 
-        {/* Se for funcionário */}
-        {acesso === "funcionario" ? (
+            <Link
+              to="/FeedBacks"
+              className="links"
+              onClick={() => setMenuAberto(false)}
+            >
+              <img src={FeedBack} alt="Feedbacks" />
+              Feedbacks
+            </Link>
+
+            <Link
+              to="/FaleConosco"
+              className="links"
+              onClick={() => setMenuAberto(false)}
+            >
+              <img src={fonezinho} alt="Fale Conosco" />
+              Fale Conosco
+            </Link>
+          </div>
+        ) : (
+          /* Menu para FUNCIONÁRIOS e ADMINISTRADORES */
           <div className="linksLateral">
             <Link
               to="/Inicio"
               className="links"
               onClick={() => setMenuAberto(false)}
             >
-              <img src={Casinha} alt="Casinha" />
+              <img src={Casinha} alt="Início" />
               Início
             </Link>
 
@@ -48,7 +79,7 @@ export default function MenuLateral() {
               className="links"
               onClick={() => setMenuAberto(false)}
             >
-              <img src={Cadastrar} alt="Usuário" />
+              <img src={Cadastrar} alt="Cadastrar" />
               Cadastrar Clientes
             </Link>
 
@@ -69,41 +100,41 @@ export default function MenuLateral() {
               <img src={Cliente} alt="Clientes" />
               Clientes
             </Link>
-          </div>
-        ) : (
-          // Se for cliente
-          <div className="linksLateral">
-            <Link
-              to="/InicioCliente"
-              className="links"
-              onClick={() => setMenuAberto(false)}
-            >
-              <img src={Casinha} alt="Casinha" />
-              Início
-            </Link>
 
-            <Link
-              to="/FaleConosco"
-              className="links"
-              onClick={() => setMenuAberto(false)}
-            >
-              <img src={fonezinho} alt="fonezinho" />
-              Fale Conosco
-            </Link>
+            {usuario?.tipoUsuario === "Admin" && (
+              <>
+                <Link
+                  to="/CadastroFuncionario"
+                  className="links"
+                  onClick={() => setMenuAberto(false)}
+                >
+                  <img src={Cadastrar} alt="Cadastrar Funcionário" />
+                  Cadastrar Funcionários
+                </Link>
+
+                <Link
+                  to="/listagemFuncionario"
+                  className="links"
+                  onClick={() => setMenuAberto(false)}
+                >
+                  <img src={Cliente} alt="Listar Funcionários" />
+                  Listar Funcionários
+                </Link>
+              </>
+            )}
           </div>
         )}
 
-        {/* Botão de logout */}
-        <Link to="/" className="logout" onClick={handleLogout}>
+        <button className="logout" onClick={handleLogout}>
           <img src={Logout} alt="Logout" />
           Sair
-        </Link>
+        </button>
       </header>
 
-      {/* Fundo escuro pra fechar o menu ao clicar fora */}
+      {/* Fundo escuro para fechar menu ao clicar fora */}
       {menuAberto && (
         <div className="overlay" onClick={() => setMenuAberto(false)} />
       )}
+    
     </>
-  );
-}
+  )};

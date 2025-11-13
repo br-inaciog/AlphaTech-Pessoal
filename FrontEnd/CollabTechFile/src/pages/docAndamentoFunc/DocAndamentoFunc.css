@@ -2,6 +2,11 @@
     text-align: center;
 }
 
+.PDFeVersao {
+    display: flex;
+    justify-content: space-between;
+}
+
 .abrirDoc {
     display: flex;
     align-items: center;
@@ -39,12 +44,15 @@
 .infDocumento {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     margin-bottom: 4%;
 }
 
-.botaoFiltrarVersoesDoc,
-.botaoSelectRementente {
-    width: 100%;
+.botaoFiltrarVersoesDoc {
+    display: flex;
+    align-items: center;
+    width: 220px;
+    margin-bottom: 2%;
 }
 
 .botaoFiltrarVersoesDoc p {
@@ -59,54 +67,49 @@
     cursor: pointer;
     font-size: 1.1rem;
     padding: 1%;
-    margin-bottom: 5%;
     background: transparent;
 }
 
-.botaoSelectRementente p {
+.botaoSelectRementente label {
     font-size: 1.5rem;
     font-weight: 600;
 }
 
-.botaoSelectRementente select {
-    width: 80%;
-    border: none;
-    border-bottom: 2px solid black;
-    cursor: pointer;
-    font-size: 1.1rem;
-    padding: 1%;
-    margin-bottom: 5%;
-    background: transparent;
+.botaoSelectRementente {
+    display: flex;
+    align-items: center;
+    width: 450px;
+    margin-bottom: 2%;
+}
+
+.botaoSelectRementente span {
+    font-size: 1.3rem;
+    margin-left: 2%;
+    font-size: 400;
 }
 
 .prazoEntrega {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 5px;
-    width: 100%;
     margin-bottom: 2%;
-    align-self: center;
-    font-weight: 600;
+    width: 200px;
+}
+
+.prazoEntrega label {
     font-size: 1.5rem;
+    font-weight: 600;
 }
 
-.prazoEntrega input {
-    width: 80%;
-    font-size: 1rem;
-    display: flex;
-    justify-content: center;
+.prazoEntrega span {
+    font-size: 1.3rem;
+    margin-left: 2%;
+    font-size: 400;
 }
 
-.prazoEntrega input {
-    border: none;
-    border-bottom: 2px solid black;
-    background-color: transparent;
-}
-
-.prazoEntrega select:focus {
-    background-color: black;
+.botaoFiltrarVersoesDoc span {
+    font-size: 1.3rem;
+    margin-left: 2%;
+    font-size: 400;
 }
 
 .tituloRN,
