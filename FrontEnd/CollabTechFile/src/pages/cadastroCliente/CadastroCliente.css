@@ -1,13 +1,1 @@
-.campoTipoUsuario {
-    width: 80%;
-    height: 20px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 50px 20px;
-    gap: 20px;
-}
 
-.campoTipoUsuario p {
-    color: #7A2323;
-}

@@ -164,7 +164,7 @@ export default function DocAndamentoFunc() {
 
         try {
             const novaRegra = await api.post("Regra", {
-                nome: regraNegocio
+                nome: regraDeNegocio
             });
 
             await api.post("regraDoc", {

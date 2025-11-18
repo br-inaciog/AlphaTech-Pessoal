@@ -22,6 +22,7 @@ export default function Inicio() {
         const data = agora.toISOString().slice(0, 19).replace("T", " ");
         return data;
     });
+    const dataAtual = new Date();
     const [versaoInicial, setVersaoInicial] = useState(1);
     const [statusDoc, setStatusDoc] = useState(1)
 
@@ -78,6 +79,11 @@ export default function Inicio() {
 
     async function cadastrarDoc(e) {
         e.preventDefault();
+
+
+        if (prazoDoc <= dataAtual) {
+            alertar("warning", "A data de entrega deve ser no Futuro!")
+        }
 
         if (!nomeDoc.trim() || !pdf || !nomeArquivo.trim() || !destinatarioDoc || !prazoDoc) {
             alertar("warning", "Preencha todos os campos antes de enviar!");

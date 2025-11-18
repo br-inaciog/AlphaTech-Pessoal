@@ -15,6 +15,8 @@ namespace CollabTechFile.Controllers
 
     public class UsuarioController : ControllerBase
     {
+        private const string SenhaPadrao = "Senai@12";
+
         private readonly IUsuarioRepository _UsuarioRepository;
 
         public UsuarioController(IUsuarioRepository usuarioRepository)
@@ -39,11 +41,19 @@ namespace CollabTechFile.Controllers
 
         //[Authorize]
         [HttpPost]
-        public IActionResult Post(Usuario usuario)
+        public async Task <IActionResult> Post(Usuario usuario)
         {
+            var gmailService = await GmailServiceFactory.CreateAsync();
+
             try
             {
                 _UsuarioRepository.Cadastrar(usuario);
+
+                var _emailService = new EmailService();
+
+
+                await _emailService.EnviarEmailAsync(gmailService, usuario.Email!);
+
                 return StatusCode(201, usuario);
             }
             catch (Exception)
@@ -75,7 +85,6 @@ namespace CollabTechFile.Controllers
         {
             try
             {
-
                 Usuario usuarioBuscado = _UsuarioRepository.BuscarPorEmailESenha(email, senha);
 
                 if (usuarioBuscado != null)
@@ -91,33 +100,34 @@ namespace CollabTechFile.Controllers
                 return BadRequest(e.Message);
             }
         }
-//        [HttpPost("RedefinirSenha")]
-//        public IActionResult RedefinirSenha(RedefinirSenhaDTO dto)
-//        {
-//            try
-//            {
-//                var usuario = _UsuarioRepository.BuscarPorId(dto.IdUsuario);
+        [HttpPut("RedefinirSenha/{id}")]
+        public IActionResult RedefinirSenha(int id, [FromBody] RedefinirSenhaDTO dto)
+        {
+            try
+            {
+                var usuario = _UsuarioRepository.BuscarPorId(id);
 
-//                if (usuario == null)
-//                    return NotFound("Usuário não encontrado");
+                if (usuario == null)
+                    return NotFound("Usuário não encontrado");
 
-//                usuario.Senha = Criptografia.GerarHash(dto.novaSenha);
+                // 1. Verifica se a senha do usuário ainda é a senha MOCADA
+                bool usandoSenhaPadrao = Criptografia.CompararHash(SenhaPadrao, usuario.Senha);
 
-//                _UsuarioRepository.Editar(usuario.IdUsuario, usuario);
+                if (!usandoSenhaPadrao)
+                    return BadRequest("A senha já foi alterada anteriormente.");
 
-//                return Ok("Senha redefinida com sucesso!");
-//            }
-//            catch (Exception e)
-//            {
-//                return BadRequest(e.Message);
-//            }
-//        }
+                // 2. Criptografa a nova senha
+                usuario.Senha = Criptografia.GerarHash(dto.novaSenha);
 
-        //[HttpPut("{id}")]
-        //public IActionResult Put(int id, Usuario usuario)
-        //{
-        //    // Este método é suficiente para edição E exclusão
-        //}
+                // 3. Atualiza no banco
+                _UsuarioRepository.Editar(usuario.IdUsuario, usuario);
 
+                return Ok("Senha redefinida com sucesso!");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

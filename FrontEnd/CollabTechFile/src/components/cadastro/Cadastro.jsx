@@ -13,7 +13,6 @@ export default function Cadastro(props) {
 
     return (
         <section className="conteudo">
-
             <div className="titulo">
                 <h1>{props.titulo}</h1>
             </div>
@@ -81,7 +80,7 @@ export default function Cadastro(props) {
                     </select>
                 </div>
 
-                {/* <div className="campo" style={{ display: props.visibilidade_campo5 }}>
+                <div className="campo" style={{ display: props.visibilidade_campo5 }}>
                     <label>{props.campo5}</label>
                     <label className="areaSenha">
                         <input
@@ -110,7 +109,7 @@ export default function Cadastro(props) {
                             {!isShow && <EyeOff size={18} />}
                         </button>
                     </label>
-                </div> */}
+                </div>
 
                 <button type="submit" className="cadastrar">
                     Cadastrar

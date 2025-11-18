@@ -15,6 +15,7 @@ import VisualizarDoc from "../pages/visualizarDoc/Visualizar";
 import DocFinalizadoClie from "../pages/docFinalizadoClie/docFinalizadoClie";
 import DocFinalizadoFunc from "../pages/docFinalizadoFunc/DocFinalizadoFunc";
 import ListagemFuncionario from "../pages/listagemFuncionario/listagemFuncionario";
+import SenhaCliente from "../pages/senhaCliente/SenhaCliente";
 
 const Rotas = () => {
   return (<Routes> <Route element={<Login />} path="/" exact />
@@ -31,6 +32,7 @@ const Rotas = () => {
     <Route element={<DocFinalizadoClie />} path="/docFinalizadoClie" />
     <Route element={<DocFinalizadoFunc />} path="/docFinalizadoFunc" />
     <Route element={<VisualizarDoc />} path="/VisualizarDoc" />
+    <Route element={<SenhaCliente />} path="/RedefinirSenha" />
     <Route element={<DocAndamentoFunc />} path="/docAndamentoFunc/:nomeDocumento/:idDocumento" />
     <Route element={<DocAndamentoClie />} path="/DocAndamentoClie/:nomeDocumento/:idDocumento" />
   </Routes>);

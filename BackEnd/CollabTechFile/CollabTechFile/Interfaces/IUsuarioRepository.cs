@@ -10,10 +10,13 @@ namespace CollabTechFile.Interfaces
 
         void Editar(int id, Usuario usuario);
 
-        void BuscarPorId(int IdUsuario);
+        Usuario BuscarPorId(int id);
 
         Usuario BuscarPorEmailESenha(string email, string senha);
 
         Usuario BuscarPorEmail(string email);
+
+
+        //void Deletar(int id);
     }
 }

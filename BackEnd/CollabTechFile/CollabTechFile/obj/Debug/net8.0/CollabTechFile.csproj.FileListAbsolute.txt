@@ -175,3 +175,14 @@ C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTech
 C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\obj\Debug\net8.0\CollabTechFile.pdb
 C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\obj\Debug\net8.0\CollabTechFile.genruntimeconfig.cache
 C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\obj\Debug\net8.0\ref\CollabTechFile.dll
+C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\bin\Debug\net8.0\credentials.json
+C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\bin\Debug\net8.0\Google.Apis.dll
+C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\bin\Debug\net8.0\Google.Apis.Auth.dll
+C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\bin\Debug\net8.0\Google.Apis.Core.dll
+C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\bin\Debug\net8.0\Google.Apis.Gmail.v1.dll
+C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\bin\Debug\net8.0\MimeKit.dll
+C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\bin\Debug\net8.0\System.Management.dll
+C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Management.dll
+C:\Users\55890867873\Desktop\AlphaTech-Project\BackEnd\CollabTechFile\CollabTechFile\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll

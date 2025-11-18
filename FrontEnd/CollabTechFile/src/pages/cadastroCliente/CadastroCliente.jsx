@@ -8,6 +8,7 @@ import Cadastro from "../../components/cadastro/Cadastro";
 import MenuLateral from "../../components/menuLateral/MenuLateral";
 import { useEffect, useState } from "react";
 import api from "../../services/Service";
+import Cabecalho from "../../components/cabecalho/Cabecalho";
 
 export default function CadastroCliente() {
   const [nome, setNome] = useState("");
@@ -50,37 +51,19 @@ export default function CadastroCliente() {
     });
   }
 
-  function validarSenha(senha) {
-    // Mínimo 6 caracteres, pelo menos 1 número e 1 símbolo
-    const regexSenha = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
-    return regexSenha.test(senha);
-  }
-
   async function cadCliente(e) {
     e.preventDefault();
 
     // Validações
-    if (!nome.trim() || !email.trim() || !empresa.trim() || !senha || !senhaVerificacao) {
+    if (!nome.trim() || !email.trim() || !empresa.trim() ) {
       alertar("warning", "Preencha todos os campos.");
       return;
     }
-
-    if (!validarSenha(senha)) {
-      alertar("warning", "A senha deve ter mínimo 6 caracteres, com números e símbolos.");
-      return;
-    }
-
-    if (senha !== senhaVerificacao) {
-      alertar("error", "As senhas não coincidem.");
-      return;
-    }
-
     const payload = {
       Nome: nome.trim(),
       Email: email.trim(),
       idEmpresa: empresa.trim(),
       idTipoUsuario: tipoUsuario.trim(),
-      Senha: senha,
       Ativo: true,
       // IdTipoUsuario: 2, // se precisar definir tipo (ex: 2 = Cliente)
       // IdEmpresa: null, // se precisar vincular a uma empresa existente
@@ -99,8 +82,6 @@ export default function CadastroCliente() {
         setEmail("");
         setEmpresa("");
         setTipoUsuario("");
-        setSenha("");
-        setSenhaVerficacao("");
       } else {
         alertar("error", `Erro ${response.status}`);
       }
@@ -129,13 +110,8 @@ export default function CadastroCliente() {
     <main className="containerGeral">
       <MenuLateral />
       <div className="conteudoPrincipal">
-        <div className="campoTipoUsuario">
-          {/* <div className="usuario"> */}
-            <img src={user} alt="user" />
-            <p>Funcionário</p>
-          {/* </div> */}
-        </div>
         <section className="areaTrabalho">
+        <Cabecalho />
           <div className="conteudo">
 
             <Cadastro

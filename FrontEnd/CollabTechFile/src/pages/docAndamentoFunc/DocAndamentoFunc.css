@@ -275,3 +275,211 @@
     font-size: 1rem;
     line-height: 1.5;
 }
+/* ======== RESPONSIVIDADE GERAL ======== */
+
+/* Tablets (até 1024px) */
+@media (max-width: 1024px) {
+    .infDocumento {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .botaoFiltrarVersoesDoc,
+    .botaoSelectRementente,
+    .prazoEntrega {
+        width: 45%;
+        text-align: center;
+    }
+
+    .tituloRN h2,
+    .tituloRF h2,
+    .tituloRNF h2 {
+        font-size: 36px;
+    }
+
+    .listaRN,
+    .listaRF,
+    .listaRNF {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .iconeRequisitosERegra {
+        width: auto;
+        align-self: flex-end;
+    }
+}
+
+/* Celulares (até 768px) */
+@media (max-width: 768px) {
+    .infDocumento {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .botaoFiltrarVersoesDoc,
+    .botaoSelectRementente,
+    .prazoEntrega {
+        width: 90%;
+        font-size: 1rem;
+    }
+
+    .botaoFiltrarVersoesDoc p,
+    .botaoSelectRementente p,
+    .prazoEntrega label {
+        font-size: 1.2rem;
+    }
+
+    .tituloRN h2,
+    .tituloRF h2,
+    .tituloRNF h2 {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .tituloRN,
+    .tituloRF,
+    .tituloRNF {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .listaRN,
+    .listaRF,
+    .listaRNF {
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 0.9rem;
+        padding: 4%;
+    }
+
+    .iconeRequisitosERegra {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .finalizarDoc,
+    .salvarDoc {
+        width: 90%;
+        font-size: 20px;
+    }
+
+    .salvarFinalizarDoc {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+/* Celulares pequenos (até 480px) */
+@media (max-width: 480px) {
+    .tituloRN h2,
+    .tituloRF h2,
+    .tituloRNF h2 {
+        font-size: 22px;
+    }
+
+    .botaoFiltrarVersoesDoc select,
+    .botaoSelectRementente select,
+    .prazoEntrega input {
+        width: 100%;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .listaRN p,
+    .listaRF p,
+    .listaRNF p {
+        font-size: 0.9rem;
+    }
+
+    .iconeRequisitosERegra img {
+        height: 28px;
+        width: 28px;
+    }
+}
+ /* ======== RESPONSIVIDADE COMENTÁRIOS ======== */
+
+/* Tablets até 1024px */
+@media (max-width: 1024px) {
+    .areaComentarioDoc {
+        padding: 3%;
+    }
+
+    .cardFeedbackDoc {
+        padding: 3%;
+    }
+
+    .nomeFeedbackDoc {
+        font-size: 1.2rem;
+    }
+
+    .dataFeedbackDoc,
+    .horarioFeedbackDoc {
+        font-size: 1rem;
+    }
+
+    .mensagemFeedbackDoc {
+        font-size: 0.95rem;
+    }
+}
+
+/* Celulares até 768px */
+@media (max-width: 768px) {
+    .cabecalhoFeedbackDoc {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .nomeFeedbackDoc {
+        font-size: 1.1rem;
+    }
+
+    .horarioDataComentario {
+        align-items: flex-start;
+    }
+
+    .mensagemFeedbackDoc {
+        font-size: 0.9rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+    }
+
+    .cardFeedbackDoc {
+        border-bottom: 1px solid #999;
+        padding: 4%;
+    }
+
+    .titulo h1{
+        font-size: 30px;
+    }
+    .titulo{
+        margin-bottom: 30px;
+    }
+}
+
+/* Celulares pequenos até 480px */
+@media (max-width: 480px) {
+    .areaComentarioDoc {
+        padding: 4%;
+    }
+
+    .nomeFeedbackDoc {
+        font-size: 1rem;
+    }
+
+    .dataFeedbackDoc,
+    .horarioFeedbackDoc {
+        font-size: 0.9rem;
+    }
+
+    .mensagemFeedbackDoc {
+        font-size: 0.85rem;
+        word-break: break-word;
+    }
+}

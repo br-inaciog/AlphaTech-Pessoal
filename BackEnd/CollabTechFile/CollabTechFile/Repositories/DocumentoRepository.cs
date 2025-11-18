@@ -100,8 +100,8 @@ namespace CollabTechFile.Repositories
         public Documento BuscarPorId(int id)
         {
             return _context.Documentos
-                .Include(d => d.Funcionario) 
-                .Include(d => d.Cliente
+                .Include(d => d.Funcionario)
+                .Include(d => d.Cliente)
                 .Include(d => d.Comentarios)
                 .Include(d => d.DocumentoVersos)
                 .FirstOrDefault(d => d.IdDocumento == id);

@@ -86,18 +86,15 @@ namespace CollabTechFile.Controllers
 
             try
             {
-                // 1. Ler PDF em memória
                 using var ms = new MemoryStream();
                 await request.Arquivo.CopyToAsync(ms);
 
                 request.documento.Arquivo = ms.ToArray();
                 request.documento.MimeType = request.Arquivo.ContentType;
 
-                // 2. OCR direto dos bytes (sem arquivo temporário)
                 string modelId = "prebuilt-document";
                 var camposExtraidos = await _ocrService.ExtrairCamposAsync(request.documento.Arquivo, modelId);
 
-                // 3. Criar comentários OCR
                 if (request.documento.Comentarios == null)
                     request.documento.Comentarios = new List<Comentario>();
 
@@ -116,7 +113,6 @@ namespace CollabTechFile.Controllers
                 if (string.IsNullOrWhiteSpace(request.documento.Nome))
                     return BadRequest("O campo 'Titulo' do documento é obrigatório.");
 
-                // 4. Salvar no BD
                 try
                 {
                     _documentoRepository.Cadastrar(request.documento);

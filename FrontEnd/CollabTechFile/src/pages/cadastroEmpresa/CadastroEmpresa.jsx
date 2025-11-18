@@ -3,8 +3,8 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import api from "../../Services/service";
 import "./CadastroEmpresa.css";
-import user from "../../assets/img/user.png";
 import Cadastro from "../../components/cadastro/Cadastro";
+import Cabecalho from "../../components/cabecalho/Cabecalho";
 
 export default function CadastroEmpresa() {
   const [empresa, setEmpresa] = useState("");
@@ -63,13 +63,8 @@ export default function CadastroEmpresa() {
     <main className="containerGeral">
       <MenuLateral />
       <div className="conteudoPrincipal">
-        <header className="header">
-          <div className="usuario">
-            <img src={user} alt="user" />
-            <p>Admin</p>
-          </div>
-        </header>
         <section className="areaTrabalho">
+          <Cabecalho />
           <div className="conteudo">
             <Cadastro
               titulo="Cadastro Empresa"

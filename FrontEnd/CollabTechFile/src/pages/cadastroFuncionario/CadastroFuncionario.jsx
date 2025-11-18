@@ -7,6 +7,7 @@ import Cadastro from "../../components/cadastro/Cadastro";
 import MenuLateral from "../../components/menuLateral/MenuLateral";
 import { useEffect, useState } from "react";
 import api from "../../services/Service";
+import Cabecalho from "../../components/cabecalho/Cabecalho";
 
 export default function CadastroFuncionario() {
   const [nome, setNome] = useState("");
@@ -127,13 +128,8 @@ export default function CadastroFuncionario() {
     <main className="containerGeral">
       <MenuLateral />
       <div className="conteudoPrincipal">
-        <header className="header">
-          <div className="usuario">
-            <img src={user} alt="user" />
-            <p>Admin</p>
-          </div>
-        </header>
         <section className="areaTrabalho">
+          <Cabecalho />
           <div className="conteudo">
             <Cadastro
               titulo="Cadastro Funcionário"
