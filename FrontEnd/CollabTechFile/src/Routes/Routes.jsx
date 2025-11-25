@@ -11,17 +11,17 @@ import DocAndamentoFunc from "../pages/docAndamentoFunc/DocAndamentoFunc";
 import DocAndamentoClie from "../pages/docAndamentoClie/DocAndamentoClie";
 import InicioCliente from "../pages/inicioCliente/InicioCliente";
 import FaleConosco from "../pages/faleConosco/FaleConosco";
-import VisualizarDoc from "../pages/visualizarDoc/Visualizar";
 import DocFinalizadoClie from "../pages/docFinalizadoClie/docFinalizadoClie";
 import DocFinalizadoFunc from "../pages/docFinalizadoFunc/DocFinalizadoFunc";
 import ListagemFuncionario from "../pages/listagemFuncionario/listagemFuncionario";
 import SenhaCliente from "../pages/senhaCliente/SenhaCliente";
+import VisualizarDoc from "../pages/visualizarDoc/VisualizarDoc"
 
 const Rotas = () => {
   return (<Routes> <Route element={<Login />} path="/" exact />
     <Route element={<Inicio />} path="/Inicio" />
     <Route element={<ListagemDoc />} path="/Listagem" />
-    <Route element={<ListagemFuncionario />} path="/ListagemFuncionarios" />
+    <Route element={<ListagemFuncionario />} path="/ListagemFuncionario" />
     <Route element={<CadastroCliente />} path="/CadastroCliente" />
     <Route element={<CadastroEmpresa />} path="/CadastroEmpresa" />
     <Route element={<CadastroFuncionario />} path="/CadastroFuncionario" />
@@ -31,7 +31,7 @@ const Rotas = () => {
     <Route element={<InicioCliente />} path="/InicioCliente" />
     <Route element={<DocFinalizadoClie />} path="/docFinalizadoClie" />
     <Route element={<DocFinalizadoFunc />} path="/docFinalizadoFunc" />
-    <Route element={<VisualizarDoc />} path="/VisualizarDoc" />
+    <Route element={<VisualizarDoc />} path="/documento/:id" />
     <Route element={<SenhaCliente />} path="/RedefinirSenha" />
     <Route element={<DocAndamentoFunc />} path="/docAndamentoFunc/:nomeDocumento/:idDocumento" />
     <Route element={<DocAndamentoClie />} path="/DocAndamentoClie/:nomeDocumento/:idDocumento" />

@@ -123,7 +123,7 @@ namespace CollabTechFile.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    primeiraSenha = ehSenhaPadrao // ✅ usado pelo front para redirecionar
+                    primeiraSenha = ehSenhaPadrao 
                 });
             }
             catch (Exception e)

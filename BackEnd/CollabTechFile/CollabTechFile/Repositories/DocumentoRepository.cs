@@ -32,14 +32,12 @@ namespace CollabTechFile.Repositories
                 doc.Nome = documento.Nome ?? doc.Nome;
                 doc.Prazo = documento.Prazo ?? doc.Prazo;
 
-                // Atualiza funcionário e cliente, se enviados
                 if (documento.IdUsuario.HasValue)
                     doc.IdUsuario = documento.IdUsuario;
 
-                if (documento.IdCliente.HasValue)
-                    doc.IdCliente = documento.IdCliente;
+                if (documento.IdEmpresa.HasValue)
+                    doc.IdEmpresa = documento.IdEmpresa;
 
-                // Atualiza PDF se enviado
                 if (documento.Arquivo != null && documento.Arquivo.Length > 0)
                     doc.Arquivo = documento.Arquivo;
 
@@ -66,25 +64,9 @@ namespace CollabTechFile.Repositories
         {
             return _context.Documentos
                 .AsNoTracking()
-                .Include(d => d.Funcionario)
-                .Include(d => d.Cliente)
-                .Select(d => new Documento
-                {
-                    IdDocumento = d.IdDocumento,
-                    Nome = d.Nome,
-                    Prazo = d.Prazo,
-                    Status = d.Status,
-                    Versao = d.Versao,
-                    VersaoAtual = d.VersaoAtual,
-                    CriadoEm = d.CriadoEm,
-                    NovoStatus = d.NovoStatus,
-                    AssinadoEm = d.AssinadoEm,
-                    FinalizadoEm = d.FinalizadoEm,
-                    IdUsuario = d.IdUsuario,
-                    IdCliente = d.IdCliente,
-                    Funcionario = d.Funcionario,
-                    Cliente = d.Cliente,
-                })
+                .Include(d => d.UsuarioNavigation)
+                .ThenInclude(u => u.EmpresaNavigation) 
+                .Include(d => d.EmpresaNavigation)
                 .ToList();
         }
 
@@ -92,19 +74,21 @@ namespace CollabTechFile.Repositories
         {
             return _context.Documentos
                 .Include(d => d.Comentarios)
-                .Include(d => d.Funcionario)
-                .Include(d => d.Cliente)
+                .Include(d => d.UsuarioNavigation)
+                .Include(d => d.EmpresaNavigation)
                 .FirstOrDefault(x => x.IdDocumento == id);
         }
 
         public Documento BuscarPorId(int id)
         {
             return _context.Documentos
-                .Include(d => d.Funcionario)
-                .Include(d => d.Cliente)
+                .Include(d => d.UsuarioNavigation)
+                .ThenInclude(u => u.EmpresaNavigation) 
+                .Include(d => d.EmpresaNavigation)
                 .Include(d => d.Comentarios)
                 .Include(d => d.DocumentoVersos)
                 .FirstOrDefault(d => d.IdDocumento == id);
         }
+
     }
 }

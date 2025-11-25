@@ -3,18 +3,19 @@ import user from "../../assets/img/User.png"
 import Seta from "../../assets/img/Seta.png"
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react";
-import { userDecodeToken } from "../../auth/Auth"; 
+import { userDecodeToken } from "../../auth/Auth";
+import secureLocalStorage from "react-secure-storage";
 
 export default function Cabecalho() {
-    
-    const [usuario, setUsuario] = useState(null); 
+
+    const [usuario, setUsuario] = useState(null);
 
     useEffect(() => {
-        const dadosUsuario = userDecodeToken(); 
-        
-        if (dadosUsuario) {
-            setUsuario(dadosUsuario); 
-        }
+        const token = secureLocalStorage.getItem("token");
+
+        const dadosUsuario = userDecodeToken(token);
+
+        setUsuario(dadosUsuario);
     }, []);
 
     return (
@@ -26,11 +27,10 @@ export default function Cabecalho() {
 
                 <div className="campoTipoUsuario">
                     <img src={user} alt="user" />
-                    
+
                     {usuario ? (
                         <div className="infos-usuario">
-                            <p className="usuario-nome">{usuario.nome}</p>
-                            <p className="usuario-tipo">{usuario.tipoUsuario}</p>
+                            <p className="usuario-nome">{usuario.nome} - {usuario.tipoUsuario}</p>
                         </div>
                     ) : (
                         <p>Usuário não encontrado.</p>

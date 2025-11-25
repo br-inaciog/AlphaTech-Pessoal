@@ -2,28 +2,32 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace CollabTechFile.Models;
-
-[Table("Empresa")]
-public partial class Empresa
+namespace CollabTechFile.Models
 {
-    [Key]
-    public int IdEmpresa { get; set; }
+    [Table("Empresa")]
+    public class Empresa
+    {
+        [Key]
+        [Column("idEmpresa")]
+        public int IdEmpresa { get; set; }
 
-    [Column("nome")]
-    [StringLength(200)]
-    public string Nome { get; set; } = null!;
+        [Column("nome")]
+        [StringLength(100)]
+        public string Nome { get; set; }
 
-    [Column("CNPJ")]
-    [StringLength(18)]
-    [Unicode(false)]
-    public string? Cnpj { get; set; }
+        [Column("cnpj")]
+        [StringLength(18)]
+        public string? Cnpj { get; set; }
 
-    [Column("ativo")]
-    public bool? Ativo { get; set; }
+        [Column("ativo")]
+        public bool Ativo { get; set; } = true;
 
-    [InverseProperty("IdEmpresaNavigation")]
-    public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+        [InverseProperty("EmpresaNavigation")]
+        public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+
+        [InverseProperty("EmpresaNavigation")]
+        public virtual ICollection<Documento> Documentos { get; set; } = new List<Documento>();
+
+    }
 }

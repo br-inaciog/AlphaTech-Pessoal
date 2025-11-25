@@ -51,23 +51,23 @@ namespace CollabTechFile.DbContextCollab
 
             modelBuilder.Entity<Documento>(entity =>
             {
-                entity.HasKey(e => e.IdDocumento).HasName("PK__Document__E52073477E6CC2C5");
+                entity.HasKey(e => e.IdDocumento);
 
                 entity.Property(e => e.CriadoEm).HasDefaultValueSql("(getdate())");
-                entity.Property(e => e.VersaoAtual).HasDefaultValue(1);
+                entity.Property(e => e.VersaoAtual).HasDefaultValue(1.0);
 
-                // Relacionamento com funcionário (responsável)
-                entity.HasOne(d => d.Funcionario)
-                      .WithMany(p => p.DocumentosFuncionario)
+                entity.HasOne(d => d.UsuarioNavigation)
+                      .WithMany(u => u.Documentos)
                       .HasForeignKey(d => d.IdUsuario)
-                      .HasConstraintName("FK_Documento_UsuarioFuncionario");
+                      .HasConstraintName("FK_Documento_Usuario");
 
-                // Relacionamento com cliente
-                entity.HasOne(d => d.Cliente)
-                      .WithMany(p => p.DocumentosCliente)
-                      .HasForeignKey(d => d.IdCliente)
-                      .HasConstraintName("FK_Documento_UsuarioCliente");
+                entity.HasOne(d => d.EmpresaNavigation)
+                      .WithMany(e => e.Documentos)
+                      .HasForeignKey(d => d.IdEmpresa)
+                      .HasConstraintName("FK_Documento_Empresa");
             });
+
+
 
             modelBuilder.Entity<DocumentoVersoes>(entity =>
             {
@@ -147,7 +147,7 @@ namespace CollabTechFile.DbContextCollab
                 entity.HasKey(e => e.IdUsuario).HasName("PK__Usuario__5B65BF97CBC5B198");
                 entity.Property(e => e.Ativo).HasDefaultValue(true);
 
-                entity.HasOne(d => d.IdEmpresaNavigation)
+                entity.HasOne(d => d.EmpresaNavigation)
                       .WithMany(p => p.Usuarios)
                       .HasConstraintName("FK__Usuario__IdEmpre__5BE2A6F2");
 

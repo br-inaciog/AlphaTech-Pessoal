@@ -6,14 +6,22 @@ import Logo from "../../assets/img/Logo.png";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SenhaCliente() {
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
 
+  const [isShow, setIsShow] = useState(false);
+
+  const handlePassword = (e) => {
+    e.preventDefault();
+    setIsShow(!isShow);
+  };
+
   // Pegando o ID enviado pela tela anterior
   const location = useLocation();
-  const idUsuario = location.state?.id; 
+  const idUsuario = location.state?.id;
 
   const navigate = useNavigate();
 
@@ -83,28 +91,42 @@ export default function SenhaCliente() {
           <div className="inputSenhaCliente">
             <div className="grupoSenha">
               <input
-                type="password"
+                type={isShow ? "text" : "password"}
+                placeholder=" "
                 minLength={6}
                 maxLength={8}
-                autoComplete="new-password"
                 value={novaSenha}
                 onChange={(e) => setNovaSenha(e.target.value)}
                 required
               />
               <label>Nova Senha</label>
+              <button
+                type="button"
+                className="btn-mostrar-senha"
+                onClick={handlePassword}
+              >
+                {isShow ? <Eye size={18} /> : <EyeOff size={18} />}
+              </button>
             </div>
 
             <div className="grupoSenha">
               <input
-                type="password"
+                type={isShow ? "text" : "password"}
+                placeholder=" "
                 minLength={6}
                 maxLength={8}
-                autoComplete="new-password"
                 value={confirmarSenha}
                 onChange={(e) => setConfirmarSenha(e.target.value)}
                 required
               />
               <label>Confirmar Senha</label>
+              <button
+                type="button"
+                className="btn-mostrar-senha"
+                onClick={handlePassword}
+              >
+                {isShow ? <Eye size={18} /> : <EyeOff size={18} />}
+              </button>
             </div>
           </div>
         </div>

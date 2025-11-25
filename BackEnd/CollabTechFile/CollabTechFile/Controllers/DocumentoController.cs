@@ -21,7 +21,6 @@ namespace CollabTechFile.Controllers
             _ocrService = ocrService;
         }
 
-        // LISTAR ATIVOS
         [HttpGet]
         public IActionResult Get()
         {
@@ -173,24 +172,5 @@ namespace CollabTechFile.Controllers
                 return StatusCode(500, $"Erro ao atualizar arquivo: {ex.Message}");
             }
         }
-
-        [HttpGet("{id}")]
-        public IActionResult BuscarPorId(int id)
-        {
-            try
-            {
-                var documento = _documentoRepository.BuscarPorId(id);
-
-                if (documento == null)
-                    return NotFound(new { mensagem = "Documento não encontrado." });
-
-                return Ok(documento);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { mensagem = "Erro ao buscar documento.", erro = ex.Message });
-            }
-        }
-
     }
 }

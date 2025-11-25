@@ -29,7 +29,7 @@ export default function ListagemFuncionario() {
         setLoading(true);
         try {
             const response = await api.get("usuario");
-            const funcionariosFiltrados = response.data.filter(u => u.idTipoUsuario === 5);
+            const funcionariosFiltrados = response.data.filter(u => u.idTipoUsuario === 2);
             setFuncionarios(funcionariosFiltrados);
             setFuncionariosFiltrados(funcionariosFiltrados);
         } catch (error) {

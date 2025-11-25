@@ -10,7 +10,6 @@ import secureLocalStorage from "react-secure-storage";
 import { useAuth } from "../../contexts/AuthContext";
 import Swal from "sweetalert2";
 import { Eye, EyeOff } from "lucide-react";
-import { IMaskInput } from 'react-imask';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -35,14 +34,12 @@ export default function Login() {
         const resposta = await api.post("Login", usuario);
 
         const token = resposta.data.token;
-        const primeiraSenha = resposta.data.primeiraSenha; // ✅ veio do backend
+        const primeiraSenha = resposta.data.primeiraSenha;
 
         if (token) {
           const tokenDecodificado = userDecodeToken(token);
-          // ✅ Se for senha padrão → encaminha para troca de senha
-          if (primeiraSenha === true) {
 
-            // guarda o token temporário para pegar o ID depois
+          if (primeiraSenha === true) {
             secureLocalStorage.setItem("token", token);
 
             await Swal.fire({
@@ -50,18 +47,17 @@ export default function Login() {
               text: "Você está usando a senha padrão. Por favor, redefina sua senha.",
               icon: "warning",
               confirmButtonColor: "#3085d6",
-              confirmButtonText: "OK"
+              confirmButtonText: "OK",
             });
 
-            navigate("/alterar-senha", { state: { id: tokenDecodificado.idUsuario } });
+            navigate("/RedefinirSenha", {
+              state: { id: tokenDecodificado.idUsuario },
+            });
 
-            return; // ✅ evita continuar o login normal
+            return;
           }
 
-          // Atualiza o token no contexto
           atualizarToken(token);
-
-          // Salva no storage
           secureLocalStorage.setItem("token", token);
 
           await Swal.fire({
@@ -72,12 +68,14 @@ export default function Login() {
             timer: 800,
           });
 
-          // ✅ Redirecionamento conforme o tipo
-          if (tokenDecodificado.tipoUsuario === "Funcionario") {
+          const tipo = tokenDecodificado.tipoUsuario;
+
+          if (tipo === "Funcionario") {
             navigate("/Inicio", { replace: true });
-          } else if (tokenDecodificado.tipoUsuario === "Cliente") {
+          } else if (tipo === "Cliente") {
             navigate("/InicioCliente", { replace: true });
           } else {
+            // caso venha "Desconhecido"
             navigate("/Inicio", { replace: true });
           }
         }
@@ -110,7 +108,6 @@ export default function Login() {
     }
   }
 
-
   return (
     <form className="mainLogin" onSubmit={realizarAutenticacao}>
       <div className="campoLogin">
@@ -132,7 +129,7 @@ export default function Login() {
               <label>Email</label>
             </div>
 
-            <div className="grupoSenha"> 
+            <div className="grupoSenha">
               <input
                 type={isShow ? "text" : "password"}
                 placeholder=" "
@@ -144,7 +141,7 @@ export default function Login() {
               />
               <label>Senha</label>
               <button
-                type="button" 
+                type="button"
                 className="btn-mostrar-senha"
                 onClick={handlePassword}
               >

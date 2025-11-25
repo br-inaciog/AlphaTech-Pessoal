@@ -14,6 +14,7 @@ namespace CollabTechFile.Models
 
         public int? IdTipoUsuario { get; set; }
 
+        [Column("idEmpresa")]
         public int? IdEmpresa { get; set; }
 
         [Column("nome")]
@@ -31,11 +32,8 @@ namespace CollabTechFile.Models
         [Column("ativo")]
         public bool? Ativo { get; set; }
 
-        [InverseProperty("Funcionario")]
-        public virtual ICollection<Documento> DocumentosFuncionario { get; set; } = new List<Documento>();
-
-        [InverseProperty("Cliente")]
-        public virtual ICollection<Documento> DocumentosCliente { get; set; } = new List<Documento>();
+        [InverseProperty("UsuarioNavigation")]
+        public virtual ICollection<Documento> Documentos { get; set; } = new List<Documento>();
 
         [InverseProperty("IdUsuarioNavigation")]
         public virtual ICollection<Comentario> Comentarios { get; set; } = new List<Comentario>();
@@ -45,7 +43,7 @@ namespace CollabTechFile.Models
 
         [ForeignKey("IdEmpresa")]
         [InverseProperty("Usuarios")]
-        public virtual Empresa? IdEmpresaNavigation { get; set; }
+        public virtual Empresa? EmpresaNavigation { get; set; }
 
         [ForeignKey("IdTipoUsuario")]
         [InverseProperty("Usuarios")]

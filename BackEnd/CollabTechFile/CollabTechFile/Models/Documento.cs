@@ -12,10 +12,10 @@ namespace CollabTechFile.Models
         public int IdDocumento { get; set; }
 
         [Column("idUsuario")]
-        public int? IdUsuario { get; set; } // funcionário
+        public int? IdUsuario { get; set; }
 
-        [Column("idCliente")]
-        public int? IdCliente { get; set; } // cliente
+        [Column("idEmpresa")]
+        public int? IdEmpresa { get; set; }
 
         [Column("nome")]
         [StringLength(200)]
@@ -29,7 +29,7 @@ namespace CollabTechFile.Models
 
         [Column("versao")]
         [Unicode(false)]
-        public double Versao { get; set; }
+        public decimal Versao { get; set; }
 
         [Column("arquivo", TypeName = "varbinary(max)")]
         public byte[]? Arquivo { get; set; }
@@ -39,7 +39,7 @@ namespace CollabTechFile.Models
         public string? MimeType { get; set; }
 
         [Column("versaoAtual")]
-        public double VersaoAtual { get; set; }
+        public decimal VersaoAtual { get; set; }
 
         [Column("criadoEm", TypeName = "datetime")]
         public DateTime CriadoEm { get; set; }
@@ -55,20 +55,18 @@ namespace CollabTechFile.Models
         [Column("finalizadoEm", TypeName = "datetime")]
         public DateTime? FinalizadoEm { get; set; }
 
-        // 🔹 Relações
+        [ForeignKey("IdUsuario")]
+        public virtual Usuario? UsuarioNavigation { get; set; }
+
+        [ForeignKey("IdEmpresa")]
+        public virtual Empresa? EmpresaNavigation { get; set; }
+
+        // RELACIONAMENTOS (comentários, versões, regras, reqdocs)
         [InverseProperty("IdDocumentoNavigation")]
         public virtual ICollection<Comentario> Comentarios { get; set; } = new List<Comentario>();
 
         [InverseProperty("IdDocumentoNavigation")]
         public virtual ICollection<DocumentoVersoes> DocumentoVersos { get; set; } = new List<DocumentoVersoes>();
-
-        [ForeignKey("IdUsuario")]
-        [InverseProperty("DocumentosFuncionario")]
-        public virtual Usuario? Funcionario { get; set; }
-
-        [ForeignKey("IdCliente")]
-        [InverseProperty("DocumentosCliente")]
-        public virtual Usuario? Cliente { get; set; }
 
         [InverseProperty("IdDocumentoNavigation")]
         public virtual ICollection<RegrasDoc> RegrasDocs { get; set; } = new List<RegrasDoc>();

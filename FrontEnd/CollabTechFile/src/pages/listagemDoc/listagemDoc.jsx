@@ -1,7 +1,7 @@
 import "./ListagemDoc.css";
-import api from "../../Services/Service";
+import api from "../../services/Service";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import MenuLateral from "../../components/menuLateral/MenuLateral";
 import Cabecalho from "../../components/cabecalho/Cabecalho";
@@ -13,7 +13,12 @@ import Swal from "sweetalert2";
 export default function ListagemDoc() {
     const [listagemDoc, setListagemDoc] = useState([]);
     const [hoverIndex, setHoverIndex] = useState(null);
-    const [filtro, setFiltro] = useState("Todos"); 
+    const [filtro, setFiltro] = useState("Todos");
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const params = new URLSearchParams(location.search);
+    const statusFiltro = params.get("status");
 
     async function listarDocumentos() {
         try {
@@ -25,9 +30,6 @@ export default function ListagemDoc() {
         }
     }
 
-    
-
-    // Função para excluir documento (vai para lixeira)
     async function excluirDocumento(id) {
         Swal.fire({
             title: "Excluir documento?",
@@ -50,14 +52,39 @@ export default function ListagemDoc() {
             }
         });
     }
+
     useEffect(() => {
         listarDocumentos();
-    }, []);
 
-    const documentosFiltrados = listagemDoc.filter((doc) => { //Serve para filtrar os documentos na base do filtro
-        if (filtro === "Todos") return true;
-        return doc.status === filtro;
-    });
+        if (statusFiltro === "Em Andamento") setFiltro("Em Andamento");
+        else if (statusFiltro === "Assinado") setFiltro("Assinados");
+        else if (statusFiltro === "Finalizado") setFiltro("Finalizados");
+        else setFiltro("Todos");
+    }, [statusFiltro]);
+
+    let documentosFiltrados = listagemDoc;
+
+    if (filtro === "Em Andamento") {
+        documentosFiltrados = listagemDoc.filter((d) => d.novoStatus === "Em Andamento");
+    } else if (filtro === "Assinados") {
+        documentosFiltrados = listagemDoc.filter((d) => d.assinadoEm !== null);
+    } else if (filtro === "Finalizados") {
+        documentosFiltrados = listagemDoc.filter((d) => d.status === true);
+    }
+
+    const tituloPagina = filtro === "Pendentes"
+        ? "Documentos Em Andamento"
+        : filtro === "Assinados"
+            ? "Documentos Assinados"
+            : filtro === "Finalizados"
+                ? "Documentos Finalizados"
+                : "Todos os Documentos"
+        ;
+
+    function limparFiltro() {
+        setFiltro("Todos");
+        navigate("/Listagem");
+    }
 
     return (
         <div className="containerGeral">
@@ -77,10 +104,22 @@ export default function ListagemDoc() {
                                 onChange={(e) => setFiltro(e.target.value)}
                             >
                                 <option value="Todos">Todos</option>
-                                <option value="Pendentes">Pendentes</option>
+                                <option value="Em Andamento">Em Andamento</option>
                                 <option value="Assinados">Assinados</option>
                                 <option value="Finalizados">Finalizados</option>
                             </select>
+
+                            <button className="botaoLimparFiltro" onClick={() => setFiltro("Todos")}>
+                                Limpar Filtro
+                            </button>
+
+                            {/* Botão de limpar filtro
+                            <button
+                                onClick={limparFiltro}
+                                className="botaoLimpar"
+                            >
+                                Limpar filtro
+                            </button> */}
                         </div>
 
                         <Link className="botaoLixeiraList" to="/Lixeira">
@@ -96,11 +135,11 @@ export default function ListagemDoc() {
                                     className="cardContainer"
                                     onMouseEnter={() => setHoverIndex(index)}
                                     onMouseLeave={() => setHoverIndex(null)}
-                                >   
-                                    <Link
-                                        to={`/docAndamentoFunc/${encodeURIComponent(doc.nome.replaceAll(" ", "-"))}/${doc.idDocumento}`}
-                                        className="cardDocumento"
-                                    >
+                                >
+                                        <Link
+                                            to={`/docAndamentoFunc/${encodeURIComponent(doc.nome.replaceAll(" ", "-"))}/${doc.idDocumento}`}
+                                            className="cardDocumento"
+                                        >
                                         <img src={Pdf} alt="Icone de Pdf" />
                                         <div className="cardInformacoes">
                                             <h1>{doc.nome || "Sem título"}</h1>
@@ -120,7 +159,7 @@ export default function ListagemDoc() {
                                                     alt="Excluir"
                                                     onClick={(e) => {
                                                         e.preventDefault();
-                                                        e.stopPropagation(); 
+                                                        e.stopPropagation();
                                                         excluirDocumento(doc.id);
                                                     }}
                                                     style={{ cursor: "pointer" }}

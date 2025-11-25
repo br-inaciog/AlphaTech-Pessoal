@@ -1,12 +1,15 @@
 import { jwtDecode } from "jwt-decode";
 
 export const userDecodeToken = (token) => {
-    
-    const decodificado = jwtDecode(token);
+    if (!token) return null;
 
-    return{
-        idUsuario: decodificado.jti,
-        token: token,
-        tipoUsuario: decodificado["Tipo do usuario"]
-    }
-}
+    const dec = jwtDecode(token);
+
+    return {
+        idUsuario: dec.jti,
+        nome: dec.name,
+        email: dec.email,
+        tipoUsuario: dec.TipoUsuario, 
+        token
+    };
+};

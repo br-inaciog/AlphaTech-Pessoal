@@ -5,17 +5,40 @@
     gap: 2%;
 }
 
-.botaoFiltrar select {
-    width: 160px;
+.botaoFiltrar {
+    display: flex;
+}
+
+.botaoLimparFiltro {
+    width: 120px;
     height: 43px;
-    border-radius: 10px;
+    font-size: 1rem;
+    border-radius: 0 10px 10px 0;
+    padding: 2%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #35486c;
+    transition: 0.3s ease;
+}
+
+.botaoFiltrar select {
+    width: 200px;
+    height: 43px;
+    border-radius: 10px 0 0 10px;
     border: none;
     cursor: pointer;
     font-size: 1.1rem;
-    padding: 4%;
-
+    padding: 3.2%;
     color: white;
     background-color: #001337;
+    -webkit-border-radius: 10px 0 0 10px;
+    -moz-border-radius: 10px 0 0 10px;
+    -ms-border-radius: 10px 0 0 10px;
+    -o-border-radius: 10px 0 0 10px;
 }
 
 .botaoLixeiraList {
@@ -44,16 +67,15 @@
 .cardDocumento {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     text-decoration: none;
     color: black;
     background-color: aliceblue;
     border-radius: 10px;
 
     width: 100%;
-    padding: 1% 2% 1% 2%;
+    padding: 15px;
     gap: 20px;
-    margin-top: 4%;
+    margin-top: 2%;
     border-bottom: 2px solid black;
 
     /* background-color: #0a2a6c; */
@@ -67,25 +89,16 @@
 }
 
 .cardDocumento img {
-    height: 60px;
-    width: 60px;
+    height: 90px;
+    width: 80px;
 }
 
 .cardInformacoes {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     margin-left: 2%;
 
     width: 100%;
-}
-
-.cardInformacoes p {
-    font-weight: 600;
-}
-
-.cardInformacoes span {
-    font-weight: 400;
 }
 
 .cardInformacoes h1 {
@@ -94,14 +107,14 @@
 
 .cardAcoes {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     width: 30%;
 }
 
 .cardAcoes img {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     transition: 0.2s ease;
 }
 
@@ -137,3 +150,8 @@
     padding: 10px 15px;
     box-shadow: inset 0px 0px 10px 0 rgba(20, 20, 20, 0.2);
 }
+
+/* .botaoLimparFiltro:hover {
+    background-color: #2f2f2f;
+    transform: scale(1.03);
+} */
