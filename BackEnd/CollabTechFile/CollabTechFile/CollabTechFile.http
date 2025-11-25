@@ -1,6 +1,0 @@
-@CollabTechFile_HostAddress = http://localhost:5051
-
-GET {{CollabTechFile_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
