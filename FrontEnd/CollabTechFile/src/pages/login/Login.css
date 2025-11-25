@@ -1,0 +1,151 @@
+.mainLogin {
+  width: 100%;
+  height: 100vh;
+  padding: 2%;
+  background: linear-gradient(135deg, #0d0d0d, #001f3f, #0a2a6c);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.userTitulo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userTitulo img {
+  width: 191px;
+  height: 123px;
+}
+
+.campoLogin {
+  width: 480px;
+  height: 650px;
+  border-radius: 20px;
+  padding: 40px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.campoInput {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.inputLogin {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
+}
+
+.inputLogin input {
+  width: 400px;
+  height: 41px;
+  padding: 15px 5px 5px 5px;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+  background: transparent;
+}
+
+.grupoEmail,
+.grupoSenha {
+  position: relative;
+}
+
+.grupoSenha input {
+  padding-right: 45px;
+}
+
+.btn-mostrar-senha {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  color: #9d9d9d;
+}
+
+.grupoEmail label,
+.grupoSenha label {
+  position: absolute;
+  left: 5px;
+  top: 10px;
+  transition: 0.3s ease;
+  color: #9d9d9d;
+  pointer-events: none;
+}
+
+.grupoEmail input:focus ~ label,
+.grupoEmail input:not(:placeholder-shown) ~ label,
+.grupoSenha input:focus ~ label,
+.grupoSenha input:not(:placeholder-shown) ~ label {
+  top: -10px;
+  font-size: 14px;
+  color: #0a2a6c;
+}
+
+.grupoEmail input:focus,
+.grupoSenha input:focus {
+  border-bottom: 2px solid #0a2a6c;
+}
+
+.grupoSenha input:focus ~ label,
+.grupoSenha input:focus ~ .btn-mostrar-senha {
+  color: #0a2a6c;
+}
+
+@media (max-width: 768px) {
+  .mainLogin {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    height: 100vh;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #0d0d0d, #001f3f, #0a2a6c);
+  }
+
+  .userTitulo {
+    margin-bottom: 25px;
+  }
+
+  .userTitulo img {
+    width: 140px;
+    height: auto;
+  }
+
+  .campoLogin {
+    width: 100%;
+    max-width: 90%;
+    height: 490px;
+    padding: 25px 20px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .inputLogin input {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .imgLogo {
+    display: none;
+  }
+
+  body,
+  html {
+    overflow-x: hidden;
+  }
+}

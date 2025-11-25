@@ -1,0 +1,32 @@
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4%;
+    margin-top: 2%;
+}
+
+.infCabecalho {
+    display: flex;
+    align-items: center;
+}
+
+.setaImg {
+    height: 1.5rem;
+    transition: 0.2s;
+}
+
+.setaImg:hover {
+    transform: scale(1.1);
+}
+
+.campoTipoUsuario {
+    width: 80%;
+    height: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.campoTipoUsuario p {
+    color: #7A2323;
+}

@@ -1,0 +1,256 @@
+.btnArea {
+    background-color: aliceblue;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 32px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: default;
+}
+
+.usuarioArea {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-weight: 500;
+    color: #7a2323;
+    font-size: 1rem;
+}
+
+.statusDocumentos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 7%;
+}
+
+.statusCard {
+    background-color: aliceblue;
+    border-radius: 16px;
+    padding: 24px 32px;
+    min-width: 232px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.statusNum {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.statusLabel {
+    font-size: 1rem;
+    color: #222;
+    margin-top: 8px;
+}
+
+.proximasEntregas {
+    background-color: aliceblue;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.proximasEntregas h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.entregaCard {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-radius: 16px;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.entregaVermelho {
+    background: #6a0d0d;
+}
+
+.entregaMarrom {
+    background: #bda7a7;
+    color: #222;
+}
+
+.entregaBege {
+    background: #d1c1b7;
+    color: #222;
+}
+
+.entregaNum {
+    font-size: 2rem;
+    font-weight: 700;
+    min-width: 40px;
+}
+
+.entregaLabel {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.documentosActions {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    margin-top: 1%;
+}
+
+.docAction {
+    background-color: aliceblue;
+    width: 100%;
+    border-radius: 20px;
+    padding: 2%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin: 2% 0 2% 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.docAction h4 {
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 5%;
+    color: #0a1a3f;
+}
+
+.docAction input:focus {
+    border: none;
+}
+
+.docActionFlex {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.anexoContainer {
+    display: flex;
+    width: 40%;
+}
+
+.inputNomeArquivo {
+    border: 2px solid black;
+    height: 35px;
+    width: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-size: 1rem;
+    background-color: transparent;
+    color: #333;
+}
+
+.inputArquivo {
+    width: 40%;
+    height: 35px;
+    font-size: 1rem;
+    padding: 1%;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-bottom: 2px solid black;
+    background: transparent;
+    margin-bottom: 5%;
+}
+
+.botaoSelectRemententeInicio {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5%;
+}
+
+.botaoSelectRemententeInicio p {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.botaoSelectRemententeInicio select {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid black;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 1%;
+    background: transparent;
+}
+
+.prazoEntregaInicio {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin-bottom: 5%;
+    margin-top: 0.5%;
+    align-self: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.prazoEntregaInicio input {
+    width: 100%;
+    margin-bottom: 5%;
+    font-size: 1rem;
+}
+
+.prazoEntregaInicio input {
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+}
+
+.labelArquivo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5%;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.labelArquivo img {
+    height: 50px;
+    width: 50px;
+    transition: 0.2s ease;
+}
+
+.labelArquivo img:hover {
+    transform: scale(1.05);
+}
+
+.botaoEnviarDoc {
+    height: 40px;
+    width: 50%;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.1rem;
+    background-color: #5F0A00;
+    color: white;
+    transition: 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.botaoEnviarDoc:hover {
+    transform: scale(1.02);
+}

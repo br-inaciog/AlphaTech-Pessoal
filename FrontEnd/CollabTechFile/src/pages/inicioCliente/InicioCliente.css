@@ -1,0 +1,64 @@
+.botoesPAF {
+    display: flex;
+    justify-content: space-between;
+}
+
+.botaoPendenteCliente {
+    width: 160px;
+    height: 43px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+
+    background-color: #5F0A00;
+    text-decoration: none;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+}
+
+.botaoAndamentoCliente {
+    width: 160px;
+    height: 43px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    
+    background-color: #D7B89C;
+    text-decoration: none;
+    color: black;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+}
+
+.botaoFinalizadoCliente {
+    width: 160px;
+    height: 43px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    
+    background-color: #1E3A8A;
+    text-decoration: none;
+    color: white;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+}
+
+.botaoPendenteCliente:hover {
+    transform: scale(1.05);
+}
+
+.botaoAndamentoCliente:hover {
+    transform: scale(1.05);
+}
+
+.botaoFinalizadoCliente:hover {
+    transform: scale(1.05);
+}

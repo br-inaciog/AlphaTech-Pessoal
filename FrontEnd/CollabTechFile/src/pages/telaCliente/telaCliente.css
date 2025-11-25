@@ -1,0 +1,114 @@
+.clientePrincipal {
+    flex: 1;
+    min-height: 100vh;
+    /* padding: 32px 0; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.topCliente {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.inputPesquisa {
+    width: 320px;
+    padding: 8px 16px;
+    border-radius: 24px;
+    border: 1px solid #aaa;
+    font-size: 1rem;
+    background: #fff;
+    outline: none;
+}
+
+.usuarioCliente {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: black;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.setaVoltar img {
+    cursor: pointer;
+    transition: transform 0.2s;
+    height: 105px;
+    width: 50px;
+}
+
+.tituloCliente {
+    width: 100%;
+    color: #142850;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.tabelaClienteContainer {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabelaCliente {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.1rem;
+}
+
+.tabelaCliente th {
+    text-align: center;
+    padding-bottom: 12px;
+    font-weight: 700;
+    color: #222;
+    border-bottom: 2px solid #222;
+}
+
+.tabelaCliente td {
+    padding: 16px 8px;
+    border-bottom: 1px solid #bdb7b7;
+    color: #222;
+    text-align: center;
+}
+
+.btnExcluir {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10;
+}
+
+.btnEditar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10;
+}
+
+.iconLixeira {
+    width: 37px;
+    height: 37px;
+    transition: 0.2s;
+}
+
+.iconLixeira:hover {
+    transform: scale(1.1);
+}
+
+.iconEditar {
+    width: 37px;
+    transition: 0.2s;
+    height: 37px;
+}
+
+.iconEditar:hover {
+    transform: scale(1.1);
+}
+
+
