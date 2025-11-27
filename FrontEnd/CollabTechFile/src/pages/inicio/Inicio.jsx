@@ -23,7 +23,7 @@ export default function Inicio() {
     const [nomeArquivo, setNomeArquivo] = useState("");
     const [pdf, setPdf] = useState(null);
 
-    const [novoStatus, setNovoStatus] = useState("Pendente");
+    const [novoStatus, setNovoStatus] = useState("Em Andamento");
     const [criadoEm, setCriadoEm] = useState(() => {
         const agora = new Date();
         return agora.toISOString().slice(0, 19).replace("T", " ");
@@ -34,6 +34,8 @@ export default function Inicio() {
     const [emAndamento, setEmAndamento] = useState([]);
     const [assinados, setAssinados] = useState([]);
     const [finalizados, setFinalizados] = useState([]);
+
+    const proximas = emAndamento;
 
     useEffect(() => {
         const token = secureLocalStorage.getItem("token");
@@ -75,9 +77,28 @@ export default function Inicio() {
             const resposta = await api.get("Documentos");
             const docs = resposta.data;
 
-            setEmAndamento(docs.filter(d => d.status === true && d.novoStatus === "Pendente"));
-            setAssinados(docs.filter(d => d.status === true && d.novoStatus === "Assinado"));
-            setFinalizados(docs.filter(d => d.status === true && d.novoStatus === "Finalizado"));
+            // filtra os "Em Andamento"
+            const andamento = docs.filter(
+                d => d.status === true && d.novoStatus === "Em Andamento"
+            );
+
+            const ordenados = andamento.sort((a, b) => {
+                const dataA = new Date(a.prazo);
+                const dataB = new Date(b.prazo);
+                return dataA - dataB;
+            });
+
+            const proximosTres = ordenados.slice(0, 3);
+
+            setEmAndamento(proximosTres);
+
+            setAssinados(
+                docs.filter(d => d.status === true && d.novoStatus === "Assinado")
+            );
+            setFinalizados(
+                docs.filter(d => d.status === true && d.novoStatus === "Finalizado")
+            );
+
         } catch (error) {
             console.log("Erro ao buscar documentos:", error);
         }
@@ -286,18 +307,20 @@ export default function Inicio() {
 
                     <div className="proximaEntregas">
                         <h3>Próximas Entregas</h3>
-                        <div className="entregaCard entregaVermelho">
-                            <span className="entregaNum">15</span>
-                            <span className="entrega-label">Documentação Hershey's</span>
-                        </div>
-                        <div className="entregaCard entregaMarrom">
-                            <span className="entregaNum">20</span>
-                            <span className="entrega-label">Projeto Pfizer</span>
-                        </div>
-                        <div className="entregaCard entregaBege">
-                            <span className="entregaNum">28</span>
-                            <span className="entrega-label">Documentação Johnson&Johnsons</span>
-                        </div>
+
+                        {proximas.map((doc, index) => (
+                            <div
+                                key={doc.idDocumento}
+                                className={`entregaCard ${index === 0 ? "entregaVermelho" : index === 1 ? "entregaMarrom" : "entregaBege"}`}
+                            >
+                                <span className="entregaNum">
+                                    {new Date(doc.prazo).getDate()}
+                                </span>
+                                <span className="entrega-label">
+                                    {doc.nome}
+                                </span>
+                            </div>
+                        ))}
                     </div>
 
                     <article className="documentosActions">
