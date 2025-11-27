@@ -112,12 +112,33 @@
     font-size: 400;
 }
 
+.cadRN {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.cadRN input {
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+    height: 40px;
+    width: 100%;
+    margin-right: 3%;
+    font-size: 1.2rem;
+}
+
+.cadRN input:focus {
+    outline: none;
+}
+
 .tituloRN,
 .tituloRF,
 .tituloRNF {
     display: flex;
     align-items: center;
     gap: 10px;
+    width: 100%;
 }
 
 .tituloRF,

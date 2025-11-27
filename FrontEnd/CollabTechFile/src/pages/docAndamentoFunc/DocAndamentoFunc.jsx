@@ -1,80 +1,41 @@
-import "./docAndamentoFunc.css"
-import MenuLateral from "../../components/menuLateral/MenuLateral";
-import Cabecalho from "../../components/cabecalho/Cabecalho"
+import "./docAndamentoFunc.css";
 import ModalSalvarDocumento from "../../components/salvarDocumento/ModalSalvarDocumento";
+import MenuLateral from "../../components/menuLateral/MenuLateral";
+import Cabecalho from "../../components/cabecalho/Cabecalho";
 import ModalPDF from "../../components/documento/Documento";
-
-import Adicionar from "../../assets/img/Adicionar.svg"
+import Adicionar from "../../assets/img/Adicionar.svg";
 import Deletar from "../../assets/img/Delete.svg";
-import Editar from "../../assets/img/Editar.png"
-import Abrir from "../../assets/img/Abrir.png"
-import Swal from "sweetalert2";
+import Editar from "../../assets/img/Editar.png";
+import Abrir from "../../assets/img/Abrir.png";
 import { useState, useEffect } from "react";
 import api from "../../services/Service";
 import { useParams } from "react-router";
-
+import Swal from "sweetalert2";
 
 export default function DocAndamentoFunc() {
     const { nomeDocumento, idDocumento } = useParams();
     const nomeCorrigido = nomeDocumento.replaceAll("-", " ");
 
-    const [showModal, setShowModal] = useState(false);
-
-    async function modalSalvarDoc(mensagem) {
-        try {
-            // Aqui tu pode colocar a lógica real de salvar o documento no backend
-            console.log("Mensagem salva:", mensagem);
-
-            alertar("success", "Documento salvo com sucesso!");
-            setShowModal(false);
-        } catch (error) {
-            alertar("error", "Erro ao salvar o documento!");
-            console.error(error);
-        }
-    }
-    async function cadDocumento(e) {
-        e.preventDefault();
-        setShowModal(true);
-    }
-
     const [documentoInfo, setDocumentoInfo] = useState(null);
-    async function buscarDocumento() {
-        try {
-            const resposta = await api.get(`Documentos/${idDocumento}`);
-            const doc = resposta.data;
-
-            setDocumentoInfo({
-                versaoAtual: doc.versaoAtual,
-                prazo: doc.prazo,
-                remetente: doc.cliente?.nome || "Sem destinatário"
-            });
-        } catch (error) {
-            console.error("Erro ao buscar informações do documento:", error);
-        }
-    }
-
-
-    const [prazo, setPrazo] = useState("");
-
-    const [listaCliente, setListaCliente] = useState([]);
-    const [clienteFiltrado, setClienteFiltrado] = useState([]);
-
     const [listaVersaoDoc, setListaVersaoDoc] = useState([]);
-    const [versaoDoc, setVersaoDoc] = useState([]);
+    const [versaoSelecionadaId, setVersaoSelecionadaId] = useState(null);
+    const [pdfUrl, setPdfUrl] = useState(null);
 
     const [listaRN, setListaRN] = useState([]);
     const [regraDeNegocio, setRegraDeNegocio] = useState("");
-    const [regraNegocio] = useState("Edite sua Regra de Negócio.")
 
     const [listaReqFunc, setListaReqFunc] = useState([])
-    const [requisitoFuncional, setRequisitoFuncional] = useState("");
-    const [reqFuncional] = useState("RF")
+    const [requisitoFuncional] = useState("RF")
     const [reqFuncionalText] = useState("Edite seu Requisito Funcional.")
 
     const [listaReqNaoFunc, setListaReqNaoFunc] = useState([])
-    const [requisitoNaoFuncional, setRequisitoNaoFuncional] = useState("");
     const [reqNaoFuncional] = useState("RNF")
     const [reqNaoFuncionalText] = useState("Edite seu Requisito Não Funcional.")
+
+    const [showModal, setShowModal] = useState(false);
+
+    // Função formatarData removida, pois a seção de comentários foi removida
+    // function alertar mantida
 
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
@@ -95,7 +56,103 @@ export default function DocAndamentoFunc() {
         });
     }
 
-    const [pdfUrl, setPdfUrl] = useState(null);
+    async function buscarDocumento() {
+        try {
+            const resposta = await api.get(`Documentos/${idDocumento}`);
+            const doc = resposta.data;
+
+            const nomeEmpresa = doc.empresaNavigation ? doc.empresaNavigation.nome : "Empresa não informada";
+
+            setDocumentoInfo({
+                versaoAtual: doc.versaoAtual,
+                prazo: doc.prazo,
+                empresa: nomeEmpresa,
+                idDocumento: doc.idDocumento
+            });
+        } catch (error) {
+            console.error("Erro ao buscar informações do documento:", error);
+        }
+    }
+
+    async function listarVersoes() {
+        try {
+            const respostaVersoes = await api.get("documentoVersoes");
+            const versoesDoDocumentoAtual = respostaVersoes.data.filter(v => v.idDocumento == idDocumento);
+
+            // Ordena da mais nova para a mais antiga
+            setListaVersaoDoc(versoesDoDocumentoAtual.sort((a, b) => b.idVersaoDocumento - a.idVersaoDocumento));
+
+        } catch (error) {
+            console.log("Erro ao buscar versões:", error);
+        }
+    }
+
+    async function salvarNovaVersao(mensagem, versaoAtual) {
+        const numAtual = parseFloat(versaoAtual || '0.0');
+        const proximaVersao = (numAtual + 1.0);
+        const versaoFormatada = proximaVersao.toFixed(1);
+
+        try {
+            const novaVersao = {
+                idDocumento: idDocumento,
+                numeroVersao: proximaVersao,
+                mensagem: mensagem,
+            };
+
+            await api.post("documentoVersoes", novaVersao);
+
+            await api.put(`Documentos/${idDocumento}`, {
+                idDocumento: idDocumento,
+                versaoAtual: proximaVersao
+            });
+
+            return versaoFormatada;
+
+        } catch (error) {
+            console.error("Erro ao salvar nova versão:", error);
+            throw new Error("Falha ao salvar a nova versão na API.");
+        }
+    }
+
+    async function modalSalvarDoc(mensagem) {
+        if (!documentoInfo || !documentoInfo.versaoAtual) {
+            alertar("error", "Informações do documento não carregadas. Tente novamente.");
+            return;
+        }
+
+        if (!mensagem.trim()) {
+            alertar("warning", "A mensagem de salvamento é obrigatória para criar uma nova versão.");
+            return;
+        }
+
+        try {
+            const novaVersao = await salvarNovaVersao(mensagem, documentoInfo.versaoAtual);
+
+            alertar("success", `Documento salvo! Nova versão: ${novaVersao}`);
+            setShowModal(false);
+
+            // Recarrega todos os dados
+            buscarDocumento();
+            listarVersoes();
+            listarRN();
+            listarReqFunc();
+            listarReqNaoFunc();
+
+        } catch (error) {
+            alertar("error", "Erro ao salvar o documento!");
+            console.error(error);
+        }
+    }
+
+    const handleVersaoChange = (event) => {
+        const id = event.target.value;
+        if (!id || id === "placeholder") {
+            setVersaoSelecionadaId(null);
+            return;
+        }
+        setVersaoSelecionadaId(id);
+        // TODO: Lógica para carregar os dados (RN/RF/RNF) da versão antiga aqui
+    };
 
     async function abrirPDF() {
         try {
@@ -109,31 +166,11 @@ export default function DocAndamentoFunc() {
             console.error("Erro ao abrir PDF", err);
         }
     }
+
     function fecharPDF() {
         if (pdfUrl) URL.revokeObjectURL(pdfUrl);
         setPdfUrl(null);
     };
-
-    async function listarVersoes() {
-        try {
-            const resposta = await api.get("documentoVersoes");
-            const versoesDoDocumentoAtual = resposta.data.filter(v => v.idDocumento == idDocumento);
-            setListaVersaoDoc(versoesDoDocumentoAtual);
-        } catch (error) {
-            console.log("Erro ao buscar versões:", error);
-        }
-    }
-    async function listarCliente() {
-        try {
-            const resposta = await api.get("usuario")
-            setListaCliente(resposta.data);
-
-            const apenasClientes = resposta.data.filter(u => u.idTipoUsuario === 3);
-            setClienteFiltrado(apenasClientes);
-        } catch (error) {
-            console.log("Erro ao buscar clientes:", error);
-        }
-    }
 
     //Regras de Negócio
     async function listarRN() {
@@ -152,15 +189,20 @@ export default function DocAndamentoFunc() {
                         nome: regra ? regra.nome : "Sem nome"
                     };
                 });
-            console.log(regraNegocioDocAtual);
 
             setListaRN(regraNegocioDocAtual.sort((a, b) => a.idRegrasDoc - b.idRegrasDoc))
         } catch (error) {
             console.log("Erro ao listar RN:", error);
         }
     }
+
     async function cadastrarRN(e) {
         e.preventDefault();
+
+        if (!regraDeNegocio) {
+            alertar("warning", "Preencha o campo de Cadastro!")
+            return;
+        }
 
         try {
             const novaRegra = await api.post("Regra", {
@@ -180,6 +222,7 @@ export default function DocAndamentoFunc() {
             console.log(error);
         }
     }
+
     async function deletarRN(regra) {
         Swal.fire({
             theme: 'dark',
@@ -204,6 +247,7 @@ export default function DocAndamentoFunc() {
             }
         });
     }
+
     async function editarRN(RN) {
         try {
             const result = await Swal.fire({
@@ -263,17 +307,17 @@ export default function DocAndamentoFunc() {
                 .filter(r => r.tipo === "RF");
 
             setListaReqFunc(rnfDoDocumentoAtual.sort((a, b) => a.idRequisito - b.idRequisito));
-            console.log(rnfDoDocumentoAtual);
         } catch (error) {
             console.log("Erro ao listar RNF:", error);
         }
     }
+
     async function cadastrarReqFuncional(e) {
         e.preventDefault()
 
         try {
             const novaRequisito = await api.post("Requisito", {
-                tipo: reqFuncional,
+                tipo: requisitoFuncional,
                 textoReq: reqFuncionalText
             });
 
@@ -283,7 +327,6 @@ export default function DocAndamentoFunc() {
             });
 
             alertar("success", "Requisito cadastrado no documento!");
-            setRequisitoFuncional("");
             listarReqFunc();
         } catch (error) {
             alertar("error", "Erro ao cadastrar!");
@@ -312,11 +355,11 @@ export default function DocAndamentoFunc() {
                 .filter(r => r.tipo === "RNF");
 
             setListaReqNaoFunc(rnfDoDocumentoAtual.sort((a, b) => a.idRequisito - b.idRequisito));
-            console.log(rnfDoDocumentoAtual);
         } catch (error) {
             console.log("Erro ao listar RNF:", error);
         }
     }
+
     async function cadastrardReqNaoFuncional(e) {
         e.preventDefault()
 
@@ -332,13 +375,13 @@ export default function DocAndamentoFunc() {
             });
 
             alertar("success", "Requisito cadastrado no documento!");
-            setRequisitoNaoFuncional("");
             listarReqNaoFunc();
         } catch (error) {
             alertar("error", "Erro ao cadastrar!");
             console.log(error);
         }
     }
+
     async function deletarReqNaoFunc(regra) {
         Swal.fire({
             theme: 'dark',
@@ -364,8 +407,13 @@ export default function DocAndamentoFunc() {
         });
     }
 
+    //CadastrarDocumento
+    async function cadDocumento(e) {
+        e.preventDefault();
+        setShowModal(true);
+    }
+
     useEffect(() => {
-        listarCliente();
         listarVersoes();
         listarRN();
         listarReqFunc();
@@ -393,12 +441,12 @@ export default function DocAndamentoFunc() {
 
                             <div className="botaoFiltrarVersoesDoc">
                                 <p>Versões:</p>
-                                <select>
-                                    <option disabled selected>Versões</option>
+                                <select onChange={handleVersaoChange} value={versaoSelecionadaId || "placeholder"}>
+                                    <option value="placeholder" disabled>Versões</option>
                                     {listaVersaoDoc.length > 0 ? (
                                         listaVersaoDoc.map(versao => (
                                             <option key={versao.idVersaoDocumento} value={versao.idVersaoDocumento}>
-                                                {versao.numeroVersao}
+                                                V{versao.numeroVersao} ({new Date(versao.dataCriacao).toLocaleDateString()})
                                             </option>
                                         ))
                                     ) : (
@@ -416,7 +464,7 @@ export default function DocAndamentoFunc() {
                             <div className="infDocumento">
                                 <div className="botaoSelectRementente">
                                     <label>Rementente:</label>
-                                    <span>{documentoInfo?.remetente}</span>
+                                    <span>{documentoInfo?.empresa}</span>
                                 </div>
 
                                 <div className="prazoEntrega">
@@ -433,9 +481,18 @@ export default function DocAndamentoFunc() {
                             <div className="regrasDeNegocio">
                                 <div className="tituloRN">
                                     <h2>Regras de Negócio</h2>
-                                    <button type="button" onClick={(e) => cadastrarRN(e)}>
-                                        <img className="botaoAdicionar" src={Adicionar} alt="Botao De Adicionar" />
-                                    </button>
+
+                                    <form className="cadRN" onSubmit={cadastrarRN}>
+                                        <input
+                                            type="text"
+                                            placeholder="Edite sua Regra de Negócio."
+                                            value={regraDeNegocio}
+                                            onChange={(e) => setRegraDeNegocio(e.target.value)}
+                                        />
+                                        <button type="submit">
+                                            <img className="botaoAdicionar" src={Adicionar} alt="Botao De Adicionar" />
+                                        </button>
+                                    </form>
                                 </div>
 
                                 <section>
@@ -467,7 +524,6 @@ export default function DocAndamentoFunc() {
                                 </section>
                             </div>
 
-
                             <div className="requisitosFuncionais">
                                 <div className="tituloRNF">
                                     <h2>Requisitos Funcionais</h2>
@@ -480,7 +536,7 @@ export default function DocAndamentoFunc() {
                                     {listaReqFunc.length > 0 ? (
                                         listaReqFunc.map((rnf, index) => (
                                             <div className="listaRF" key={rnf.idRequisito}>
-                                                <p>RNF{String(index + 1).padStart(2, "0")}: <span>{rnf.textoReq}</span></p>
+                                                <p>RF{String(index + 1).padStart(2, "0")}: <span>{rnf.textoReq}</span></p>
 
                                                 <div className="iconeRequisitosERegra">
                                                     <img onClick={() => deletarReqNaoFunc(rnf)} className="botaoExcluir" src={Deletar} alt="Lixeira" />
@@ -557,7 +613,6 @@ export default function DocAndamentoFunc() {
                 {showModal && (
                     <ModalSalvarDocumento
                         nomeDocumento={nomeCorrigido}
-                        prazoEntrega={prazo}
                         onCancel={() => setShowModal(false)}
                         onPublish={modalSalvarDoc}
                     />

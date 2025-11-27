@@ -12,8 +12,6 @@ import Cabecalho from "../../components/cabecalho/Cabecalho";
 export default function CadastroFuncionario() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [senhaVerificacao, setSenhaVerficacao] = useState("");
 
   const [tipoUsuario, setTipoUsuario] = useState("");
   const [listaTipoUsuario, setListaTipoUsuario] = useState([]);
@@ -60,26 +58,11 @@ export default function CadastroFuncionario() {
     }
   }
 
-  function validarSenha(senha) { // Pelo menos 8 caracteres, incluindo números e símbolos
-    const regexSenha = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
-    return regexSenha.test(senha);
-  }
-
   async function cadFuncionario(e) {
     e.preventDefault();
 
-    if (!nome.trim() || !email.trim() || !empresa || !tipoUsuario || !senha || !senhaVerificacao) {
+    if (!nome.trim() || !email.trim() || !empresa || !tipoUsuario) {
       alertar("warning", "Preencha todos os campos.");
-      return;
-    }
-
-    if (!validarSenha(senha)) {
-      alertar("warning", "A senha deve ter mínimo 8 caracteres, com números e símbolos.");
-      return;
-    }
-
-    if (senha !== senhaVerificacao) {
-      alertar("error", "As senhas não coincidem.");
       return;
     }
 
@@ -88,7 +71,6 @@ export default function CadastroFuncionario() {
       email: email.trim(),
       idTipoUsuario: tipoUsuario,
       idEmpresa: empresa,
-      senha: senha,
     };
 
     setLoading(true);
@@ -101,8 +83,6 @@ export default function CadastroFuncionario() {
         setEmail("");
         setEmpresa("");
         setTipoUsuario("");
-        setSenha("");
-        setSenhaVerficacao("");
       } else {
         alertar("error", `Erro ${response.status}`);
       }
@@ -122,7 +102,7 @@ export default function CadastroFuncionario() {
   useEffect(() => {
     listarEmpresa();
     listarTipoUsuario();
-  }, [listaEmpresa]);
+  }, []);
 
   return (
     <main className="containerGeral">
@@ -134,6 +114,8 @@ export default function CadastroFuncionario() {
             <Cadastro
               titulo="Cadastro Funcionário"
               visibilidade_campoCNPJ="none"
+              visibilidade_campo5="none"
+              visibilidade_campo6="none"
               funcCadastro={cadFuncionario}
 
               // Nome
@@ -158,16 +140,6 @@ export default function CadastroFuncionario() {
               listaEmpresa={listaEmpresa}
               valorEmpresa={empresa}
               setValorEmpresa={setEmpresa}
-
-              // Senha
-              campo5="Senha"
-              valorInput3={senha}
-              setValorInput3={setSenha}
-
-              // Confirmar senha
-              campo6="Confirmar Senha"
-              valorInput4={senhaVerificacao}
-              setValorInput4={setSenhaVerficacao}
             />
           </div>
         </section>

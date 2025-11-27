@@ -49,6 +49,20 @@ namespace CollabTechFile.Repositories
                 _context.SaveChanges();
             }
         }
+        public void AtualizarVersao(int id, Documento documentoComNovaVersao)
+        {
+            var docExistente = _context.Documentos.Find(id);
+
+            if (docExistente != null)
+            {
+                if (documentoComNovaVersao.VersaoAtual > 0)
+                {
+                    docExistente.VersaoAtual = documentoComNovaVersao.VersaoAtual;
+                }
+
+                _context.SaveChanges();
+            }
+        }
 
         public void Deletar(int id)
         {

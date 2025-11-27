@@ -14,7 +14,15 @@ public partial class DocumentoVersoes
 
     public int IdDocumento { get; set; }
 
-    public int NumeroVersao { get; set; }
+    public decimal NumeroVersao { get; set; }
+
+    [MaxLength(500)] 
+    public string? Mensagem { get; set; }
+
+    public DateTime? DataCriacao { get; set; } = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
+        DateTime.UtcNow,
+        "E. South America Standard Time" 
+    );
 
     [JsonIgnore]
     [ForeignKey("IdDocumento")]

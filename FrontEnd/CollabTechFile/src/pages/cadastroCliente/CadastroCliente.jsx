@@ -13,8 +13,6 @@ import Cabecalho from "../../components/cabecalho/Cabecalho";
 export default function CadastroCliente() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [senhaVerificacao, setSenhaVerficacao] = useState("");
 
   const [empresa, setEmpresa] = useState("");
   const [listaEmpresa, setListaEmpresa] = useState([]);
@@ -65,8 +63,6 @@ export default function CadastroCliente() {
       idEmpresa: empresa.trim(),
       idTipoUsuario: tipoUsuario.trim(),
       Ativo: true,
-      // IdTipoUsuario: 2, // se precisar definir tipo (ex: 2 = Cliente)
-      // IdEmpresa: null, // se precisar vincular a uma empresa existente
     };
 
     console.log("Enviando:", payload);
@@ -85,10 +81,6 @@ export default function CadastroCliente() {
       } else {
         alertar("error", `Erro ${response.status}`);
       }
-
-      console.log(setNome);
-
-
     } catch (error) {
       console.error("Erro completo:", error.response);
       const mensagemErro = error.response?.data?.message ||

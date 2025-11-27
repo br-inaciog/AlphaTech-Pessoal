@@ -27,6 +27,9 @@ namespace CollabTechFile.Models
         [Column("status")]
         public bool Status { get; set; }
 
+        [MaxLength(500)]
+        public string? Mensagem { get; set; }
+
         [Column("versao")]
         [Unicode(false)]
         public decimal Versao { get; set; }

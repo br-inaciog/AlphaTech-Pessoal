@@ -1,10 +1,11 @@
-﻿using CollabTechFile.Models;
+﻿using CollabTechFile.DTO;
 using CollabTechFile.Interfaces;
+using CollabTechFile.Models;
+using CollabTechFile.Repositories;
 using CollabTechFile.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Threading.Tasks;
-using CollabTechFile.DTO;
 
 namespace CollabTechFile.Controllers
 {
@@ -28,6 +29,65 @@ namespace CollabTechFile.Controllers
                 .Where(d => d.Status == true);
 
             return Ok(documentos);
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Documento documento)
+        {
+            try
+            {
+                if (documento == null)
+                    return BadRequest("Os dados do documento não foram enviados.");
+
+                documento.CriadoEm = DateTime.Now;
+                documento.Status = true;
+
+                _documentoRepository.Cadastrar(documento);
+
+                return StatusCode(201, documento);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao cadastrar documento: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Documento documento)
+        {
+            if (id != documento.IdDocumento)
+            {
+                return BadRequest("O ID na URL não corresponde ao ID do documento.");
+            }
+            try
+            {
+                _documentoRepository.AtualizarVersao(id, documento);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao atualizar documento: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{id}")] 
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                var documento = _documentoRepository.BuscarPorId(id);
+
+                if (documento == null)
+                {
+                    return NotFound($"Documento com ID {id} não encontrado.");
+                }
+
+                return Ok(documento);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao buscar documento: {ex.Message}");
+            }
         }
 
         [HttpGet("Lixeira")]

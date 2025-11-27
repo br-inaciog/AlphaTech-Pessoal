@@ -7,7 +7,6 @@ import { userDecodeToken } from "../../auth/Auth";
 import secureLocalStorage from "react-secure-storage";
 
 export default function Cabecalho() {
-
     const [usuario, setUsuario] = useState(null);
 
     useEffect(() => {

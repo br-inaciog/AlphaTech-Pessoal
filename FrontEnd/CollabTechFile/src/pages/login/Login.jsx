@@ -45,6 +45,7 @@ export default function Login() {
             await Swal.fire({
               title: "Atenção!",
               text: "Você está usando a senha padrão. Por favor, redefina sua senha.",
+              theme: "dark",
               icon: "warning",
               confirmButtonColor: "#3085d6",
               confirmButtonText: "OK",
@@ -63,6 +64,7 @@ export default function Login() {
           await Swal.fire({
             title: "Login realizado!",
             text: "Redirecionando...",
+            theme: "dark",
             icon: "success",
             showConfirmButton: false,
             timer: 800,
@@ -86,6 +88,7 @@ export default function Login() {
           Swal.fire({
             title: "Email ou senha inválidos!",
             text: "Verifique suas credenciais e tente novamente.",
+            theme: "dark",
             icon: "error",
             confirmButtonColor: "#d33",
           });
@@ -93,6 +96,7 @@ export default function Login() {
           Swal.fire({
             title: "Erro no servidor!",
             text: "Tente novamente mais tarde.",
+            theme: "dark",
             icon: "warning",
             confirmButtonColor: "#3085d6",
           });
@@ -102,6 +106,7 @@ export default function Login() {
       Swal.fire({
         title: "Campos vazios!",
         text: "Preencha todos os campos para realizar o login.",
+        theme: "dark",
         icon: "info",
         confirmButtonColor: "#3085d6",
       });

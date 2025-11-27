@@ -53,6 +53,59 @@
   },
   {
     "ContainingType": "CollabTechFile.Controllers.DocumentosController",
+    "Method": "Post",
+    "RelativePath": "api/Documentos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "documento",
+        "Type": "CollabTechFile.Models.Documento",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CollabTechFile.Controllers.DocumentosController",
+    "Method": "Put",
+    "RelativePath": "api/Documentos/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "documento",
+        "Type": "CollabTechFile.Models.Documento",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CollabTechFile.Controllers.DocumentosController",
+    "Method": "Get",
+    "RelativePath": "api/Documentos/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CollabTechFile.Controllers.DocumentosController",
     "Method": "DownloadPdf",
     "RelativePath": "api/Documentos/{id}/pdf",
     "HttpMethod": "GET",
@@ -190,8 +243,13 @@
         "IsRequired": false
       },
       {
+        "Name": "documento.Mensagem",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
         "Name": "documento.Versao",
-        "Type": "System.Double",
+        "Type": "System.Decimal",
         "IsRequired": false
       },
       {
@@ -206,7 +264,7 @@
       },
       {
         "Name": "documento.VersaoAtual",
-        "Type": "System.Double",
+        "Type": "System.Decimal",
         "IsRequired": false
       },
       {

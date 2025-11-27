@@ -79,6 +79,98 @@
             "description": "OK"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Documentos"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Documento"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Documento"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Documento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/{id}": {
+      "put": {
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Documento"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Documento"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Documento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/Documentos/Lixeira": {
@@ -200,6 +292,10 @@
                   },
                   "documento.Status": {
                     "type": "boolean"
+                  },
+                  "documento.Mensagem": {
+                    "maxLength": 500,
+                    "type": "string"
                   },
                   "documento.Versao": {
                     "type": "number",
@@ -402,6 +498,9 @@
                   "style": "form"
                 },
                 "documento.Status": {
+                  "style": "form"
+                },
+                "documento.Mensagem": {
                   "style": "form"
                 },
                 "documento.Versao": {
@@ -1468,6 +1567,11 @@
           "status": {
             "type": "boolean"
           },
+          "mensagem": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          },
           "versao": {
             "type": "number",
             "format": "double"
@@ -1556,8 +1660,18 @@
             "format": "int32"
           },
           "numeroVersao": {
-            "type": "integer",
-            "format": "int32"
+            "type": "number",
+            "format": "double"
+          },
+          "mensagem": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          },
+          "dataCriacao": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false

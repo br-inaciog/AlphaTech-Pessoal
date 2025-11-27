@@ -28,7 +28,7 @@ export default function Inicio() {
     const [versaoInicial, setVersaoInicial] = useState(1);
     const [statusDoc, setStatusDoc] = useState(1)
 
-    const [pendentes, setPendentes] = useState([]);
+    const [emAndamento, setEmAndamento] = useState([]);
     const [assinados, setAssinados] = useState([]);
     const [finalizados, setFinalizados] = useState([]);
     const navigate = useNavigate();
@@ -69,7 +69,7 @@ export default function Inicio() {
             const resposta = await api.get("Documentos");
             const docs = resposta.data;
 
-            setPendentes(docs.filter(d => d.status === false));
+            setEmAndamento(docs.filter(d => d.status === false));
             setAssinados(docs.filter(d => d.assinadoEm !== null));
             setFinalizados(docs.filter(d => d.status === true));
         } catch (error) {
@@ -77,23 +77,23 @@ export default function Inicio() {
         }
     }
 
-    function mostrarNomeArquivo(e) {
-        const file = e.target.files[0];
-        if (file) {
-            if (file.type !== "application/pdf") {
-                alertar("error", "Apenas arquivos PDF são permitidos!");
-                e.target.value = "";
-                setPdf("");
-                setNomeArquivo("");
-                return;
-            }
+    // function mostrarNomeArquivo(e) {
+    //     const file = e.target.files[0];
+    //     if (file) {
+    //         if (file.type !== "application/pdf") {
+    //             alertar("error", "Apenas arquivos PDF são permitidos!");
+    //             e.target.value = "";
+    //             setPdf("");
+    //             setNomeArquivo("");
+    //             return;
+    //         }
 
-            setNomeArquivo(file.name);
-            setPdf(file);
-        } else {
-            setNomeArquivo("");
-        }
-    }
+    //         setNomeArquivo(file.name);
+    //         setPdf(file);
+    //     } else {
+    //         setNomeArquivo("");
+    //     }
+    // }
 
     async function listarEmpresa() {
         try {
@@ -181,17 +181,8 @@ export default function Inicio() {
                             onClick={() => navigate("/Listagem?status=pendente")}
                             style={{ cursor: "pointer" }}
                         >
-                            <span className="statusNum">{pendentes.length}</span>
-                            <span className="statusLabel">Pendentes</span>
-                        </div>
-
-                        <div
-                            className="statusCard"
-                            onClick={() => navigate("/Listagem?status=assinado")}
-                            style={{ cursor: "pointer" }}
-                        >
-                            <span className="statusNum">{assinados.length}</span>
-                            <span className="statusLabel">Assinados</span>
+                            <span className="statusNum">{emAndamento.length}</span>
+                            <span className="statusLabel">Em Andamento</span>
                         </div>
 
                         <div
@@ -201,6 +192,15 @@ export default function Inicio() {
                         >
                             <span className="statusNum">{finalizados.length}</span>
                             <span className="statusLabel">Finalizados</span>
+                        </div>
+
+                        <div
+                            className="statusCard"
+                            onClick={() => navigate("/Listagem?status=assinado")}
+                            style={{ cursor: "pointer" }}
+                        >
+                            <span className="statusNum">{assinados.length}</span>
+                            <span className="statusLabel">Assinados</span>
                         </div>
                     </div>
 
@@ -232,7 +232,7 @@ export default function Inicio() {
                                     onChange={(e) => setNomeDoc(e.target.value)}
                                 />
 
-                                <div className="anexoContainer">
+                                {/* <div className="anexoContainer">
                                     <input
                                         type="file"
                                         id="arquivoInput"
@@ -257,7 +257,7 @@ export default function Inicio() {
                                         value={nomeArquivo}
                                         disabled
                                     />
-                                </div>
+                                </div> */}
 
                                 <div className="botaoSelectRemententeInicio">
                                     <p>Empresa:</p>

@@ -22,11 +22,40 @@ export default function ListagemDoc() {
 
     async function listarDocumentos() {
         try {
-            const resposta = await api.get("Documentos");
-            setListagemDoc(resposta.data);
-            console.log(resposta.data);
+            const [respDocumentos, respVersoes] = await Promise.all([
+                api.get("Documentos"),
+                api.get("documentoVersoes")
+            ]);
+
+            const documentos = respDocumentos.data;
+            const versoes = respVersoes.data;
+
+            const ultimaMensagemPorDocumento = versoes.reduce((acc, versao) => {
+                const idDoc = versao.idDocumento;
+
+                if (!acc[idDoc] || versao.idDocumentoVersoes > acc[idDoc].idDocumentoVersoes) {
+                    if (versao.mensagem && versao.mensagem.trim() !== '') {
+                        acc[idDoc] = {
+                            mensagem: versao.mensagem,
+                            idDocumentoVersoes: versao.idDocumentoVersoes
+                        };
+                    }
+                }
+                return acc;
+            }, {});
+
+
+            const documentosComAnotacao = documentos.map(doc => {
+                const ultimaAnotacao = ultimaMensagemPorDocumento[doc.idDocumento];
+                return {
+                    ...doc,
+                    anotacao: ultimaAnotacao ? ultimaAnotacao.mensagem : doc.anotacao
+                };
+            });
+
+            setListagemDoc(documentosComAnotacao);
         } catch (error) {
-            console.error("Erro ao listar documentos:", error);
+            console.error("Erro ao listar documentos ou versões:", error);
         }
     }
 
@@ -53,26 +82,18 @@ export default function ListagemDoc() {
         });
     }
 
-    useEffect(() => {
-        listarDocumentos();
-
-        if (statusFiltro === "Em Andamento") setFiltro("Em Andamento");
-        else if (statusFiltro === "Assinado") setFiltro("Assinados");
-        else if (statusFiltro === "Finalizado") setFiltro("Finalizados");
-        else setFiltro("Todos");
-    }, [statusFiltro]);
-
-    let documentosFiltrados = listagemDoc;
+    let documentosFiltrados = listagemDoc; // Inicia com a lista completa
 
     if (filtro === "Em Andamento") {
         documentosFiltrados = listagemDoc.filter((d) => d.novoStatus === "Em Andamento");
     } else if (filtro === "Assinados") {
-        documentosFiltrados = listagemDoc.filter((d) => d.assinadoEm !== null);
+        documentosFiltrados = listagemDoc.filter((d) => d.novoStatus === "Assinados");
     } else if (filtro === "Finalizados") {
-        documentosFiltrados = listagemDoc.filter((d) => d.status === true);
+        documentosFiltrados = listagemDoc.filter((d) => d.novoStatus === "Finalizados");
     }
 
-    const tituloPagina = filtro === "Pendentes"
+    // Define o título dinamicamente
+    const tituloPagina = filtro === "Em Andamento"
         ? "Documentos Em Andamento"
         : filtro === "Assinados"
             ? "Documentos Assinados"
@@ -83,8 +104,18 @@ export default function ListagemDoc() {
 
     function limparFiltro() {
         setFiltro("Todos");
-        navigate("/Listagem");
+        navigate("/Listagem"); // remove o ?status da URL
     }
+
+    useEffect(() => {
+        listarDocumentos();
+
+        // Padronizando o filtro da URL com os nomes das options
+        if (statusFiltro === "pendente") setFiltro("Em Andamento"); // Corrigido de "Pendentes"
+        else if (statusFiltro === "assinado") setFiltro("Assinados");
+        else if (statusFiltro === "finalizado") setFiltro("Finalizados");
+        else setFiltro("Todos");
+    }, [statusFiltro]);
 
     return (
         <div className="containerGeral">
@@ -94,7 +125,7 @@ export default function ListagemDoc() {
                     <Cabecalho />
 
                     <div className="titulo">
-                        <h1>Documentos</h1>
+                        <h1>{tituloPagina}</h1>
                     </div>
 
                     <div className="botaoFiltraLixeira">
@@ -136,16 +167,16 @@ export default function ListagemDoc() {
                                     onMouseEnter={() => setHoverIndex(index)}
                                     onMouseLeave={() => setHoverIndex(null)}
                                 >
-                                        <Link
-                                            to={`/docAndamentoFunc/${encodeURIComponent(doc.nome.replaceAll(" ", "-"))}/${doc.idDocumento}`}
-                                            className="cardDocumento"
-                                        >
+                                    <Link
+                                        to={`/docAndamentoFunc/${encodeURIComponent(doc.nome.replaceAll(" ", "-"))}/${doc.idDocumento}`}
+                                        className="cardDocumento"
+                                    >
                                         <img src={Pdf} alt="Icone de Pdf" />
                                         <div className="cardInformacoes">
                                             <h1>{doc.nome || "Sem título"}</h1>
                                             <p>Prazo: <span>{new Date(doc.criadoEm).toLocaleDateString('pt-BR') || "Sem data"}</span></p>
-                                            <p>Versão: <span>{doc.versao || "Sem Versão"}</span></p>
-                                            <p>Autor: <span>{doc.idUsuarioNavigation?.nome || "Autor desconhecido"}</span></p>
+                                            <p>Versão: <span>{doc.versaoAtual || "Sem Versão"}</span></p>
+                                            <p>Autor: <span>{doc.usuarioNavigation?.nome || "Autor desconhecido"}</span></p>
                                         </div>
 
                                         <div className="cardAcoes">
