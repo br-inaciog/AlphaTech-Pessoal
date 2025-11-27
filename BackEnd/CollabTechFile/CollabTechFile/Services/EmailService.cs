@@ -17,21 +17,328 @@ public class EmailService
         emailMessage.Subject = "Acesso ao sistema CollabTechFile";
 
         string mensagem = $@"
-            <h2>Bem-vindo ao sistema CollabTechFile!</h2>
-            <p>Seu cadastro foi realizado com sucesso.</p>
-            <p><strong>Login:</strong> {destinatario}</p>
-            <p><strong>Senha:</strong> {SenhaPadrao}</p>
-            <p>Por motivos de segurança, altere sua senha no primeiro acesso.</p>
+                        <html dir=""ltr"" xmlns=""http://www.w3.org/1999/xhtml"" xmlns:o=""urn:schemas-microsoft-com:office:office"">
+  <head>
+    <meta charset=""UTF-8"">
+    <meta content=""width=device-width, initial-scale=1"" name=""viewport"">
+    <meta name=""x-apple-disable-message-reformatting"">
+    <meta http-equiv=""X-UA-Compatible"" content=""IE=edge"">
+    <meta content=""telephone=no"" name=""format-detection"">
+    <title></title>
+    <!--[if (mso 16)]>
+    <style type=""text/css"">
+    a {{text-decoration: none;}}
+    </style>
+    <![endif]-->
+    <!--[if gte mso 9]><style>sup {{ font-size: 100% !important; }}</style><![endif]-->
+    <!--[if gte mso 9]>
+<noscript>
+         <xml>
+           <o:OfficeDocumentSettings>
+           <o:AllowPNG></o:AllowPNG>
+           <o:PixelsPerInch>96</o:PixelsPerInch>
+           </o:OfficeDocumentSettings>
+         </xml>
+      </noscript>
+<![endif]-->
+    <!--[if !mso]><!-- -->
+    <link href=""https://fonts.googleapis.com/css2?family=Orbitron&display=swap"" rel=""stylesheet"">
+    <!--<![endif]-->
+    <!--[if mso]><xml>
+    <w:WordDocument xmlns:w=""urn:schemas-microsoft-com:office:word"">
+      <w:DontUseAdvancedTypographyReadingMail/>
+    </w:WordDocument>
+    </xml><![endif]-->
+  </head>
+  <body class=""body"">
+    <div dir=""ltr"" class=""es-wrapper-color"">
+      <!--[if gte mso 9]>
+			<v:background xmlns:v=""urn:schemas-microsoft-com:vml"" fill=""t"">
+				<v:fill type=""tile"" color=""#07023c""></v:fill>
+			</v:background>
+		<![endif]-->
+      <table width=""100%"" cellspacing=""0"" cellpadding=""0"" class=""es-wrapper"">
+        <tbody>
+          <tr>
+            <td valign=""top"" class=""esd-email-paddings"">
+              <table cellspacing=""0"" cellpadding=""0"" align=""center"" class=""es-content esd-header-popover"">
+                <tbody>
+                  <tr>
+                    <td align=""center"" class=""esd-stripe"">
+                      <table width=""600"" cellspacing=""0"" cellpadding=""0"" bgcolor=""#001337"" align=""center"" esd-img-prev-position=""center center"" class=""es-content-body"" style=""background-color: #001337"">
+                        <tbody>
+                          <tr>
+                            <td align=""left"" class=""esd-structure es-p20t es-p10b es-p20r es-p20l"">
+                              <table cellpadding=""0"" cellspacing=""0"" width=""100%"">
+                                <tbody>
+                                  <tr>
+                                    <td width=""560"" valign=""top"" align=""center"" class=""es-m-p0r esd-container-frame"">
+                                      <table cellpadding=""0"" cellspacing=""0"" width=""100%"">
+                                        <tbody>
+                                          <tr>
+                                            <td align=""center"" class=""esd-block-image"" style=""font-size:0px"">
+                                              <a target=""_blank"" href=""https://viewstripo.email"">
+                                                <img src=""https://evxmfou.stripocdn.email/content/guids/1d491798-bd9c-4a6e-90ed-33b1ee13e16c/images/image__1_removebgpreview_1_1.png"" alt="""" title=""Logo"" width=""395"" class=""adapt-img"" style=""display: block"">
+                                              </a>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align=""left"" class=""esd-structure es-p30t es-p30b es-p20r es-p20l"">
+                              <table width=""100%"" cellspacing=""0"" cellpadding=""0"">
+                                <tbody>
+                                  <tr>
+                                    <td width=""560"" valign=""top"" align=""center"" class=""es-m-p0r es-m-p20b esd-container-frame"">
+                                      <table width=""100%"" cellspacing=""0"" cellpadding=""0"">
+                                        <tbody>
+                                          <tr>
+                                            <td align=""center"" class=""esd-block-text"">
+                                              <h1 style=""font-family: arial,&#39;helvetica neue&#39;,helvetica,sans-serif; color: #ffffff"">
+                                                Bem vindo ao sistema!
+                                              </h1>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td align=""center"" class=""esd-block-text es-p10t es-p10b"">
+                                              <p style=""color: #ffffff"">
+                                                Seu cadastro foi realizado com sucesso
+                                              </p>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td align=""center"" class=""esd-block-text es-p10t es-p10b"">
+                                              <p style=""color: #ffffff"">
+                                                <strong>Login:</strong> <strong>{destinatario}</strong>&nbsp;
+                                              </p>
+                                              <p style=""color: #ffffff"">
+                                                <strong>Senha:</strong> <strong>{SenhaPadrao}</strong>&nbsp;
+                                              </p>
+                                              <p style=""color: #ffffff"">
+                                                Por motivos de segurança, altere sua senha no primeiro acesso.
+                                              </p>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align=""left"" bgcolor=""#001337"" class=""esd-structure es-p20t es-p20r es-p20l"" style=""background-color: #001337"">
+                              <table width=""100%"" cellpadding=""0"" cellspacing=""0"">
+                                <tbody>
+                                  <tr>
+                                    <td align=""left"" width=""560"" class=""esd-container-frame"">
+                                      <table cellpadding=""0"" cellspacing=""0"" role=""presentation"" width=""100%"">
+                                        <tbody>
+                                          <tr>
+                                            <td align=""center"" class=""esd-block-text"">
+                                              <p style=""color: #ffffff"">
+                                                <strong>solutions.alphatech6@gmail.com</strong>
+                                              </p>
+                                              <p style=""color: #ffffff"">
+                                                <strong>​</strong>
+                                              </p>
+                                              <p style=""color: #ffffff"">
+                                                <strong>Instagram: https://shre.ink/Alphatech</strong>
+                                              </p>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
         ";
 
         // Configura o corpo do e-mail (Texto simples e HTML)
         var builder = new BodyBuilder
         {
             HtmlBody = @$"<h2>Bem-vindo ao sistema CollabTechFile!</h2>
-            <p>Seu cadastro foi realizado com sucesso.</p>
-            <p><strong>Login:</strong> {destinatario}</p>
-            <p><strong>Senha:</strong> {SenhaPadrao}</p>
-            <p>Por motivos de segurança, altere sua senha no primeiro acesso.</p>"
+                        <html dir=""ltr"" xmlns=""http://www.w3.org/1999/xhtml"" xmlns:o=""urn:schemas-microsoft-com:office:office"">
+  <head>
+    <meta charset=""UTF-8"">
+    <meta content=""width=device-width, initial-scale=1"" name=""viewport"">
+    <meta name=""x-apple-disable-message-reformatting"">
+    <meta http-equiv=""X-UA-Compatible"" content=""IE=edge"">
+    <meta content=""telephone=no"" name=""format-detection"">
+    <title></title>
+    <!--[if (mso 16)]>
+    <style type=""text/css"">
+    a {{text-decoration: none;}}
+    </style>
+    <![endif]-->
+    <!--[if gte mso 9]><style>sup {{ font-size: 100% !important; }}</style><![endif]-->
+    <!--[if gte mso 9]>
+<noscript>
+         <xml>
+           <o:OfficeDocumentSettings>
+           <o:AllowPNG></o:AllowPNG>
+           <o:PixelsPerInch>96</o:PixelsPerInch>
+           </o:OfficeDocumentSettings>
+         </xml>
+      </noscript>
+<![endif]-->
+    <!--[if !mso]><!-- -->
+    <link href=""https://fonts.googleapis.com/css2?family=Orbitron&display=swap"" rel=""stylesheet"">
+    <!--<![endif]-->
+    <!--[if mso]><xml>
+    <w:WordDocument xmlns:w=""urn:schemas-microsoft-com:office:word"">
+      <w:DontUseAdvancedTypographyReadingMail/>
+    </w:WordDocument>
+    </xml><![endif]-->
+  </head>
+  <body class=""body"">
+    <div dir=""ltr"" class=""es-wrapper-color"">
+      <!--[if gte mso 9]>
+			<v:background xmlns:v=""urn:schemas-microsoft-com:vml"" fill=""t"">
+				<v:fill type=""tile"" color=""#07023c""></v:fill>
+			</v:background>
+		<![endif]-->
+      <table width=""100%"" cellspacing=""0"" cellpadding=""0"" class=""es-wrapper"">
+        <tbody>
+          <tr>
+            <td valign=""top"" class=""esd-email-paddings"">
+              <table cellspacing=""0"" cellpadding=""0"" align=""center"" class=""es-content esd-header-popover"">
+                <tbody>
+                  <tr>
+                    <td align=""center"" class=""esd-stripe"">
+                      <table width=""600"" cellspacing=""0"" cellpadding=""0"" bgcolor=""#001337"" align=""center"" esd-img-prev-position=""center center"" class=""es-content-body"" style=""background-color: #001337"">
+                        <tbody>
+                          <tr>
+                            <td align=""left"" class=""esd-structure es-p20t es-p10b es-p20r es-p20l"">
+                              <table cellpadding=""0"" cellspacing=""0"" width=""100%"">
+                                <tbody>
+                                  <tr>
+                                    <td width=""560"" valign=""top"" align=""center"" class=""es-m-p0r esd-container-frame"">
+                                      <table cellpadding=""0"" cellspacing=""0"" width=""100%"">
+                                        <tbody>
+                                          <tr>
+                                            <td align=""center"" class=""esd-block-image"" style=""font-size:0px"">
+                                              <a target=""_blank"" href=""https://viewstripo.email"">
+                                                <img src=""https://evxmfou.stripocdn.email/content/guids/1d491798-bd9c-4a6e-90ed-33b1ee13e16c/images/image__1_removebgpreview_1_1.png"" alt="""" title=""Logo"" width=""395"" class=""adapt-img"" style=""display: block"">
+                                              </a>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align=""left"" class=""esd-structure es-p30t es-p30b es-p20r es-p20l"">
+                              <table width=""100%"" cellspacing=""0"" cellpadding=""0"">
+                                <tbody>
+                                  <tr>
+                                    <td width=""560"" valign=""top"" align=""center"" class=""es-m-p0r es-m-p20b esd-container-frame"">
+                                      <table width=""100%"" cellspacing=""0"" cellpadding=""0"">
+                                        <tbody>
+                                          <tr>
+                                            <td align=""center"" class=""esd-block-text"">
+                                              <h1 style=""font-family: arial,&#39;helvetica neue&#39;,helvetica,sans-serif; color: #ffffff"">
+                                                Bem vindo ao sistema!
+                                              </h1>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td align=""center"" class=""esd-block-text es-p10t es-p10b"">
+                                              <p style=""color: #ffffff"">
+                                                Seu cadastro foi realizado com sucesso
+                                              </p>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td align=""center"" class=""esd-block-text es-p10t es-p10b"">
+                                              <p style=""color: #ffffff"">
+                                                <strong>Login:</strong> <strong>{destinatario}</strong>&nbsp;
+                                              </p>
+                                              <p style=""color: #ffffff"">
+                                                <strong>Senha:</strong> <strong>{SenhaPadrao}</strong>&nbsp;
+                                              </p>
+                                              <p style=""color: #ffffff"">
+                                                Por motivos de segurança, altere sua senha no primeiro acesso.
+                                              </p>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align=""left"" bgcolor=""#001337"" class=""esd-structure es-p20t es-p20r es-p20l"" style=""background-color: #001337"">
+                              <table width=""100%"" cellpadding=""0"" cellspacing=""0"">
+                                <tbody>
+                                  <tr>
+                                    <td align=""left"" width=""560"" class=""esd-container-frame"">
+                                      <table cellpadding=""0"" cellspacing=""0"" role=""presentation"" width=""100%"">
+                                        <tbody>
+                                          <tr>
+                                            <td align=""center"" class=""esd-block-text"">
+                                              <p style=""color: #ffffff"">
+                                                <strong>solutions.alphatech6@gmail.com</strong>
+                                              </p>
+                                              <p style=""color: #ffffff"">
+                                                <strong>​</strong>
+                                              </p>
+                                              <p style=""color: #ffffff"">
+                                                <strong>Instagram: https://shre.ink/Alphatech</strong>
+                                              </p>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>"
         };
 
         // Adicione o body (corpo) à mensagem

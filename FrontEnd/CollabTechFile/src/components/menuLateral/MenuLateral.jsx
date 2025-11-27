@@ -84,7 +84,7 @@ export default function MenuLateral() {
         linksParaExibir = linksDeNavegacao.linksCliente;
     } else if (tipoUsuario === "Funcionario") {
         linksParaExibir = linksDeNavegacao.linksFuncionario;
-    } else if (tipoUsuario === "Administrador") {
+    } else if (tipoUsuario === "Admin") {
         linksParaExibir = [
             ...linksDeNavegacao.linksFuncionario, 
             ...linksDeNavegacao.linksAdministrador

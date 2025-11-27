@@ -1,3 +1,7 @@
+.cabecalhoArea {
+    margin-bottom: 7%;
+}
+
 .btnArea {
     background-color: aliceblue;
     border: none;
@@ -107,7 +111,7 @@
     display: flex;
     gap: 32px;
     justify-content: center;
-    margin-top: 1%;
+    margin-top: 7%;
 }
 
 .docAction {
@@ -137,13 +141,40 @@
 
 .docActionFlex {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
 }
 
 .anexoContainer {
     display: flex;
-    width: 40%;
+    width: 70%;
+}
+
+.inputNomeDocumento {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5%;
+}
+
+.inputNomeDocumento label {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.inputNomeDocumento input {
+    width: 100%;
+    height: 35px;
+    font-size: 1rem;
+    padding: 1%;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-bottom: 2px solid black;
+    background: transparent;
 }
 
 .inputNomeArquivo {
@@ -158,27 +189,14 @@
     color: #333;
 }
 
-.inputArquivo {
-    width: 40%;
-    height: 35px;
-    font-size: 1rem;
-    padding: 1%;
-    border-right: none;
-    border-left: none;
-    border-top: none;
-    border-bottom: 2px solid black;
-    background: transparent;
-    margin-bottom: 5%;
-}
-
 .botaoSelectRemententeInicio {
-    width: 40%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     margin-bottom: 5%;
 }
 
-.botaoSelectRemententeInicio p {
+.botaoSelectRemententeInicio label {
     font-size: 1.1rem;
     font-weight: 600;
 }
@@ -196,7 +214,7 @@
 .prazoEntregaInicio {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 70%;
     margin-bottom: 5%;
     margin-top: 0.5%;
     align-self: center;
@@ -206,14 +224,32 @@
 
 .prazoEntregaInicio input {
     width: 100%;
-    margin-bottom: 5%;
     font-size: 1rem;
 }
 
 .prazoEntregaInicio input {
+    width: 100%;
     border: none;
     border-bottom: 2px solid black;
-    background-color: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 1%;
+    background: transparent;
+}
+
+.checkboxAnexo {
+    margin-bottom: 5%;
+    font-weight: 600;
+    font-size: 1.1rem;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.checkboxAnexo input {
+    width: 30px;
+    height: 30px;
+    border: 2px solid black;
 }
 
 .labelArquivo {

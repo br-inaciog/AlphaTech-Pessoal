@@ -77,11 +77,11 @@ namespace CollabTechFile.Repositories
         public List<Documento> Listar()
         {
             return _context.Documentos
-                .AsNoTracking()
-                .Include(d => d.UsuarioNavigation)
+            .Include(d => d.UsuarioNavigation)
                 .ThenInclude(u => u.EmpresaNavigation) 
                 .Include(d => d.EmpresaNavigation)
-                .ToList();
+                             .AsNoTracking()
+       .ToList();
         }
 
         public Documento BuscarPorIdPdf(int id)

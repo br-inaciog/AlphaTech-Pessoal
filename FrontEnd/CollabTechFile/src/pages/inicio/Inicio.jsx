@@ -1,49 +1,55 @@
 import { useEffect, useState } from 'react';
 import Swal from "sweetalert2";
-import api from "../../Services/Service";
+import api from "../../services/Service";
 import './Inicio.css';
 import MenuLateral from '../../components/menuLateral/MenuLateral';
 import Usuario from '../../assets/img/User.png';
 import Adicionar from '../../assets/img/Adicionar.png';
 import secureLocalStorage from 'react-secure-storage';
-import { Link } from 'react-router';
 import { useNavigate } from "react-router-dom";
 import { userDecodeToken } from '../../auth/Auth';
 
 export default function Inicio() {
     const [listaEmpresa, setListaEmpresa] = useState([]);
-    const [empresaRemetente, setEmpresaRemetente] = useState([]);
+    const [usuario, setUsuario] = useState(null);
+    const navigate = useNavigate();
+
+    const [nomeDoc, setNomeDoc] = useState("");
+    const [prazoDoc, setprazoDoc] = useState("");
+    const [empresaDoc, setempresaDoc] = useState("");
+
+    const [anexarPdf, setAnexarPdf] = useState(false);
 
     const [nomeArquivo, setNomeArquivo] = useState("");
-    const [nomeDoc, setNomeDoc] = useState("")
-    const [pdf, setPdf] = useState("")
-    const [prazoDoc, setprazoDoc] = useState("")
-    const [empresaDoc, setempresaDoc] = useState("")
-    const [novoStatus, setNovoStatus] = useState("Pendente")
+    const [pdf, setPdf] = useState(null);
+
+    const [novoStatus, setNovoStatus] = useState("Pendente");
     const [criadoEm, setCriadoEm] = useState(() => {
         const agora = new Date();
-        const data = agora.toISOString().slice(0, 19).replace("T", " ");
-        return data;
+        return agora.toISOString().slice(0, 19).replace("T", " ");
     });
-    const [versaoInicial, setVersaoInicial] = useState(1);
-    const [statusDoc, setStatusDoc] = useState(1)
+    const [versaoInicial, setVersaoInicial] = useState(1.0);
+    const [statusAtivo, setStatusAtivo] = useState(true);
 
     const [emAndamento, setEmAndamento] = useState([]);
     const [assinados, setAssinados] = useState([]);
     const [finalizados, setFinalizados] = useState([]);
-    const navigate = useNavigate();
-
-
-    const [usuario, setUsuario] = useState(null);
 
     useEffect(() => {
         const token = secureLocalStorage.getItem("token");
 
-        const dadosUsuario = userDecodeToken(token);
-
-        setUsuario(dadosUsuario);
+        if (token) {
+            try {
+                const dadosUsuario = userDecodeToken(token);
+                setUsuario(dadosUsuario);
+            } catch (error) {
+                console.error("Erro ao decodificar token:", error);
+                setUsuario(null);
+            }
+        }
+        listarEmpresa();
+        listarDocumentosPorStatus();
     }, []);
-
 
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
@@ -69,90 +75,170 @@ export default function Inicio() {
             const resposta = await api.get("Documentos");
             const docs = resposta.data;
 
-            setEmAndamento(docs.filter(d => d.status === false));
-            setAssinados(docs.filter(d => d.assinadoEm !== null));
-            setFinalizados(docs.filter(d => d.status === true));
+            setEmAndamento(docs.filter(d => d.status === true && d.novoStatus === "Pendente"));
+            setAssinados(docs.filter(d => d.status === true && d.novoStatus === "Assinado"));
+            setFinalizados(docs.filter(d => d.status === true && d.novoStatus === "Finalizado"));
         } catch (error) {
             console.log("Erro ao buscar documentos:", error);
         }
     }
 
-    // function mostrarNomeArquivo(e) {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //         if (file.type !== "application/pdf") {
-    //             alertar("error", "Apenas arquivos PDF são permitidos!");
-    //             e.target.value = "";
-    //             setPdf("");
-    //             setNomeArquivo("");
-    //             return;
-    //         }
+    function mostrarNomeArquivo(e) {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.type !== "application/pdf") {
+                alertar("error", "Apenas arquivos PDF são permitidos!");
+                e.target.value = "";
+                setPdf(null);
+                setNomeArquivo("");
+                return;
+            }
 
-    //         setNomeArquivo(file.name);
-    //         setPdf(file);
-    //     } else {
-    //         setNomeArquivo("");
-    //     }
-    // }
+            setNomeArquivo(file.name);
+            setPdf(file);
+        } else {
+            setNomeArquivo("");
+            setPdf(null);
+        }
+    }
 
     async function listarEmpresa() {
         try {
             const resposta = await api.get("empresa");
             setListaEmpresa(resposta.data);
-            console.log(resposta.data);
-
         } catch (error) {
             console.log("Erro ao buscar clientes:", error);
         }
     }
 
-
-    async function cadastrarDoc(e) {
-        e.preventDefault();
-
+    function validarCamposComuns() {
         const prazo = new Date(prazoDoc);
         const agora = new Date();
 
         if (prazo <= agora) {
             alertar("warning", "A data de entrega deve ser no Futuro!");
+            return false;
+        }
+
+        if (!nomeDoc.trim() || !empresaDoc || !prazoDoc) {
+            alertar("warning", "Preencha o Nome, Empresa e Prazo antes de enviar!");
+            return false;
+        }
+
+        if (!usuario || !usuario.idUsuario) {
+            alertar("error", "Dados do usuário criador ausentes. Tente logar novamente.");
+            return false;
+        }
+
+        return true;
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        if (!validarCamposComuns()) {
             return;
         }
 
-        // valida campos
-        if (!nomeDoc.trim() || !nomeArquivo.trim() || !empresaDoc || !prazoDoc) {
-            alertar("warning", "Preencha todos os campos antes de enviar!");
-            return;
-        }
-
-        try {
-            const formData = new FormData();
-            formData.append("nomeDocumento", nomeDoc);
-            formData.append("empresa", empresaDoc);
-            formData.append("prazo", prazoDoc);
-            formData.append("status", novoStatus);
-            formData.append("criadoEm", criadoEm);
-            formData.append("versaoInicial", versaoInicial);
-            formData.append("statusDoc", statusDoc);
-
-            await api.post("Documentos/upload-ocr", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-
-            alertar("success", "Documento enviado com sucesso!");
-            setNomeDoc("");
-            setempresaDoc("");
-            setprazoDoc("");
-
-        } catch (error) {
-            alertar("error", "Erro ao enviar documento!");
-            console.error(error);
+        if (anexarPdf) {
+            if (!pdf) {
+                alertar("warning", "Anexe o arquivo PDF para continuar.");
+                return;
+            }
+            anexarDoc();
+        } else {
+            cadastrarDoc();
         }
     }
 
+    async function cadastrarDoc() {
+        try {
+            const dadosDocumento = {
+                idUsuario: usuario.idUsuario,     
+                idEmpresa: empresaDoc,
+                nome: nomeDoc,
+                prazo: prazoDoc,
+                status: statusAtivo,
+                versao: versaoInicial,            
+                versaoAtual: versaoInicial,
+                criadoEm: criadoEm,
+                novoStatus: novoStatus
+            };
 
-    useEffect(() => {
-        listarEmpresa();
-    }, []);
+            await api.post("Documentos", dadosDocumento);
+            setNomeDoc("");
+            setempresaDoc("");
+            setprazoDoc("");
+            listarDocumentosPorStatus();
+
+        } catch (error) {
+            alertar("error", "Erro ao criar documento!");
+            console.error("Erro no envio:", error);
+        }
+    }
+
+    function handleAnexarPdfChange(e) {
+        const isChecked = e.target.checked;
+
+        setAnexarPdf(isChecked);
+
+        if (!isChecked) {
+            setPdf(null);
+            setNomeArquivo("");
+
+            const inputElement = document.getElementById("arquivoInput");
+            if (inputElement) {
+                inputElement.value = "";
+            }
+        }
+    }
+
+async function anexarDoc() {
+    try {
+        const formData = new FormData();
+        
+        // Dados do Documento (usando o objeto usuario.idUsuario corrigido):
+        formData.append("idUsuario", usuario.idUsuario); // ID do Criador
+        formData.append("idEmpresa", empresaDoc);
+        formData.append("nome", nomeDoc);
+        formData.append("prazo", prazoDoc);
+        formData.append("status", statusAtivo);
+
+        formData.append("versao", versaoInicial); 
+        formData.append("versaoAtual", versaoInicial);
+        
+        formData.append("criadoEm", criadoEm);
+        formData.append("novoStatus", novoStatus);
+        
+        if (pdf) {
+            formData.append("mimeType", pdf.type); 
+        } else {
+            formData.append("mimeType", "");
+        }
+        
+        formData.append("arquivo", pdf); 
+
+        await api.post("Documentos/upload-ocr", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+
+            alertar("success", "Documento e anexo enviados com sucesso!");
+
+            setNomeDoc("");
+            setempresaDoc("");
+            setprazoDoc("");
+            setPdf(null);
+            setNomeArquivo("");
+            setAnexarPdf(false);
+            listarDocumentosPorStatus();
+
+        } catch (error) {
+            alertar("error", "Erro ao enviar documento!");
+            console.error("Erro no envio:", error);
+        }
+    }
 
     return (
         <div className="containerGeral">
@@ -221,46 +307,22 @@ export default function Inicio() {
                     </div>
 
                     <article className="documentosActions">
-                        <div className="docAction">
-                            <h4>Anexar/Criar Documentação:</h4>
-                            <form onSubmit={cadastrarDoc} className="docActionFlex">
-                                <input
-                                    type="text"
-                                    placeholder="Nome do Arquivo"
-                                    className="inputArquivo"
-                                    value={nomeDoc}
-                                    onChange={(e) => setNomeDoc(e.target.value)}
-                                />
-
-                                {/* <div className="anexoContainer">
-                                    <input
-                                        type="file"
-                                        id="arquivoInput"
-                                        className="arquivoInput"
-                                        style={{ display: "none" }}
-                                        accept="application/pdf"
-                                        onChange={mostrarNomeArquivo}
-                                    />
-
-                                    <label htmlFor="arquivoInput" className="labelArquivo">
-                                        <img
-                                            src={Adicionar}
-                                            alt="Adicionar documento"
-                                            className="imgEscanear"
-                                        />
-                                    </label>
-
+                        <div className="docAction ">
+                            <h4>Cadastrar Novo Documento:</h4>
+                            <form onSubmit={handleSubmit} className="docActionFlex">
+                                <div className='inputNomeDocumento'>
+                                    <label>Prazo do Documento:</label>
                                     <input
                                         type="text"
-                                        className="inputNomeArquivo"
-                                        placeholder="Nenhum arquivo selecionado"
-                                        value={nomeArquivo}
-                                        disabled
+                                        placeholder="Nome do Documento"
+                                        className="inputArquivo"
+                                        value={nomeDoc}
+                                        onChange={(e) => setNomeDoc(e.target.value)}
                                     />
-                                </div> */}
+                                </div>
 
                                 <div className="botaoSelectRemententeInicio">
-                                    <p>Empresa:</p>
+                                    <label>Empresa:</label>
                                     <select
                                         value={empresaDoc}
                                         onChange={(e) => setempresaDoc(e.target.value)}
@@ -273,7 +335,7 @@ export default function Inicio() {
                                                 </option>
                                             ))
                                         ) : (
-                                            <option disabled>Versões</option>
+                                            <option disabled>Nenhuma empresa</option>
                                         )}
                                     </select>
                                 </div>
@@ -286,6 +348,46 @@ export default function Inicio() {
                                         onChange={(e) => setprazoDoc(e.target.value)}
                                     />
                                 </div>
+
+                                <div className="checkboxAnexo">
+                                    <input
+                                        type="checkbox"
+                                        id="anexarPdf"
+                                        checked={anexarPdf}
+                                        onChange={handleAnexarPdfChange}
+                                    />
+                                    <label htmlFor="anexarPdf">Deseja anexar o arquivo PDF agora?</label>
+                                </div>
+
+
+                                {anexarPdf && (
+                                    <div className="anexoContainer">
+                                        <input
+                                            type="file"
+                                            id="arquivoInput"
+                                            className="arquivoInput"
+                                            style={{ display: "none" }}
+                                            accept="application/pdf"
+                                            onChange={mostrarNomeArquivo}
+                                        />
+
+                                        <label htmlFor="arquivoInput" className="labelArquivo">
+                                            <img
+                                                src={Adicionar}
+                                                alt="Adicionar documento"
+                                                className="imgEscanear"
+                                            />
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            className="inputNomeArquivo"
+                                            placeholder="Selecione um arquivo PDF"
+                                            value={nomeArquivo}
+                                            disabled
+                                        />
+                                    </div>
+                                )}
 
                                 <button type="submit" className="botaoEnviarDoc">
                                     Enviar

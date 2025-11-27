@@ -17,6 +17,13 @@ export default function ListagemDoc() {
     const location = useLocation();
     const navigate = useNavigate();
 
+    // SIMULAÇÃO DO USUÁRIO LOGADO - Substitua pela sua lógica real
+    const [usuarioLogado, setUsuarioLogado] = useState({ 
+        id: 1, 
+        papel: "Admin" // Mude para 'Funcionario' ou 'Cliente' para testar
+    }); 
+    // FIM SIMULAÇÃO
+
     const params = new URLSearchParams(location.search);
     const statusFiltro = params.get("status");
 
@@ -27,8 +34,16 @@ export default function ListagemDoc() {
                 api.get("documentoVersoes")
             ]);
 
-            const documentos = respDocumentos.data;
+            let documentos = respDocumentos.data;
             const versoes = respVersoes.data;
+
+            // LÓGICA DE FILTRO POR PAPEL (RBAC)
+            const papel = usuarioLogado.papel;
+            const idUsuario = usuarioLogado.id;
+
+            if (papel === "Funcionario") {
+                documentos = documentos.filter(doc => doc.idUsuario === idUsuario);
+            }
 
             const ultimaMensagemPorDocumento = versoes.reduce((acc, versao) => {
                 const idDoc = versao.idDocumento;
@@ -71,7 +86,8 @@ export default function ListagemDoc() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await api.preventDefault(`/Documentos/${id.idDocumento}`);
+                    // MUDANÇA: Usando 'api.delete' para excluir ou arquivar
+                    await api.delete(`/Documentos/${id.idDocumento}`); 
                     Swal.fire("Excluído!", "O documento foi enviado para a lixeira.", "success");
                     listarDocumentos();
                 } catch (error) {
@@ -82,7 +98,22 @@ export default function ListagemDoc() {
         });
     }
 
-    let documentosFiltrados = listagemDoc; // Inicia com a lista completa
+    const podeEditarOuExcluir = (doc) => {
+        const papel = usuarioLogado.papel;
+        const idUsuario = usuarioLogado.id;
+
+        if (papel === "Admin") {
+            return true;
+        }
+        
+        if (papel === "Funcionario") {
+            return doc.idUsuario === idUsuario; 
+        }
+
+        return false;
+    };
+
+    let documentosFiltrados = listagemDoc;
 
     if (filtro === "Em Andamento") {
         documentosFiltrados = listagemDoc.filter((d) => d.novoStatus === "Em Andamento");
@@ -92,7 +123,6 @@ export default function ListagemDoc() {
         documentosFiltrados = listagemDoc.filter((d) => d.novoStatus === "Finalizados");
     }
 
-    // Define o título dinamicamente
     const tituloPagina = filtro === "Em Andamento"
         ? "Documentos Em Andamento"
         : filtro === "Assinados"
@@ -104,18 +134,17 @@ export default function ListagemDoc() {
 
     function limparFiltro() {
         setFiltro("Todos");
-        navigate("/Listagem"); // remove o ?status da URL
+        navigate("/Listagem");
     }
 
     useEffect(() => {
         listarDocumentos();
 
-        // Padronizando o filtro da URL com os nomes das options
-        if (statusFiltro === "pendente") setFiltro("Em Andamento"); // Corrigido de "Pendentes"
+        if (statusFiltro === "pendente") setFiltro("Em Andamento");
         else if (statusFiltro === "assinado") setFiltro("Assinados");
         else if (statusFiltro === "finalizado") setFiltro("Finalizados");
         else setFiltro("Todos");
-    }, [statusFiltro]);
+    }, [statusFiltro, usuarioLogado.id, usuarioLogado.papel]); // Adicionado dependências do usuário
 
     return (
         <div className="containerGeral">
@@ -143,14 +172,6 @@ export default function ListagemDoc() {
                             <button className="botaoLimparFiltro" onClick={() => setFiltro("Todos")}>
                                 Limpar Filtro
                             </button>
-
-                            {/* Botão de limpar filtro
-                            <button
-                                onClick={limparFiltro}
-                                className="botaoLimpar"
-                            >
-                                Limpar filtro
-                            </button> */}
                         </div>
 
                         <Link className="botaoLixeiraList" to="/Lixeira">
@@ -180,22 +201,26 @@ export default function ListagemDoc() {
                                         </div>
 
                                         <div className="cardAcoes">
-                                            <div className="infAcoes">
-                                                <img src={Editar} alt="Editar" />
-                                            </div>
+                                            {podeEditarOuExcluir(doc) && (
+                                                <>
+                                                    <div className="infAcoes">
+                                                        <img src={Editar} alt="Editar" />
+                                                    </div>
 
-                                            <div className="infAcoes">
-                                                <img
-                                                    src={Excluir}
-                                                    alt="Excluir"
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        e.stopPropagation();
-                                                        excluirDocumento(doc.id);
-                                                    }}
-                                                    style={{ cursor: "pointer" }}
-                                                />
-                                            </div>
+                                                    <div className="infAcoes">
+                                                        <img
+                                                            src={Excluir}
+                                                            alt="Excluir"
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                e.stopPropagation();
+                                                                excluirDocumento({ idDocumento: doc.idDocumento });
+                                                            }}
+                                                            style={{ cursor: "pointer" }}
+                                                        />
+                                                    </div>
+                                                </>
+                                            )}
                                         </div>
                                     </Link>
 

@@ -1,73 +1,73 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\",
+  "WorkspaceRootPath": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\models\\documentoversoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\models\\documentoversoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\models\\documento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\models\\documento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\dbcontextcollab\\collabtechfilecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\dbcontextcollab\\collabtechfilecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\repositories\\documentorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\repositories\\documentorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\controllers\\documentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\controllers\\documentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\interfaces\\idocumentorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\interfaces\\idocumentorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\interfaces\\idocumentorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\repositories\\documentorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\repositories\\documentorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\models\\empresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\models\\empresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\controllers\\documentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\controllers\\documentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\repositories\\usuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\repositories\\usuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\services\\gmailservicefactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\models\\documento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\models\\documento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\dbcontextcollab\\collabtechfilecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\dbcontextcollab\\collabtechfilecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\models\\documentoversoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\models\\documentoversoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\models\\empresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\models\\empresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\repositories\\usuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\repositories\\usuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\services\\gmailservicefactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\services\\gmailservicefactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\interfaces\\iusuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\interfaces\\iusuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\interfaces\\iusuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\engenharia\\onedrive\\\u00E1rea de trabalho\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\dto\\redefinirsenhadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|c:\\users\\55890867873\\desktop\\alphatech-pessoal\\backend\\collabtechfile\\collabtechfile\\dto\\redefinirsenhadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8817F269-3307-4A04-B231-97C0EB0E612A}|CollabTechFile\\CollabTechFile.csproj|solutionrelative:collabtechfile\\dto\\redefinirsenhadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -78,7 +78,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -90,63 +90,37 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DocumentoVersoes.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\DocumentoVersoes.cs",
-              "RelativeDocumentMoniker": "CollabTechFile\\Models\\DocumentoVersoes.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\DocumentoVersoes.cs",
-              "RelativeToolTip": "CollabTechFile\\Models\\DocumentoVersoes.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAQwBcAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T03:50:42.729Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "DocumentoRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Repositories\\DocumentoRepository.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Repositories\\DocumentoRepository.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\Repositories\\DocumentoRepository.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Repositories\\DocumentoRepository.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Repositories\\DocumentoRepository.cs",
               "RelativeToolTip": "CollabTechFile\\Repositories\\DocumentoRepository.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAIwDsAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAuwEwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-27T03:36:39.51Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "IDocumentoRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Interfaces\\IDocumentoRepository.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Interfaces\\IDocumentoRepository.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\Interfaces\\IDocumentoRepository.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Interfaces\\IDocumentoRepository.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Interfaces\\IDocumentoRepository.cs",
               "RelativeToolTip": "CollabTechFile\\Interfaces\\IDocumentoRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA6AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-30T17:32:38.682Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Documento.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Documento.cs",
-              "RelativeDocumentMoniker": "CollabTechFile\\Models\\Documento.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Documento.cs",
-              "RelativeToolTip": "CollabTechFile\\Models\\Documento.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAADwvx4AAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T13:39:27.925Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Usuario.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Usuario.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\Models\\Usuario.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Usuario.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Usuario.cs",
               "RelativeToolTip": "CollabTechFile\\Models\\Usuario.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAAswCIAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -154,49 +128,89 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "CollabTechFileContext.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\DbContextCollab\\CollabTechFileContext.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\DbContextCollab\\CollabTechFileContext.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\DbContextCollab\\CollabTechFileContext.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\DbContextCollab\\CollabTechFileContext.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\DbContextCollab\\CollabTechFileContext.cs",
               "RelativeToolTip": "CollabTechFile\\DbContextCollab\\CollabTechFileContext.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAowEoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAADwvw8AAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T13:05:06.108Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\appsettings.json",
+              "RelativeDocumentMoniker": "CollabTechFile\\appsettings.json",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\appsettings.json",
+              "RelativeToolTip": "CollabTechFile\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAACPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-18T12:58:26.056Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "DocumentoController.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\DocumentoController.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\DocumentoController.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\Controllers\\DocumentoController.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\DocumentoController.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\DocumentoController.cs",
               "RelativeToolTip": "CollabTechFile\\Controllers\\DocumentoController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAwwDwAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAABsAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-27T03:41:35.516Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\appsettings.json",
-              "RelativeDocumentMoniker": "CollabTechFile\\appsettings.json",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\appsettings.json",
-              "RelativeToolTip": "CollabTechFile\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-18T12:58:26.056Z"
+              "DocumentIndex": 3,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Services\\EmailService.cs",
+              "RelativeDocumentMoniker": "CollabTechFile\\Services\\EmailService.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Services\\EmailService.cs",
+              "RelativeToolTip": "CollabTechFile\\Services\\EmailService.cs",
+              "ViewState": "AgIAADwBAAAAAAAAAAAgwFUBAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T11:29:50.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Documento.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Documento.cs",
+              "RelativeDocumentMoniker": "CollabTechFile\\Models\\Documento.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Documento.cs",
+              "RelativeToolTip": "CollabTechFile\\Models\\Documento.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAowB4AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T13:39:27.925Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "DocumentoVersoes.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\DocumentoVersoes.cs",
+              "RelativeDocumentMoniker": "CollabTechFile\\Models\\DocumentoVersoes.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\DocumentoVersoes.cs",
+              "RelativeToolTip": "CollabTechFile\\Models\\DocumentoVersoes.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T03:50:42.729Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "Empresa.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Empresa.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Empresa.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\Models\\Empresa.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Empresa.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Models\\Empresa.cs",
               "RelativeToolTip": "CollabTechFile\\Models\\Empresa.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAxwB4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -204,11 +218,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "UsuarioRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Repositories\\UsuarioRepository.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Repositories\\UsuarioRepository.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\Repositories\\UsuarioRepository.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Repositories\\UsuarioRepository.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Repositories\\UsuarioRepository.cs",
               "RelativeToolTip": "CollabTechFile\\Repositories\\UsuarioRepository.cs",
               "ViewState": "AgIAADEAAAAAAAAAAAAgwGoAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -216,11 +230,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Program.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\Program.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Program.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Program.cs",
               "RelativeToolTip": "CollabTechFile\\Program.cs",
               "ViewState": "AgIAAFEAAAAAAAAAAAAswHkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -230,9 +244,9 @@
               "$type": "Document",
               "DocumentIndex": 15,
               "Title": "IUsuarioRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Interfaces\\IUsuarioRepository.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Interfaces\\IUsuarioRepository.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\Interfaces\\IUsuarioRepository.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Interfaces\\IUsuarioRepository.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Interfaces\\IUsuarioRepository.cs",
               "RelativeToolTip": "CollabTechFile\\Interfaces\\IUsuarioRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -240,11 +254,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "UsuarioController.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\UsuarioController.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\UsuarioController.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\Controllers\\UsuarioController.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\UsuarioController.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\UsuarioController.cs",
               "RelativeToolTip": "CollabTechFile\\Controllers\\UsuarioController.cs",
               "ViewState": "AgIAAEMAAAAAAAAAAAAkwBIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -252,23 +266,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "EmailService.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Services\\EmailService.cs",
-              "RelativeDocumentMoniker": "CollabTechFile\\Services\\EmailService.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Services\\EmailService.cs",
-              "RelativeToolTip": "CollabTechFile\\Services\\EmailService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T11:29:50.047Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 14,
               "Title": "GmailServiceFactory.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Services\\GmailServiceFactory.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Services\\GmailServiceFactory.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\Services\\GmailServiceFactory.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Services\\GmailServiceFactory.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Services\\GmailServiceFactory.cs",
               "RelativeToolTip": "CollabTechFile\\Services\\GmailServiceFactory.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -276,11 +278,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "LoginController.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\LoginController.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\LoginController.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\Controllers\\LoginController.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\LoginController.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\Controllers\\LoginController.cs",
               "RelativeToolTip": "CollabTechFile\\Controllers\\LoginController.cs",
               "ViewState": "AgIAAE4AAAAAAAAAAAAowFkAAABZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -290,9 +292,9 @@
               "$type": "Document",
               "DocumentIndex": 16,
               "Title": "RedefinirSenhaDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\DTO\\RedefinirSenhaDTO.cs",
+              "DocumentMoniker": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\DTO\\RedefinirSenhaDTO.cs",
               "RelativeDocumentMoniker": "CollabTechFile\\DTO\\RedefinirSenhaDTO.cs",
-              "ToolTip": "C:\\Users\\Engenharia\\OneDrive\\\u00C1rea de Trabalho\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\DTO\\RedefinirSenhaDTO.cs",
+              "ToolTip": "C:\\Users\\55890867873\\Desktop\\AlphaTech-Pessoal\\BackEnd\\CollabTechFile\\CollabTechFile\\DTO\\RedefinirSenhaDTO.cs",
               "RelativeToolTip": "CollabTechFile\\DTO\\RedefinirSenhaDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

@@ -34,9 +34,6 @@ export default function DocAndamentoFunc() {
 
     const [showModal, setShowModal] = useState(false);
 
-    // Função formatarData removida, pois a seção de comentários foi removida
-    // function alertar mantida
-
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
             theme: 'dark',
@@ -79,7 +76,6 @@ export default function DocAndamentoFunc() {
             const respostaVersoes = await api.get("documentoVersoes");
             const versoesDoDocumentoAtual = respostaVersoes.data.filter(v => v.idDocumento == idDocumento);
 
-            // Ordena da mais nova para a mais antiga
             setListaVersaoDoc(versoesDoDocumentoAtual.sort((a, b) => b.idVersaoDocumento - a.idVersaoDocumento));
 
         } catch (error) {
@@ -89,7 +85,7 @@ export default function DocAndamentoFunc() {
 
     async function salvarNovaVersao(mensagem, versaoAtual) {
         const numAtual = parseFloat(versaoAtual || '0.0');
-        const proximaVersao = (numAtual + 1.0);
+        const proximaVersao = (numAtual + 0.1);
         const versaoFormatada = proximaVersao.toFixed(1);
 
         try {
@@ -131,7 +127,6 @@ export default function DocAndamentoFunc() {
             alertar("success", `Documento salvo! Nova versão: ${novaVersao}`);
             setShowModal(false);
 
-            // Recarrega todos os dados
             buscarDocumento();
             listarVersoes();
             listarRN();
@@ -151,7 +146,6 @@ export default function DocAndamentoFunc() {
             return;
         }
         setVersaoSelecionadaId(id);
-        // TODO: Lógica para carregar os dados (RN/RF/RNF) da versão antiga aqui
     };
 
     async function abrirPDF() {

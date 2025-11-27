@@ -78,7 +78,7 @@
 .botaoSelectRementente {
     display: flex;
     align-items: center;
-    width: 450px;
+    width: 200px;
     margin-bottom: 2%;
 }
 
@@ -115,7 +115,7 @@
 .cadRN {
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 60%;
 }
 
 .cadRN input {
