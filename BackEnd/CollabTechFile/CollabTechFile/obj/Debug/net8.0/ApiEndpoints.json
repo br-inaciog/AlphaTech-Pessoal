@@ -243,11 +243,6 @@
         "IsRequired": false
       },
       {
-        "Name": "documento.Mensagem",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "documento.Versao",
         "Type": "System.Decimal",
         "IsRequired": false

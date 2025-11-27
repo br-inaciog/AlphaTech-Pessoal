@@ -293,10 +293,6 @@
                   "documento.Status": {
                     "type": "boolean"
                   },
-                  "documento.Mensagem": {
-                    "maxLength": 500,
-                    "type": "string"
-                  },
                   "documento.Versao": {
                     "type": "number",
                     "format": "double"
@@ -498,9 +494,6 @@
                   "style": "form"
                 },
                 "documento.Status": {
-                  "style": "form"
-                },
-                "documento.Mensagem": {
                   "style": "form"
                 },
                 "documento.Versao": {
@@ -1566,11 +1559,6 @@
           },
           "status": {
             "type": "boolean"
-          },
-          "mensagem": {
-            "maxLength": 500,
-            "type": "string",
-            "nullable": true
           },
           "versao": {
             "type": "number",

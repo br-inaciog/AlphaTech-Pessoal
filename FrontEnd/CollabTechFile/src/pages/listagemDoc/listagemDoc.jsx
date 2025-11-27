@@ -37,7 +37,6 @@ export default function ListagemDoc() {
             let documentos = respDocumentos.data;
             const versoes = respVersoes.data;
 
-            // LÓGICA DE FILTRO POR PAPEL (RBAC)
             const papel = usuarioLogado.papel;
             const idUsuario = usuarioLogado.id;
 
@@ -87,12 +86,12 @@ export default function ListagemDoc() {
             if (result.isConfirmed) {
                 try {
                     // MUDANÇA: Usando 'api.delete' para excluir ou arquivar
-                    await api.delete(`/Documentos/${id.idDocumento}`); 
+                    await api.put(`/Documentos/${id.idDocumento}`); 
                     Swal.fire("Excluído!", "O documento foi enviado para a lixeira.", "success");
                     listarDocumentos();
                 } catch (error) {
                     console.error("Erro ao excluir:", error);
-                    Swal.fire("Erro!", "Não foi possível excluir o documento.", "error");
+                    alertar("error" )
                 }
             }
         });

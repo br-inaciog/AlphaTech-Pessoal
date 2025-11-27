@@ -154,18 +154,20 @@ export default function Inicio() {
     async function cadastrarDoc() {
         try {
             const dadosDocumento = {
-                idUsuario: usuario.idUsuario,     
+                idUsuario: usuario.idUsuario,
                 idEmpresa: empresaDoc,
                 nome: nomeDoc,
                 prazo: prazoDoc,
-                status: statusAtivo,
-                versao: versaoInicial,            
-                versaoAtual: versaoInicial,
-                criadoEm: criadoEm,
-                novoStatus: novoStatus
+                status: statusAtivo ?? true,
+                versao: Number(versaoInicial).toFixed(2),
+                versaoAtual: Number(versaoInicial).toFixed(2),
+                criadoEm: new Date().toISOString(),
+                novoStatus: novoStatus ?? "Em Andamento"
             };
 
             await api.post("Documentos", dadosDocumento);
+            alertar("success", "Documento Cadastrado com Sucesso!")
+
             setNomeDoc("");
             setempresaDoc("");
             setprazoDoc("");
@@ -193,36 +195,28 @@ export default function Inicio() {
         }
     }
 
-async function anexarDoc() {
-    try {
-        const formData = new FormData();
-        
-        // Dados do Documento (usando o objeto usuario.idUsuario corrigido):
-        formData.append("idUsuario", usuario.idUsuario); // ID do Criador
-        formData.append("idEmpresa", empresaDoc);
-        formData.append("nome", nomeDoc);
-        formData.append("prazo", prazoDoc);
-        formData.append("status", statusAtivo);
+    async function anexarDoc(e) {
+        try {
+            const formData = new FormData();
 
-        formData.append("versao", versaoInicial); 
-        formData.append("versaoAtual", versaoInicial);
-        
-        formData.append("criadoEm", criadoEm);
-        formData.append("novoStatus", novoStatus);
-        
-        if (pdf) {
-            formData.append("mimeType", pdf.type); 
-        } else {
-            formData.append("mimeType", "");
-        }
-        
-        formData.append("arquivo", pdf); 
+            formData.append("idUsuario", usuario.idUsuario);
+            formData.append("idEmpresa", empresaDoc);
+            formData.append("nome", nomeDoc);
+            formData.append("prazo", prazoDoc);
+            formData.append("status", statusAtivo ?? true);
+            formData.append("versao", Number(versaoInicial).toFixed(2));
+            formData.append("versaoAtual", Number(versaoInicial).toFixed(2));
+            formData.append("criadoEm", new Date().toISOString());
+            formData.append("novoStatus", novoStatus ?? "Em Andamento");
 
-        await api.post("Documentos/upload-ocr", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
+            formData.append("mimeType", pdf ? pdf.type : "");
+            formData.append("arquivo", pdf);
+
+            await api.post("Documentos/upload-ocr", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
 
             alertar("success", "Documento e anexo enviados com sucesso!");
 
@@ -311,7 +305,7 @@ async function anexarDoc() {
                             <h4>Cadastrar Novo Documento:</h4>
                             <form onSubmit={handleSubmit} className="docActionFlex">
                                 <div className='inputNomeDocumento'>
-                                    <label>Prazo do Documento:</label>
+                                    <label>Nome:</label>
                                     <input
                                         type="text"
                                         placeholder="Nome do Documento"

@@ -7,6 +7,5 @@ namespace CollabTechFile.Interfaces
         void Cadastrar(Comentario comentario);
         void Deletar(int id);
         List<Comentario> Listar();
-
     }
 }
