@@ -31,12 +31,10 @@ public partial class Documento
     [Unicode(false)]
     public decimal Versao { get; set; }
 
-    // NOVO – PDF armazenado diretamente no banco
     [Column(TypeName = "varbinary(max)")]
     public byte[]? Arquivo { get; set; }
 
     public string? TextoOcr { get; set; }
-
 
     [StringLength(100)]
     public string? MimeType { get; set; }

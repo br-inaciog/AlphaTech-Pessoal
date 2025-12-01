@@ -30,7 +30,7 @@ namespace CollabTechFile.DbContextCollab
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer("Server=DESKTOP-KU3JB7K\\SQLEXPRESS;Database=CollabTechFile;User ID=sa;pwd=Senai@134;TrustServerCertificate=true");
+            => optionsBuilder.UseSqlServer("Server=NOTE06-S28\\SQLEXPRESS;Database=CollabTechFile;User ID=sa;pwd=Senai@134;TrustServerCertificate=true");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
