@@ -66,15 +66,56 @@ namespace CollabTechFile.Repositories
                 _context.SaveChanges();
             }
         }
+        public void AtualizarStatus(int id, string novoStatus)
+        {
+            var doc = _context.Documentos.Find(id);
+
+            if (doc != null)
+            {
+                doc.NovoStatus = novoStatus;
+                _context.SaveChanges();
+            }
+        }
 
         public void Deletar(int id)
         {
             var doc = _context.Documentos.Find(id);
-            if (doc != null)
-            {
-                _context.Documentos.Remove(doc);
-                _context.SaveChanges();
-            }
+            if (doc == null) return;
+
+            var versoes = _context.DocumentoVersoes
+                .Where(v => v.IdDocumento == id)
+                .ToList();
+
+            if (versoes.Any())
+                _context.DocumentoVersoes.RemoveRange(versoes);
+
+            var requisitos = _context.ReqDocs
+                .Where(r => r.IdDocumento == id)
+                .ToList();
+
+            if (requisitos.Any())
+                _context.ReqDocs.RemoveRange(requisitos);
+
+            var comentarios = _context.Comentarios
+                .Where(c => c.IdDocumento == id)
+                .ToList();
+
+            if (comentarios.Any())
+                _context.Comentarios.RemoveRange(comentarios);
+
+            // 4) DELETAR REGRAS VINCULADAS
+            var regrasDoc = _context.RegrasDocs
+                .Where(rd => rd.IdDocumento == id)
+                .ToList();
+
+            if (regrasDoc.Any())
+                _context.RegrasDocs.RemoveRange(regrasDoc);
+
+            // 5) DELETAR DOCUMENTO
+            _context.Documentos.Remove(doc);
+
+            // 6) SALVAR TUDO
+            _context.SaveChanges();
         }
 
         public List<Documento> Listar()
@@ -82,6 +123,7 @@ namespace CollabTechFile.Repositories
             return _context.Documentos
             .AsNoTracking()
             .Include(d => d.UsuarioNavigation)
+            .Include(d => d.EmpresaNavigation)
             .Include(d => d.ReqDocs)
                 .ThenInclude(rd => rd.IdRequisitoNavigation)
             .Include(d => d.RegrasDocs)
@@ -105,6 +147,7 @@ namespace CollabTechFile.Repositories
                 TextoOcr = d.TextoOcr,
 
                 UsuarioNavigation = d.UsuarioNavigation,
+                EmpresaNavigation = d.EmpresaNavigation,
 
                 // Mapeia ReqDocs e a entidade Requisito vinculada
                 ReqDocs = d.ReqDocs.Select(rd => new ReqDoc

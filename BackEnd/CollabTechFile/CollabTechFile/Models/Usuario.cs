@@ -48,5 +48,6 @@ namespace CollabTechFile.Models
         [ForeignKey("IdTipoUsuario")]
         [InverseProperty("Usuarios")]
         public virtual TipoUsuario? IdTipoUsuarioNavigation { get; set; }
+
     }
 }

@@ -1,7 +1,7 @@
 import "./Lixeira.css";
 import MenuLateral from "../../components/menuLateral/MenuLateral";
 import Cabecalho from "../../components/cabecalho/Cabecalho";
-import api from "../../Services/service";
+import api from "../../services/Service";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Pdf from "../../assets/img/PDF.png";
@@ -11,9 +11,18 @@ import Excluir from "../../assets/img/Delete.svg";
 export default function Lixeira() {
     const [docLixeira, setDocLixeira] = useState([]);
 
-    useEffect(() => {
-        listarDocLixeira();
-    }, []);
+    const alertar = (icone, mensagem) => {
+        Swal.fire({
+            icon: icone,
+            title: mensagem,
+            theme: 'dark',
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+        });
+    };
 
     async function listarDocLixeira() {
         try {
@@ -28,6 +37,7 @@ export default function Lixeira() {
         Swal.fire({
             title: "Excluir permanentemente?",
             text: "Este documento não poderá ser recuperado depois.",
+            theme: "dark",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "Sim, excluir",
@@ -36,11 +46,11 @@ export default function Lixeira() {
             if (result.isConfirmed) {
                 try {
                     await api.delete(`Documentos/Excluir/${id}`);
-                    Swal.fire("Excluído!", "O documento foi removido definitivamente.", "success");
+                    alertar("success", "O documento foi excluido permanentemente!");
                     listarDocLixeira();
                 } catch (error) {
                     console.error("Erro ao excluir:", error);
-                    Swal.fire("Erro", "Não foi possível excluir o documento.", "error");
+                    alertar("error", "Não foi possível excluir o documento.");
                 }
             }
         });
@@ -49,6 +59,7 @@ export default function Lixeira() {
     async function recuperarDoc(id) {
         Swal.fire({
             title: "Restaurar documento?",
+            theme: "dark",
             icon: "question",
             showCancelButton: true,
             confirmButtonText: "Sim, restaurar",
@@ -57,15 +68,19 @@ export default function Lixeira() {
             if (result.isConfirmed) {
                 try {
                     await api.put(`Documentos/Restaurar/${id}`);
-                    Swal.fire("Restaurado!", "O documento voltou para a listagem.", "success");
+                    alertar("success", "O documento voltou para a listagem.");
                     listarDocLixeira();
                 } catch (error) {
                     console.error("Erro ao restaurar:", error);
-                    Swal.fire("Erro", "Não foi possível restaurar o documento.", "error");
+                    alertar("error", "Não foi possível restaurar o documento.");
                 }
             }
         });
     }
+
+    useEffect(() => {
+        listarDocLixeira();
+    }, []);
 
     return (
         <div className="containerGeral">
@@ -78,15 +93,17 @@ export default function Lixeira() {
                         <h1>Lixeira</h1>
                     </div>
 
-                    <div className="cardInf">
+                    <div className="    ">
                         {docLixeira.length > 0 ? (
                             docLixeira.map((doc) => (
-                                <div key={doc.idDocumento} className="cardDocumentoLixeira">
-                                    <div className="cardInformacoesLixeira">
-                                        <img src={Pdf} alt="PDF" />
-                                        <p>{doc.nome || "Documento sem nome"}</p>
+                                <div className="cardDocumento">
+                                    < img src={Pdf} alt="Icone de Pdf" />
+                                    <div className="cardInformacoes">
+                                        <h1>{doc.nome || "Sem título"}</h1>
+                                        <p>Prazo: <span>{new Date(doc.criadoEm).toLocaleDateString('pt-BR') || "Sem data"}</span></p>
+                                        <p>Versão: <span>{doc.versaoAtual || "Sem Versão"}</span></p>
+                                        <p>Autor: <span>{doc.usuarioNavigation?.nome || "Autor desconhecido"}</span></p>
                                     </div>
-
                                     <div className="cardAcoesLixeira">
                                         <img
                                             src={Restaurar}
@@ -109,6 +126,6 @@ export default function Lixeira() {
                     </div>
                 </section>
             </main>
-        </div>
+        </div >
     );
 }

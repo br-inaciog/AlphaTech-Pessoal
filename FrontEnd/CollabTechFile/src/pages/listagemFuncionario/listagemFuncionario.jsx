@@ -63,6 +63,7 @@ export default function ListagemFuncionario() {
             await api.put(`usuario/${funcionarioId}`, { ...funcionario, ativo: novoStatus });
             setFuncionarios(funcionarios.map(f => (f.id || f.idUsuario) === funcionarioId ? { ...f, ativo: novoStatus } : f));
             alertar("success", `Funcionário ${novoStatus ? 'ativado' : 'inativado'} com sucesso!`);
+            await buscarFuncionarios();
         } catch {
             alertar("error", "Erro ao alterar status do funcionário");
         }

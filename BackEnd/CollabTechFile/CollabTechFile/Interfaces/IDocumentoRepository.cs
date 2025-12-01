@@ -11,5 +11,6 @@ namespace CollabTechFile.Interfaces
         Documento BuscarPorId(int id);
         List<Documento> Listar();
         void AtualizarVersao(int id, Documento documento);
+        void AtualizarStatus(int id, string novoStatus);
     }
 }

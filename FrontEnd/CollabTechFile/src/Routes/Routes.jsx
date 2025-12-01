@@ -29,11 +29,11 @@ const Rotas = () => {
     <Route element={<Lixeira />} path="/Lixeira" />
     <Route element={<FaleConosco />} path="/FaleConosco" />
     <Route element={<InicioCliente />} path="/InicioCliente" />
-    <Route element={<DocFinalizadoClie />} path="/docFinalizadoClie" />
-    <Route element={<DocFinalizadoFunc />} path="/docFinalizadoFunc" />
     <Route element={<VisualizarDoc />} path="/documento/:id" />
     <Route element={<SenhaCliente />} path="/RedefinirSenha" />
     <Route element={<DocAndamentoFunc />} path="/docAndamentoFunc/:nomeDocumento/:idDocumento" />
+    <Route element={<DocFinalizadoFunc />} path="/docFinalizadoFunc/:nomeDocumento/:idDocumento" />
+    <Route element={<DocFinalizadoClie />} path="/docFinalizadoClie/:nomeDocumento/:idDocumento" />
     <Route element={<DocAndamentoClie />} path="/DocAndamentoClie/:nomeDocumento/:idDocumento" />
   </Routes>);
 };

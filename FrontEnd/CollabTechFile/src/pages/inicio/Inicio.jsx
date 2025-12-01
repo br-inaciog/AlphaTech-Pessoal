@@ -21,6 +21,10 @@ export default function Inicio() {
     const [nomeArquivo, setNomeArquivo] = useState("");
     const [pdf, setPdf] = useState(null);
 
+    const [anexarPdfComIA, setAnexarPdfComIA] = useState(false);
+    const [pdfComIA, setPdfComIA] = useState("");
+    const [nomeArquivoComIA, setNomeArquivoComIA] = useState("");
+
     const [novoStatus, setNovoStatus] = useState("Em Andamento");
     const [versaoInicial, setVersaoInicial] = useState(1.0);
     const [statusAtivo, setStatusAtivo] = useState(true);
@@ -88,7 +92,7 @@ export default function Inicio() {
             if (file.type !== "application/pdf") {
                 alertar("error", "Apenas arquivos PDF são permitidos!");
                 e.target.value = "";
-                setPdf(null);
+                setPdfComIA(null);
                 setNomeArquivo("");
                 return;
             }
@@ -175,18 +179,18 @@ export default function Inicio() {
         }
     }
 
-    function handleAnexarPdfChange(e) {
-        const isChecked = e.target.checked;
-        setAnexarPdf(isChecked);
+    // function handleAnexarPdfChange(e) {
+    //     const isChecked = e.target.checked;
+    //     setAnexarPdf(isChecked);
 
-        if (!isChecked) {
-            setPdf(null);
-            setNomeArquivo("");
+    //     if (!isChecked) {
+    //         setPdf(null);
+    //         setNomeArquivo("");
 
-            const inputElement = document.getElementById("arquivoInput");
-            if (inputElement) inputElement.value = "";
-        }
-    }
+    //         const inputElement = document.getElementById("arquivoInput");
+    //         if (inputElement) inputElement.value = "";
+    //     }
+    // }
 
     async function anexarDoc() {
         try {
@@ -221,6 +225,59 @@ export default function Inicio() {
         } catch (error) {
             alertar("error", "Erro ao enviar documento!");
         }
+    }
+
+    const mostrarNomeArquivoComIA = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setPdfComIA(file);
+            setNomeArquivoComIA(file.name);
+        } else {
+            setPdfComIA(null);
+            setNomeArquivoComIA("Selecione um arquivo PDF para Análise IA");
+        }
+    };
+
+    async function anexarDocComIA() {
+        try {
+            const formData = new FormData();
+            formData.append("arquivo", pdfComIA);
+
+            const endpoint = `Documentos/analisar?idUsuario=${usuario.idUsuario}&idEmpresa=${empresaDoc}`;
+
+            const resposta = await api.post(endpoint, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+
+            alertar("success", "Documento Cadastrado com Sucesso!")
+        } catch (error) {
+            console.error("Erro ao enviar documento para análise de IA:", error.response?.data || error.message);
+            alertar("error", "Erro ao analisar documento! Verifique o console.");
+        }
+    }
+
+
+    async function cadastrarDocComIA(e) {
+        e.preventDefault();
+
+        if (!empresaDoc) {
+            alertar("warning", "A Empresa é obrigatória para a análise com IA.");
+            return;
+        }
+
+        if (!pdfComIA) {
+            alertar("warning", "Anexe o arquivo PDF para continuar a análise com IA.");
+            return;
+        }
+
+        if (!usuario || !usuario.idUsuario) {
+            alertar("error", "Dados do usuário ausentes. Tente logar novamente.");
+            return;
+        }
+
+        anexarDocComIA();
     }
 
     return (
@@ -282,7 +339,7 @@ export default function Inicio() {
                                         "entregaBege"}`}
                             >
                                 <span className="entregaNum">
-                                    {new Date(doc.prazo).getDate()}
+                                    {doc.prazo}
                                 </span>
                                 <span className="entrega-label">
                                     {doc.nome}
@@ -334,7 +391,7 @@ export default function Inicio() {
                                     />
                                 </div>
 
-                                <div className="checkboxAnexo">
+                                {/* <div className="checkboxAnexo">
                                     <input
                                         type="checkbox"
                                         id="anexarPdf"
@@ -342,9 +399,9 @@ export default function Inicio() {
                                         onChange={handleAnexarPdfChange}
                                     />
                                     <label htmlFor="anexarPdf">Deseja anexar o arquivo PDF agora?</label>
-                                </div>
+                                </div> */}
 
-                                {anexarPdf && (
+                                {/* {anexarPdf && (
                                     <div className="anexoContainer">
                                         <input
                                             type="file"
@@ -371,10 +428,79 @@ export default function Inicio() {
                                             disabled
                                         />
                                     </div>
-                                )}
+                                )} */}
 
                                 <button type="submit" className="botaoEnviarDoc">
-                                    Enviar
+                                    Abrir Documento
+                                </button>
+                            </form>
+                        </div>
+                    </article>
+
+                    <article className="documentosActions">
+                        <div className="docAction ">
+                            <h4>Anexar Documento com IA (Apenas Empresa Obrigatória):</h4>
+                            <form onSubmit={cadastrarDocComIA} className="docActionFlex">
+
+                                <div className='inputNomeDocumento'>
+                                    <label>Nome (Fallback):</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Nome do Documento (IA preenche, use como fallback)"
+                                        className="inputArquivo"
+                                        value={nomeDoc}
+                                        onChange={(e) => setNomeDoc(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="botaoSelectRemententeInicio">
+                                    <label>Empresa:</label>
+                                    <select
+                                        value={empresaDoc}
+                                        onChange={(e) => setempresaDoc(e.target.value)}
+                                    >
+                                        <option value="" disabled>Selecione a Empresa</option>
+                                        {listaEmpresa.length > 0 ? (
+                                            listaEmpresa.map(empresa => (
+                                                <option key={empresa.idEmpresa} value={empresa.idEmpresa}>
+                                                    {empresa.nome}
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option disabled>Nenhuma empresa cadastrada</option>
+                                        )}
+                                    </select>
+                                </div>
+
+                                <div className="anexoContainer">
+                                    <input
+                                        type="file"
+                                        id="arquivoInputIA"
+                                        className="arquivoInput"
+                                        style={{ display: "none" }}
+                                        accept="application/pdf"
+                                        onChange={mostrarNomeArquivoComIA}
+                                    />
+
+                                    <label htmlFor="arquivoInputIA" className="labelArquivo">
+                                        <img
+                                            src={Adicionar}
+                                            alt="Adicionar documento IA"
+                                            className="imgEscanear"
+                                        />
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        className="inputNomeArquivo"
+                                        placeholder="Selecione o PDF para Análise IA"
+                                        value={nomeArquivoComIA}
+                                        disabled
+                                    />
+                                </div>
+
+                                <button type="submit" className="botaoEnviarDoc">
+                                    Enviar para Análise IA
                                 </button>
                             </form>
                         </div>

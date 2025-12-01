@@ -28,14 +28,14 @@ export default function InicioCliente() {
         }
     }
 
-    let documentosFiltrados = listaDoc; // Inicia com a lista completa
+    let documentosFiltrados = listaDoc; 
 
     if (filtro === "Em Andamento") {
         documentosFiltrados = listaDoc.filter((d) => d.novoStatus === "Em Andamento");
     } else if (filtro === "Assinados") {
         documentosFiltrados = listaDoc.filter((d) => d.novoStatus === "Assinados");
     } else if (filtro === "Finalizados") {
-        documentosFiltrados = listaDoc.filter((d) => d.novoStatus === "Finalizados");
+        documentosFiltrados = listaDoc.filter((d) => d.novoStatus === "Finalizado");
     }
 
     // Define o título dinamicamente
@@ -43,23 +43,22 @@ export default function InicioCliente() {
         ? "Documentos Em Andamento"
         : filtro === "Assinados"
             ? "Documentos Assinados"
-            : filtro === "Finalizados"
-                ? "Documentos Finalizados"
+            : filtro === "Finalizado"
+                ? "Documentos Finalizado"
                 : "Todos os Documentos"
         ;
 
     function limparFiltro() {
         setFiltro("Todos");
-        navigate("/Listagem"); // remove o ?status da URL
+        navigate("/Listagem"); 
     }
 
     useEffect(() => {
         listarDocumentos();
 
-        // Padronizando o filtro da URL com os nomes das options
-        if (statusFiltro === "pendente") setFiltro("Em Andamento"); // Corrigido de "Pendentes"
-        else if (statusFiltro === "assinado") setFiltro("Assinados");
-        else if (statusFiltro === "finalizado") setFiltro("Finalizados");
+        if (statusFiltro === "andamento") setFiltro("Em Andamento"); 
+        else if (statusFiltro === "assinado") setFiltro("Assinado");
+        else if (statusFiltro === "finalizado") setFiltro("Finalizado");
         else setFiltro("Todos");
     }, [statusFiltro]);
 
@@ -82,21 +81,13 @@ export default function InicioCliente() {
                             >
                                 <option value="Todos">Todos</option>
                                 <option value="Em Andamento">Em Andamento</option>
-                                <option value="Assinados">Assinados</option>
                                 <option value="Finalizados">Finalizados</option>
+                                <option value="Assinados">Assinados</option>
                             </select>
 
                             <button className="botaoLimparFiltro" onClick={() => setFiltro("Todos")}>
                                 Limpar Filtro
                             </button>
-
-                            {/* Botão de limpar filtro
-                            <button
-                                onClick={limparFiltro}
-                                className="botaoLimpar"
-                            >
-                                Limpar filtro
-                            </button> */}
                         </div>
                     </div>
 
@@ -104,8 +95,13 @@ export default function InicioCliente() {
                         {documentosFiltrados.length > 0 ? (
                             documentosFiltrados.map((doc) => (
 
-                                <Link to={`/docAndamentoClie/${encodeURIComponent(doc.nome.replaceAll(" ", "-"))}/${doc.idDocumento}`}
-                                    className="cardDocumentoCliente">
+                                <Link
+                                    to={`/${doc.novoStatus === "Finalizado"
+                                        ? "docFinalizadoClie"
+                                        : "docAndamentoClie"
+                                        }/${encodeURIComponent(doc.nome.replaceAll(" ", "-"))}/${doc.idDocumento}`}
+                                    className="cardDocumento"
+                                >
                                     <img src={Pdf} alt="Icone de Pdf" />
                                     <div className="cardInformacoesCliente">
                                         <h1>{doc.nome || "Sem título"}</h1>

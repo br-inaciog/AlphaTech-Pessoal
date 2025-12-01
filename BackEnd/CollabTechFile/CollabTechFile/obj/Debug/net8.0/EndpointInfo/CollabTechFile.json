@@ -133,6 +133,48 @@
         }
       }
     },
+    "/api/Documentos/status/{id}": {
+      "put": {
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarStatusDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarStatusDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarStatusDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Documentos/{id}": {
       "put": {
         "tags": [
@@ -697,6 +739,24 @@
       "post": {
         "tags": [
           "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idEmpresa",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "requestBody": {
           "content": {
@@ -1669,6 +1729,16 @@
   },
   "components": {
     "schemas": {
+      "AtualizarStatusDTO": {
+        "type": "object",
+        "properties": {
+          "novoStatus": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Comentario": {
         "type": "object",
         "properties": {
@@ -1838,6 +1908,10 @@
           "dataCriacao": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "conteudo": {
+            "type": "string",
             "nullable": true
           }
         },

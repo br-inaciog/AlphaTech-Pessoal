@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import api from "../../services/Service";
 import Swal from "sweetalert2";
 import secureLocalStorage from "react-secure-storage";
-import { userDecodeToken } from "../../auth/auth";
+import { userDecodeToken } from "../../auth/Auth";
 
 export default function DocAndamentoClie() {
     const { nomeDocumento, idDocumento } = useParams();
@@ -87,25 +87,25 @@ export default function DocAndamentoClie() {
         }
     };
 
-    const [pdfUrl, setPdfUrl] = useState(null);
+    // const [pdfUrl, setPdfUrl] = useState(null);
 
-    async function abrirPDF() {
-        try {
-            const resposta = await api.get(`documentos/${idDocumento}/pdf`, {
-                responseType: "blob"
-            });
+    // async function abrirPDF() {
+    //     try {
+    //         const resposta = await api.get(`documentos/${idDocumento}/pdf`, {
+    //             responseType: "blob"
+    //         });
 
-            const url = URL.createObjectURL(resposta.data);
-            setPdfUrl(url);
-        } catch (err) {
-            console.error("Erro ao abrir PDF", err);
-        }
-    }
+    //         const url = URL.createObjectURL(resposta.data);
+    //         setPdfUrl(url);
+    //     } catch (err) {
+    //         console.error("Erro ao abrir PDF", err);
+    //     }
+    // }
 
-    const fecharPDF = () => {
-        if (pdfUrl) URL.revokeObjectURL(pdfUrl);
-        setPdfUrl(null);
-    };
+    // const fecharPDF = () => {
+    //     if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+    //     setPdfUrl(null);
+    // };
 
     async function carregarComentarios() {
         try {
@@ -160,10 +160,10 @@ export default function DocAndamentoClie() {
                             <h1>Documento em Andamento</h1>
                         </div>
 
-                        <button className="abrirDoc" onClick={abrirPDF}>
+                        {/* <button className="abrirDoc" onClick={abrirPDF}>
                             <img src={Abrir} alt="Abrir Documento PDF" />
                             <p>Abrir PDF</p>
-                        </button>
+                        </button> */}
 
                         <div className="documento">
                             <div className="nomeDoc">
@@ -297,7 +297,7 @@ export default function DocAndamentoClie() {
                     </section>
                 </section>
 
-                {pdfUrl && <ModalPDF pdfUrl={pdfUrl} onClose={fecharPDF} />}
+                {/* {pdfUrl && <ModalPDF pdfUrl={pdfUrl} onClose={fecharPDF} />} */}
 
                 <ModalComentarioCliente
                     nomeDocumento={nomeCorrigido}

@@ -103,11 +103,12 @@ namespace CollabTechFile.Controllers
 
                 var claims = new[]
                 {
-            new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email),
-            new Claim(JwtRegisteredClaimNames.Name, usuarioBuscado.Nome),
-            new Claim("TipoUsuario", usuarioBuscado.IdTipoUsuarioNavigation?.TituloTipoUsuario ?? "Desconhecido")
-        };
+                    new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email),
+                    new Claim(JwtRegisteredClaimNames.Name, usuarioBuscado.Nome),
+                    new Claim("TipoUsuario", usuarioBuscado.IdTipoUsuarioNavigation?.TituloTipoUsuario ?? "Desconhecido"),
+                    new Claim("Empresa", usuarioBuscado.EmpresaNavigation?.Nome ?? "Desconhecido")
+                 };
 
                 var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("collab-tech-file-chave-autenticacao"));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

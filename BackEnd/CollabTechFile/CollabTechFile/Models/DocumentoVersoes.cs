@@ -28,4 +28,6 @@ public partial class DocumentoVersoes
     [ForeignKey("IdDocumento")]
     [InverseProperty("DocumentoVersos")]
     public virtual Documento? IdDocumentoNavigation { get; set; }
+
+    public string? Conteudo { get; set; }
 }

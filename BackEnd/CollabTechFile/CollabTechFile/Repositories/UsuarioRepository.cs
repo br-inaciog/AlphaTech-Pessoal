@@ -77,12 +77,14 @@ namespace CollabTechFile.Repositories
             }
         }
 
-
         public List<Usuario> Listar()
         {
             try
             {
-                return _context.Usuarios.ToList();
+                return _context.Usuarios
+                    .Include(u => u.EmpresaNavigation)     
+                    .Include(u => u.IdTipoUsuarioNavigation) 
+                    .ToList();
             }
             catch (Exception)
             {
@@ -114,11 +116,13 @@ namespace CollabTechFile.Repositories
                 throw;
             }
         }
-            
+
         public Usuario BuscarPorEmail(string email)
         {
             return _context.Usuarios
                 .Include(u => u.IdTipoUsuarioNavigation)
+                .Include(u => u.EmpresaNavigation)
+                .AsNoTracking() 
                 .FirstOrDefault(u => u.Email == email)!;
         }
 

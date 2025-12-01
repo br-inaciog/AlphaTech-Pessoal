@@ -9,6 +9,8 @@ import Pdf from "../../assets/img/PDF.png";
 import Editar from "../../assets/img/Editar.png";
 import Excluir from "../../assets/img/Delete.svg";
 import Swal from "sweetalert2";
+import secureLocalStorage from "react-secure-storage";
+import { userDecodeToken } from "../../auth/Auth";
 
 export default function ListagemDoc() {
     const [listagemDoc, setListagemDoc] = useState([]);
@@ -17,15 +19,29 @@ export default function ListagemDoc() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // SIMULAÇÃO DO USUÁRIO LOGADO - Substitua pela sua lógica real
-    const [usuarioLogado, setUsuarioLogado] = useState({ 
-        id: 1, 
-        papel: "Admin" // Mude para 'Funcionario' ou 'Cliente' para testar
-    }); 
-    // FIM SIMULAÇÃO
-
     const params = new URLSearchParams(location.search);
     const statusFiltro = params.get("status");
+
+    const alertar = (icone, mensagem) => {
+        Swal.fire({
+            icon: icone,
+            title: mensagem,
+            theme: 'dark',
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+        });
+    };
+
+    function verificarEmpresa() {
+        const token = secureLocalStorage.getItem("token");
+
+        const tokenDecodificado = userDecodeToken(token);
+
+        console.log(tokenDecodificado);
+    }
 
     async function listarDocumentos() {
         try {
@@ -36,13 +52,6 @@ export default function ListagemDoc() {
 
             let documentos = respDocumentos.data;
             const versoes = respVersoes.data;
-
-            const papel = usuarioLogado.papel;
-            const idUsuario = usuarioLogado.id;
-
-            if (papel === "Funcionario") {
-                documentos = documentos.filter(doc => doc.idUsuario === idUsuario);
-            }
 
             const ultimaMensagemPorDocumento = versoes.reduce((acc, versao) => {
                 const idDoc = versao.idDocumento;
@@ -75,42 +84,29 @@ export default function ListagemDoc() {
 
     async function excluirDocumento(id) {
         Swal.fire({
-            title: "Excluir documento?",
-            text: "O documento irá para a lixeira.",
+            title: "Mover para a lixeira?",
+            text: "O documento será inativado.",
             theme: "dark",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "Sim, excluir!",
+            confirmButtonText: "Sim",
             cancelButtonText: "Cancelar"
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    // MUDANÇA: Usando 'api.delete' para excluir ou arquivar
-                    await api.put(`/Documentos/${id.idDocumento}`); 
-                    Swal.fire("Excluído!", "O documento foi enviado para a lixeira.", "success");
+                    await api.put(`/Documentos/Inativar/${id}`, {
+                        novoStatus: "Inativo"
+                    });
+
+                    alertar("success", "Ele foi movido para a lixeira.");
                     listarDocumentos();
                 } catch (error) {
-                    console.error("Erro ao excluir:", error);
-                    alertar("error" )
+                    console.error("Erro ao inativar:", error);
+                    alertar("error", "Não foi possível inativar o documento.");
                 }
             }
         });
     }
-
-    const podeEditarOuExcluir = (doc) => {
-        const papel = usuarioLogado.papel;
-        const idUsuario = usuarioLogado.id;
-
-        if (papel === "Admin") {
-            return true;
-        }
-        
-        if (papel === "Funcionario") {
-            return doc.idUsuario === idUsuario; 
-        }
-
-        return false;
-    };
 
     let documentosFiltrados = listagemDoc;
 
@@ -119,18 +115,91 @@ export default function ListagemDoc() {
     } else if (filtro === "Assinados") {
         documentosFiltrados = listagemDoc.filter((d) => d.novoStatus === "Assinados");
     } else if (filtro === "Finalizados") {
-        documentosFiltrados = listagemDoc.filter((d) => d.novoStatus === "Finalizados");
+        documentosFiltrados = listagemDoc.filter((d) => d.novoStatus === "Finalizado");
+    }
+
+    async function editarDocumento(doc) {
+        const prazoAtual = doc.prazo ? doc.prazo.substring(0, 10) : '';
+
+        try {
+            const respEmpresas = await api.get("Empresa");
+            const listaEmpresas = respEmpresas.data;
+
+            const empresasOptions = listaEmpresas
+                .map(empresa => `<option 
+                                value="${empresa.idEmpresa}" 
+                                ${empresa.idEmpresa === doc.idEmpresa ? 'selected' : ''}
+                             >
+                                ${empresa.nome}
+                            </option>`)
+                .join('');
+
+            const { value } = await Swal.fire({
+                title: "Editar Documento",
+                html: `
+                <label for="nomeDoc" style="margin-top: 10px; display: block;">Nome Documento:</label>
+                <input id="nomeDoc" class="swal2-input" placeholder="Nome do Documento" value="${doc.nome || ''}">
+                
+                <label for="prazoDoc" style="margin-top: 10px; display: block;">Prazo Documento:</label>
+                <input id="prazoDoc" class="swal2-input" type="date" value="${prazoAtual}">
+                
+                <label for="idEmpresa" style="margin-top: 10px; display: block;">Empresa:</label>
+                <select id="idEmpresa" class="swal2-select">${empresasOptions}</select>
+            `,
+                theme: "dark",
+                showCancelButton: true,
+                confirmButtonText: "Salvar",
+                cancelButtonText: "Cancelar",
+                focusConfirm: false,
+                preConfirm: () => {
+                    const nome = document.getElementById("nomeDoc").value;
+                    const prazo = document.getElementById("prazoDoc").value;
+                    const idEmpresa = document.getElementById("idEmpresa").value; // Pega o ID da empresa selecionada
+
+                    if (!nome || !prazo || !idEmpresa) {
+                        Swal.showValidationMessage("Preencha o Nome, Prazo e selecione uma Empresa.");
+                        return false;
+                    }
+
+                    console.log(nome);
+                    console.log(prazo);
+                    console.log(idEmpresa);
+
+
+                    return { nome, prazo, idEmpresa };
+                }
+            });
+
+            if (value) {
+                const dadosAtualizados = {
+                    "idDocumento": doc.idDocumento,
+
+                    "idEmpresa": parseInt(value.idEmpresa),
+                    "idUsuario": doc.idUsuario,
+
+                    "nome": value.nome,
+                    "prazo": value.prazo
+                };
+
+                await api.put(`Documentos/${doc.idDocumento}`, dadosAtualizados);
+
+                alertar("success", "O documento foi atualizado.");
+                await listarDocumentos();
+            }
+        } catch (error) {
+            console.error("Erro ao editar documento ou buscar empresas:", error);
+            alertar("error", "Erro ao editar Documento.");
+        }
     }
 
     const tituloPagina = filtro === "Em Andamento"
         ? "Documentos Em Andamento"
         : filtro === "Assinados"
             ? "Documentos Assinados"
-            : filtro === "Finalizados"
-                ? "Documentos Finalizados"
+            : filtro === "Finalizado"
+                ? "Documentos Finalizado"
                 : "Todos os Documentos"
         ;
-
     function limparFiltro() {
         setFiltro("Todos");
         navigate("/Listagem");
@@ -138,12 +207,13 @@ export default function ListagemDoc() {
 
     useEffect(() => {
         listarDocumentos();
+        verificarEmpresa();
 
-        if (statusFiltro === "pendente") setFiltro("Em Andamento");
-        else if (statusFiltro === "assinado") setFiltro("Assinados");
-        else if (statusFiltro === "finalizado") setFiltro("Finalizados");
+        if (statusFiltro === "andamento") setFiltro("Em Andamento");
+        else if (statusFiltro === "assinado") setFiltro("Assinado");
+        else if (statusFiltro === "finalizado") setFiltro("Finalizado");
         else setFiltro("Todos");
-    }, [statusFiltro, usuarioLogado.id, usuarioLogado.papel]); // Adicionado dependências do usuário
+    }, [statusFiltro]);
 
     return (
         <div className="containerGeral">
@@ -164,8 +234,8 @@ export default function ListagemDoc() {
                             >
                                 <option value="Todos">Todos</option>
                                 <option value="Em Andamento">Em Andamento</option>
-                                <option value="Assinados">Assinados</option>
                                 <option value="Finalizados">Finalizados</option>
+                                <option value="Assinados">Assinados</option>
                             </select>
 
                             <button className="botaoLimparFiltro" onClick={() => setFiltro("Todos")}>
@@ -188,7 +258,10 @@ export default function ListagemDoc() {
                                     onMouseLeave={() => setHoverIndex(null)}
                                 >
                                     <Link
-                                        to={`/docAndamentoFunc/${encodeURIComponent(doc.nome.replaceAll(" ", "-"))}/${doc.idDocumento}`}
+                                        to={`/${doc.novoStatus === "Finalizado"
+                                            ? "docFinalizadoFunc"
+                                            : "docAndamentoFunc"
+                                            }/${encodeURIComponent(doc.nome.replaceAll(" ", "-"))}/${doc.idDocumento}`}
                                         className="cardDocumento"
                                     >
                                         <img src={Pdf} alt="Icone de Pdf" />
@@ -200,26 +273,22 @@ export default function ListagemDoc() {
                                         </div>
 
                                         <div className="cardAcoes">
-                                            {podeEditarOuExcluir(doc) && (
-                                                <>
-                                                    <div className="infAcoes">
-                                                        <img src={Editar} alt="Editar" />
-                                                    </div>
+                                            <div className="infAcoes">
+                                                <img src={Editar} alt="Editar" />
+                                            </div>
 
-                                                    <div className="infAcoes">
-                                                        <img
-                                                            src={Excluir}
-                                                            alt="Excluir"
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                e.stopPropagation();
-                                                                excluirDocumento({ idDocumento: doc.idDocumento });
-                                                            }}
-                                                            style={{ cursor: "pointer" }}
-                                                        />
-                                                    </div>
-                                                </>
-                                            )}
+                                            <div className="infAcoes">
+                                                <img
+                                                    src={Excluir}
+                                                    alt="Excluir"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                        excluirDocumento(doc.idDocumento);
+                                                    }}
+                                                    style={{ cursor: "pointer" }}
+                                                />
+                                            </div>
                                         </div>
                                     </Link>
 

@@ -31,8 +31,8 @@ namespace CollabTechFile.Controllers
             try
             {
                 var documentos = _documentoRepository
-                    .Listar()              
-                    .Where(d => d.Status); 
+                    .Listar()
+                    .Where(d => d.Status);
 
                 return Ok(documentos);
             }
@@ -62,6 +62,21 @@ namespace CollabTechFile.Controllers
                 return StatusCode(500, $"Erro ao cadastrar documento: {ex.Message}");
             }
         }
+
+        [HttpPut("status/{id}")]
+        public IActionResult AtualizarStatus(int id, [FromBody] AtualizarStatusDTO dto)
+        {
+            try
+            {
+                _documentoRepository.AtualizarStatus(id, dto.NovoStatus);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao atualizar status: {ex.Message}");
+            }
+        }
+
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Documento documento)
@@ -231,12 +246,23 @@ namespace CollabTechFile.Controllers
             });
         }
 
-
         [HttpPost("analisar")]
-        public async Task<IActionResult> Analisar(IFormFile arquivo, [FromServices] IConfiguration _config)
+        public async Task<IActionResult> Analisar(
+            IFormFile arquivo,
+            int idUsuario,
+            int idEmpresa,
+            [FromServices] IConfiguration _config,
+            [FromServices] IDocumentoRepository _documentoRepository) // Adicionado para salvar no BD
         {
+            // --- 1. VALIDAÇÃO INICIAL ---
             if (arquivo == null || arquivo.Length == 0)
                 return BadRequest("Nenhum arquivo foi enviado.");
+
+            if (idUsuario <= 0)
+                return BadRequest("ID do Usuário logado é obrigatório.");
+
+            if (idEmpresa <= 0)
+                return BadRequest("ID da Empresa é obrigatório.");
 
             try
             {
@@ -252,13 +278,16 @@ namespace CollabTechFile.Controllers
                     await client.AnalyzeDocumentAsync(WaitUntil.Completed, modelId, stream);
 
                 AnalyzeResult result = operation.Value;
+
+                if (result.Documents == null || !result.Documents.Any())
+                    return BadRequest("O modelo de IA não conseguiu extrair informações do documento.");
+
                 var doc = result.Documents.First();
 
                 // -----------------------
-                // 1) EXTRAIR CAMPOS
+                // 2. EXTRAIR CAMPOS
                 // -----------------------
                 string Nome = doc.Fields.ContainsKey("Nome") ? doc.Fields["Nome"].Content?.Replace("Nome:", "").Trim() : null;
-                string Empresa = doc.Fields.ContainsKey("Empresa") ? doc.Fields["Empresa"].Content?.Trim() : null;
                 string Data = doc.Fields.ContainsKey("Data") ? doc.Fields["Data"].Content?.Trim() : null;
                 string Versao = doc.Fields.ContainsKey("Versao") ? doc.Fields["Versao"].Content?.Trim() : "1";
 
@@ -271,14 +300,14 @@ namespace CollabTechFile.Controllers
                 string textoOcr = $"{Descricao}\n{Funcoes}\n{ReqFunc}\n{ReqNaoFunc}\n{Regras}";
 
                 // -----------------------
-                // 2) DATA → DateOnly
+                // 3. DATA → DateOnly
                 // -----------------------
                 DateOnly prazo = DateOnly.FromDateTime(
-                    DateTime.TryParse(Data, out DateTime temp) ? temp : DateTime.Now
+                    DateTime.TryParse(Data, out DateTime temp) ? temp : DateTime.Now.AddDays(7) // Adicionado 7 dias de fallback
                 );
 
                 // -----------------------
-                // 3) ARQUIVO → byte[]
+                // 4. ARQUIVO → byte[]
                 // -----------------------
                 byte[] bytesArquivo;
                 using (var ms = new MemoryStream())
@@ -288,13 +317,13 @@ namespace CollabTechFile.Controllers
                 }
 
                 // -----------------------
-                // 4) MONTAR DOCUMENTO
+                // 5. MONTAR DOCUMENTO
                 // -----------------------
                 var documento = new Documento
                 {
-                    IdEmpresa = 1,    // Ajuste conforme sua regra (p.ex. procurar Empresa por nome)
-                    IdUsuario = 1,    // Ajuste (usuário logado)
-                    Nome = Nome,
+                    IdEmpresa = idEmpresa,      // USANDO PARÂMETRO PASSADO
+                    IdUsuario = idUsuario,      // USANDO PARÂMETRO PASSADO
+                    Nome = Nome ?? "Documento Analisado IA", // Fallback para Nome
                     Prazo = prazo,
                     Status = true,
                     Versao = decimal.TryParse(Versao, NumberStyles.Any, new CultureInfo("pt-BR"), out var dv) ? dv : 1,
@@ -303,15 +332,14 @@ namespace CollabTechFile.Controllers
                     MimeType = arquivo.ContentType,
                     VersaoAtual = decimal.TryParse(Versao, NumberStyles.Any, new CultureInfo("pt-BR"), out var dva) ? dva : 1,
                     CriadoEm = DateTime.Now,
-                    // inicializa coleções para adicionar os vínculos
+                    NovoStatus = "Em Andamento",
                     ReqDocs = new List<ReqDoc>(),
                     RegrasDocs = new List<RegrasDoc>()
                 };
 
                 // -----------------------
-                // 5) MONTAR REQUISITOS (REQ_DOC)
+                // 6. MONTAR REQUISITOS (REQ_DOC)
                 // -----------------------
-                // Função utilitária simples para quebrar linhas e bullets
                 string[] SplitLines(string text) =>
                     string.IsNullOrWhiteSpace(text)
                         ? Array.Empty<string>()
@@ -326,10 +354,10 @@ namespace CollabTechFile.Controllers
 
                 foreach (var linha in linhasReq)
                 {
-                    // tenta extrair "RF01: descrição" ou "RF01 - descrição" ou apenas "Descrição"
                     string codigo = null;
                     string texto = linha;
 
+                    // Lógica para extrair código (RF01, RNF01, etc.)
                     if (linha.Contains(":"))
                     {
                         var idx = linha.IndexOf(':');
@@ -340,7 +368,6 @@ namespace CollabTechFile.Controllers
                     {
                         var idx = linha.IndexOf('-');
                         var possibleCode = linha.Substring(0, idx).Trim();
-                        // se possível código parece com RF ou RNF, aceita
                         if (possibleCode.StartsWith("RF", StringComparison.OrdinalIgnoreCase) ||
                             possibleCode.StartsWith("RNF", StringComparison.OrdinalIgnoreCase) ||
                             possibleCode.All(ch => char.IsLetterOrDigit(ch)))
@@ -349,19 +376,15 @@ namespace CollabTechFile.Controllers
                             texto = linha.Substring(idx + 1).Trim();
                         }
                     }
-                    // se não há código, deixa tipo genérico
                     if (string.IsNullOrWhiteSpace(codigo))
                         codigo = "RF";
 
-                    // Cria entidade Requisito (PK = 0 para inserir)
                     var requisito = new Requisito
                     {
                         Tipo = codigo,
                         TextoReq = texto
                     };
 
-                    // Cria entidade de ligação ReqDoc; não precisa setar IdDocumento/IdRequisito
-                    // basta setar as navegations para que o EF insira tudo
                     var reqDoc = new ReqDoc
                     {
                         IdRequisitoNavigation = requisito,
@@ -372,7 +395,7 @@ namespace CollabTechFile.Controllers
                 }
 
                 // -----------------------
-                // 6) MONTAR REGRAS DE NEGÓCIO (REGRAS_DOC)
+                // 7. MONTAR REGRAS DE NEGÓCIO (REGRAS_DOC)
                 // -----------------------
                 var linhasRegras = SplitLines(Regras);
 
@@ -394,7 +417,6 @@ namespace CollabTechFile.Controllers
                         texto = linha.Substring(idx + 1).Trim();
                     }
 
-                    // Nome da regra pode ser "RB01 - descrição" ou apenas descrição
                     var regra = new Regra
                     {
                         Nome = string.IsNullOrWhiteSpace(codigo) ? texto : $"{codigo} - {texto}"
@@ -410,15 +432,13 @@ namespace CollabTechFile.Controllers
                 }
 
                 // -----------------------
-                // 7) SALVAR TUDO VIA REPOSITORY
+                // 8. SALVAR TUDO
                 // -----------------------
-                // seu repository faz: _context.Documentos.Add(documento); _context.SaveChanges();
-                // com as navegations preenchidas o EF deve inserir Documento, Requisito, Regra e as tabelas intermediárias.
                 _documentoRepository.Cadastrar(documento);
 
                 return Ok(new
                 {
-                    mensagem = "Documento, requisitos e regras cadastrados com sucesso!",
+                    mensagem = "Documento, requisitos e regras cadastrados com sucesso através da IA!",
                     documento
                 });
             }

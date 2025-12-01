@@ -2,11 +2,11 @@ import "./docAndamentoFunc.css";
 import ModalSalvarDocumento from "../../components/salvarDocumento/ModalSalvarDocumento";
 import MenuLateral from "../../components/menuLateral/MenuLateral";
 import Cabecalho from "../../components/cabecalho/Cabecalho";
-import ModalPDF from "../../components/documento/Documento";
+// import ModalPDF from "../../components/documento/Documento";
 import Adicionar from "../../assets/img/Adicionar.svg";
 import Deletar from "../../assets/img/Delete.svg";
 import Editar from "../../assets/img/Editar.png";
-import Abrir from "../../assets/img/Abrir.png";
+// import Abrir from "../../assets/img/Abrir.png";
 import { useState, useEffect } from "react";
 import api from "../../services/Service";
 import { useParams } from "react-router";
@@ -96,6 +96,7 @@ export default function DocAndamentoFunc() {
                 idDocumento: idDocumento,
                 numeroVersao: proximaVersao,
                 mensagem: mensagem,
+                conteudo: JSON.stringify(documentoAtual)  // AQUI!!
             };
 
             await api.post("documentoVersoes", novaVersao);
@@ -139,31 +140,75 @@ export default function DocAndamentoFunc() {
     }
 
     const handleVersaoChange = (event) => {
+        // const id = event.target.value;
+        // if (!id || id === "placeholder") {
+        //     setVersaoSelecionadaId(null);
+        //     return;
+        // }
+        // setVersaoSelecionadaId(id);
         const id = event.target.value;
+
         if (!id || id === "placeholder") {
             setVersaoSelecionadaId(null);
             return;
         }
+
         setVersaoSelecionadaId(id);
-    };
 
-    async function abrirPDF() {
-        try {
-            const resposta = await api.get(`documentos/${idDocumento}/pdf`, {
-                responseType: "blob"
-            });
+        // 1. Achar a versão selecionada
+        const versaoSelecionada = listaVersaoDoc.find(
+            (v) => v.idDocumentoVersoes == id
+        );
 
-            const url = URL.createObjectURL(resposta.data);
-            setPdfUrl(url);
-        } catch (err) {
-            console.error("Erro ao abrir PDF", err);
+        if (!versaoSelecionada) {
+            console.warn("Versão não encontrada!");
+            return;
         }
-    }
 
-    function fecharPDF() {
-        if (pdfUrl) URL.revokeObjectURL(pdfUrl);
-        setPdfUrl(null);
+        // 2. Restaurar o documento salvo
+        try {
+            const documentoRestaurado = JSON.parse(versaoSelecionada.conteudo);
+
+            // 3. Atualizar o estado principal do documento
+            setDocumentoAtual(documentoRestaurado);
+
+            // 4. Separar RF e RNF novamente para exibir na UI
+            const requisitos = documentoRestaurado.reqDocs || [];
+
+            const rf = requisitos.filter(req =>
+                req.idRequisitoNavigation?.tipo?.toUpperCase().startsWith("RF") &&
+                !req.idRequisitoNavigation.tipo.toUpperCase().includes("RNF")
+            );
+
+            const rnf = requisitos.filter(req =>
+                req.idRequisitoNavigation?.tipo?.toUpperCase().startsWith("RNF")
+            );
+
+            setReqFuncionais(rf);
+            setReqNaoFuncionais(rnf);
+
+        } catch (error) {
+            console.error("Erro ao restaurar documento da versão:", error);
+        }
     };
+
+    // async function abrirPDF() {
+    //     try {
+    //         const resposta = await api.get(`documentos/${idDocumento}/pdf`, {
+    //             responseType: "blob"
+    //         });
+
+    //         const url = URL.createObjectURL(resposta.data);
+    //         setPdfUrl(url);
+    //     } catch (err) {
+    //         console.error("Erro ao abrir PDF", err);
+    //     }
+    // }
+
+    // function fecharPDF() {
+    //     if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+    //     setPdfUrl(null);
+    // };
 
     //Regras de Negócio
     async function cadastrarRN(e) {
@@ -218,43 +263,225 @@ export default function DocAndamentoFunc() {
         });
     }
 
+
     async function editarRN(RN) {
         try {
             const result = await Swal.fire({
                 title: "Editar Regra De Negócio!",
                 html: `
-                <input id="campo1" class="swal2-input" placeholder="Título" value="${RN.nome || ''}">
+                <input id="campo1" class="swal2-input" placeholder="Título" 
+                value="${RN.idRegrasNavigation?.nome || ''}">
             `,
-                theme: 'dark',
+                theme: "dark",
                 showCancelButton: true,
                 confirmButtonText: "Salvar",
                 cancelButtonText: "Cancelar",
                 focusConfirm: false,
                 preConfirm: () => {
-                    const campo1 = document.getElementById("campo1").value;
+                    const campo1 = document.getElementById("campo1").value.trim();
                     if (!campo1) {
                         Swal.showValidationMessage("Preencha o Campo");
-                        return false;
+                        return;
                     }
                     return campo1;
-                }
+                },
             });
 
-            if (result.isConfirmed) {
-                const novoNome = result.value;
+            if (!result.isConfirmed) return;
 
-                await api.put(`Regra/${RN.idRegras}`, {
-                    nome: novoNome
+            const novoNome = result.value;
+            const idRegra = RN.idRegrasNavigation.idRegras;
+
+            await api.put(`Regra/${idRegra}`, {
+                idRegras: idRegra,
+                nome: novoNome,
+            });
+
+            setDocumentoAtual((prev) => {
+                if (!prev) return prev;
+
+                const novasRegras = (prev.regrasDocs || []).map((r) => {
+                    const idRegraRelacionada = r.idRegrasNavigation?.idRegras;
+
+                    if (idRegraRelacionada === idRegra) {
+                        return {
+                            ...r,
+                            idRegrasNavigation: {
+                                ...r.idRegrasNavigation,
+                                nome: novoNome,
+                            },
+                        };
+                    }
+
+                    return r;
                 });
 
-                alertar("success", "Regra atualizada com sucesso!");
-                await buscarDadosDocumento();
-            }
+                return {
+                    ...prev,
+                    regrasDocs: novasRegras,
+                };
+            });
+
+            alertar("success", "Regra atualizada com sucesso!");
+
+            // await buscarDadosDocumento();
         } catch (error) {
-            console.log(error);
+            console.log("Erro ao editar RN:", error);
             alertar("error", "Erro ao atualizar a regra!");
         }
     }
+
+
+    async function editarRF(rf) {
+        try {
+            const result = await Swal.fire({
+                title: "Editar Requisito!",
+                html: `
+                <input id="campo1" class="swal2-input" placeholder="Título" 
+                value="${rf.idRequisitoNavigation?.nome || ''}">
+            `,
+                theme: "dark",
+                showCancelButton: true,
+                confirmButtonText: "Salvar",
+                cancelButtonText: "Cancelar",
+                focusConfirm: false,
+                preConfirm: () => {
+                    const campo1 = document.getElementById("campo1").value.trim();
+                    if (!campo1) {
+                        Swal.showValidationMessage("Preencha o Campo");
+                        return;
+                    }
+                    return campo1;
+                },
+            });
+
+            if (!result.isConfirmed) return;
+
+            const novoNome = result.value;
+
+            // ID DO REQDOC
+            const idReqDoc = rf.idReqDoc;
+
+            // MONTA O REQDOC COMPLETO PARA O BACKEND
+            const reqDocAtualizado = {
+                idReqDoc: idReqDoc,
+                idRequisito: rf.idRequisito,
+                idDocumento: rf.idDocumento,
+                idRequisitoNavigation: {
+                    ...rf.idRequisitoNavigation,
+                    nome: novoNome,
+                },
+                idDocumentoNavigation: null,
+            };
+
+            await api.put(`ReqDoc/${idReqDoc}`, reqDocAtualizado);
+
+            // ATUALIZA NA TELA
+            setDocumentoAtual(prev => {
+                if (!prev) return prev;
+
+                const novosReq = prev.reqDocs.map(r => {
+                    if (r.idReqDoc === idReqDoc) {
+                        return {
+                            ...r,
+                            idRequisitoNavigation: {
+                                ...r.idRequisitoNavigation,
+                                nome: novoNome
+                            }
+                        };
+                    }
+                    return r;
+                });
+
+                return {
+                    ...prev,
+                    reqDocs: novosReq
+                };
+            });
+
+            alertar("success", "Requisito atualizado com sucesso!");
+
+        } catch (error) {
+            console.log("Erro ao editar RF:", error);
+            alertar("error", "Erro ao atualizar o requisito!");
+        }
+    }
+
+
+
+
+    async function editarRNF(rnf) {
+        try {
+            const result = await Swal.fire({
+                title: "Editar RNF!",
+                html: `
+                <input id="campo1" class="swal2-input" placeholder="Título" 
+                value="${rnf.idRnfNavigation?.nome || ''}">
+            `,
+                theme: "dark",
+                showCancelButton: true,
+                confirmButtonText: "Salvar",
+                cancelButtonText: "Cancelar",
+                focusConfirm: false,
+                preConfirm: () => {
+                    const campo1 = document.getElementById("campo1").value.trim();
+                    if (!campo1) {
+                        Swal.showValidationMessage("Preencha o Campo");
+                        return;
+                    }
+                    return campo1;
+                },
+            });
+
+            if (!result.isConfirmed) return;
+
+            const novoNome = result.value;
+
+            const idReqDoc = rnf.idReqDoc;
+
+            const rnfAtualizado = {
+                idReqDoc: idReqDoc,
+                idRnf: rnf.idRnf,
+                idDocumento: rnf.idDocumento,
+                idRnfNavigation: {
+                    ...rnf.idRnfNavigation,
+                    nome: novoNome,
+                },
+                idDocumentoNavigation: null,
+            };
+
+            await api.put(`ReqDoc/${id}`, rnfAtualizado);
+
+            setDocumentoAtual(prev => {
+                if (!prev) return prev;
+
+                const novasRNFs = prev.idReqDoc.map(r => {
+                    if (r.idReqDoc === idReqDoc) {
+                        return {
+                            ...r,
+                            idRnfNavigation: {
+                                ...r.idRnfNavigation,
+                                nome: novoNome
+                            }
+                        };
+                    }
+                    return r;
+                });
+
+                return {
+                    ...prev,
+                    rnfDocs: novasRNFs
+                };
+            });
+
+            alertar("success", "RNF atualizada com sucesso!");
+
+        } catch (error) {
+            console.log("Erro ao editar RNF:", error);
+            alertar("error", "Erro ao atualizar a RNF!");
+        }
+    }
+
 
     //Requisito Funcional
     async function cadastrarReqFuncional(e) {
@@ -285,7 +512,6 @@ export default function DocAndamentoFunc() {
         }
     }
 
-    //Requisito Não Funcional
     async function cadastrardReqNaoFuncional(e) {
         e.preventDefault()
 
@@ -353,8 +579,6 @@ export default function DocAndamentoFunc() {
             const response = await api.get(`/Documentos/${idDocumento}`);
             const dados = response.data;
 
-            console.log("DOC ATUAL:", dados);
-
             setDocumentoAtual(dados);
 
             if (!dados || typeof dados !== "object") return;
@@ -383,14 +607,28 @@ export default function DocAndamentoFunc() {
         }
     }
 
+    async function finalizarDocumento() {
+        try {
+            await api.put(`/Documentos/status/${idDocumento}`, {
+                novoStatus: "Finalizado"
+            });
+
+            alertar("success", "Documento finalizado!");
+            await buscarDadosDocumento();
+            await listarVersoes();
+        } catch (error) {
+            console.error("Erro ao finalizar documento:", error);
+            alertar("error", "Erro ao finalizar documento!");
+        }
+    }
 
     useEffect(() => {
         // listarCliente();
-        // listarVersoes();
         // listarRN();
         // listarReqFunc();
         // listarReqNaoFunc();
 
+        listarVersoes();
         carregarComentarios();
         buscarDadosDocumento();
         buscarDocumento();
@@ -415,10 +653,10 @@ export default function DocAndamentoFunc() {
                         </div>
 
                         <div className="PDFeVersao">
-                            <button className="abrirDoc" onClick={abrirPDF}>
+                            {/* <button className="abrirDoc" onClick={abrirPDF}>
                                 <img src={Abrir} alt="" />
                                 <p>Abrir PDF</p>
-                            </button>
+                            </button> */}
 
                             <div className="botaoFiltrarVersoesDoc">
                                 <p>Versões:</p>
@@ -426,7 +664,7 @@ export default function DocAndamentoFunc() {
                                     <option value="placeholder" disabled>Versões</option>
                                     {listaVersaoDoc.length > 0 ? (
                                         listaVersaoDoc.map(versao => (
-                                            <option key={versao.idVersaoDocumento} value={versao.idVersaoDocumento}>
+                                            <option key={versao.idDocumentoVersoes} value={versao.idDocumentoVersoes}>
                                                 V{versao.numeroVersao} ({new Date(versao.dataCriacao).toLocaleDateString()})
                                             </option>
                                         ))
@@ -545,8 +783,10 @@ export default function DocAndamentoFunc() {
                                                         alt="Lixeira"
                                                     />
                                                     <img
+                                                        onClick={() => editarRF(rf)}
                                                         className="botaoEditar"
-                                                        src={Editar} alt="Caneta de Editar"
+                                                        src={Editar}
+                                                        alt="Caneta de Editar"
                                                     />
                                                 </div>
                                             </div>
@@ -592,6 +832,7 @@ export default function DocAndamentoFunc() {
                                                         alt="Lixeira"
                                                     />
                                                     <img
+                                                        onClick={() => editarRNF(rnf)}
                                                         className="botaoEditar"
                                                         src={Editar}
                                                         alt="Caneta de Editar"
@@ -651,11 +892,12 @@ export default function DocAndamentoFunc() {
                         nomeDocumento={nomeCorrigido}
                         onCancel={() => setShowModal(false)}
                         onPublish={modalSalvarDoc}
+                        finalizar={finalizarDocumento} // <<< adiciona isso
                     />
                 )}
-                {pdfUrl && (
+                {/* {pdfUrl && (
                     <ModalPDF pdfUrl={pdfUrl} onClose={fecharPDF} />
-                )}
+                )} */}
             </main>
         </div >
     )

@@ -2,7 +2,7 @@ import "./ModalSalvarDocumento.css";
 import React, { useState } from "react";
 import voltar from "../../assets/img/Voltar.svg";
 
-const ModalSalvarDocumento = ({ nomeDocumento, onCancel, onPublish }) => {
+const ModalSalvarDocumento = ({ nomeDocumento, onCancel, onPublish, finalizar }) => {
     const [documento, setDocumento] = useState("");
 
     return (
@@ -51,7 +51,14 @@ const ModalSalvarDocumento = ({ nomeDocumento, onCancel, onPublish }) => {
                     >
                         Salvar Nova Versão
                     </button>
+                    <button
+                        className="modalDocumentoFinalizar"
+                        onClick={finalizar}
+                    >
+                        Finalizar
+                    </button>
                 </div>
+
             </div>
         </div>
     );
