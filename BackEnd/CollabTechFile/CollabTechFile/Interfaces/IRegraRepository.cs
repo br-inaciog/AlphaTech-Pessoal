@@ -8,5 +8,6 @@ namespace CollabTechFile.Interfaces
         void Deletar(int id);
         void Editar(int id, Regra regra);
         List<Regra> Listar();
+        public Task<bool> DeletarRegraCompletaAsync(int idRegraDoc);
     }
 }

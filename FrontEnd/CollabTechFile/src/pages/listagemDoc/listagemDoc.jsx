@@ -188,7 +188,7 @@ export default function ListagemDoc() {
                                     onMouseLeave={() => setHoverIndex(null)}
                                 >
                                     <Link
-                                        to={`/docAndamentoFunc/${encodeURIComponent(doc.nome.replaceAll(" ", "-"))}/${doc.idDocumento}`}
+                                        to={`/docAndamentoFunc/${encodeURIComponent(doc.nome.replaceAll(" ", "-"))}`}
                                         className="cardDocumento"
                                     >
                                         <img src={Pdf} alt="Icone de Pdf" />

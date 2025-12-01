@@ -17,25 +17,21 @@ export default function Inicio() {
     const [nomeDoc, setNomeDoc] = useState("");
     const [prazoDoc, setprazoDoc] = useState("");
     const [empresaDoc, setempresaDoc] = useState("");
-
     const [anexarPdf, setAnexarPdf] = useState(false);
-
     const [nomeArquivo, setNomeArquivo] = useState("");
     const [pdf, setPdf] = useState(null);
 
     const [novoStatus, setNovoStatus] = useState("Em Andamento");
-    const [criadoEm, setCriadoEm] = useState(() => {
-        const agora = new Date();
-        return agora.toISOString().slice(0, 19).replace("T", " ");
-    });
     const [versaoInicial, setVersaoInicial] = useState(1.0);
     const [statusAtivo, setStatusAtivo] = useState(true);
 
-    const [emAndamento, setEmAndamento] = useState([]);
-    const [assinados, setAssinados] = useState([]);
-    const [finalizados, setFinalizados] = useState([]);
+    const [docsPorStatus, setDocsPorStatus] = useState({
+        andamento: [],
+        assinados: [],
+        finalizados: []
+    });
 
-    const proximas = emAndamento;
+    const [proximasEntregas, setProximasEntregas] = useState([]);
 
     useEffect(() => {
         const token = secureLocalStorage.getItem("token");
@@ -44,11 +40,11 @@ export default function Inicio() {
             try {
                 const dadosUsuario = userDecodeToken(token);
                 setUsuario(dadosUsuario);
-            } catch (error) {
-                console.error("Erro ao decodificar token:", error);
+            } catch {
                 setUsuario(null);
             }
         }
+
         listarEmpresa();
         listarDocumentosPorStatus();
     }, []);
@@ -61,15 +57,8 @@ export default function Inicio() {
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
         });
-        Toast.fire({
-            icon: icone,
-            title: mensagem
-        });
+        Toast.fire({ icon: icone, title: mensagem });
     }
 
     async function listarDocumentosPorStatus() {
@@ -77,28 +66,17 @@ export default function Inicio() {
             const resposta = await api.get("Documentos");
             const docs = resposta.data;
 
-            // filtra os "Em Andamento"
-            const andamento = docs.filter(
-                d => d.status === true && d.novoStatus === "Em Andamento"
-            );
+            const andamento = docs.filter(d => d.status && d.novoStatus === "Em Andamento");
+            const assinados = docs.filter(d => d.status && d.novoStatus === "Assinado");
+            const finalizados = docs.filter(d => d.status && d.novoStatus === "Finalizado");
 
-            const ordenados = andamento.sort((a, b) => {
-                const dataA = new Date(a.prazo);
-                const dataB = new Date(b.prazo);
-                return dataA - dataB;
-            });
+            setDocsPorStatus({ andamento, assinados, finalizados });
 
-            const proximosTres = ordenados.slice(0, 3);
+            const proximos = [...andamento]
+                .sort((a, b) => new Date(a.prazo) - new Date(b.prazo))
+                .slice(0, 3);
 
-            setEmAndamento(proximosTres);
-
-            setAssinados(
-                docs.filter(d => d.status === true && d.novoStatus === "Assinado")
-            );
-            setFinalizados(
-                docs.filter(d => d.status === true && d.novoStatus === "Finalizado")
-            );
-
+            setProximasEntregas(proximos);
         } catch (error) {
             console.log("Erro ao buscar documentos:", error);
         }
@@ -157,9 +135,7 @@ export default function Inicio() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        if (!validarCamposComuns()) {
-            return;
-        }
+        if (!validarCamposComuns()) return;
 
         if (anexarPdf) {
             if (!pdf) {
@@ -187,7 +163,7 @@ export default function Inicio() {
             };
 
             await api.post("Documentos", dadosDocumento);
-            alertar("success", "Documento Cadastrado com Sucesso!")
+            alertar("success", "Documento Cadastrado com Sucesso!");
 
             setNomeDoc("");
             setempresaDoc("");
@@ -196,13 +172,11 @@ export default function Inicio() {
 
         } catch (error) {
             alertar("error", "Erro ao criar documento!");
-            console.error("Erro no envio:", error);
         }
     }
 
     function handleAnexarPdfChange(e) {
         const isChecked = e.target.checked;
-
         setAnexarPdf(isChecked);
 
         if (!isChecked) {
@@ -210,13 +184,11 @@ export default function Inicio() {
             setNomeArquivo("");
 
             const inputElement = document.getElementById("arquivoInput");
-            if (inputElement) {
-                inputElement.value = "";
-            }
+            if (inputElement) inputElement.value = "";
         }
     }
 
-    async function anexarDoc(e) {
+    async function anexarDoc() {
         try {
             const formData = new FormData();
 
@@ -229,14 +201,11 @@ export default function Inicio() {
             formData.append("versaoAtual", Number(versaoInicial).toFixed(2));
             formData.append("criadoEm", new Date().toISOString());
             formData.append("novoStatus", novoStatus ?? "Em Andamento");
-
             formData.append("mimeType", pdf ? pdf.type : "");
             formData.append("arquivo", pdf);
 
             await api.post("Documentos/upload-ocr", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
+                headers: { "Content-Type": "multipart/form-data" }
             });
 
             alertar("success", "Documento e anexo enviados com sucesso!");
@@ -251,7 +220,6 @@ export default function Inicio() {
 
         } catch (error) {
             alertar("error", "Erro ao enviar documento!");
-            console.error("Erro no envio:", error);
         }
     }
 
@@ -267,12 +235,10 @@ export default function Inicio() {
                             {usuario ? (
                                 <div className="infos-usuario">
                                     <p className="usuario-nome">{usuario.nome} - {usuario.tipoUsuario}</p>
-                                    <p className="usuario-tipo"></p>
                                 </div>
                             ) : (
                                 <p>Usuário não encontrado.</p>
                             )}
-                            <span className="iconMoon"></span>
                         </div>
                     </div>
 
@@ -282,7 +248,7 @@ export default function Inicio() {
                             onClick={() => navigate("/Listagem?status=pendente")}
                             style={{ cursor: "pointer" }}
                         >
-                            <span className="statusNum">{emAndamento.length}</span>
+                            <span className="statusNum">{docsPorStatus.andamento.length}</span>
                             <span className="statusLabel">Em Andamento</span>
                         </div>
 
@@ -291,7 +257,7 @@ export default function Inicio() {
                             onClick={() => navigate("/Listagem?status=finalizado")}
                             style={{ cursor: "pointer" }}
                         >
-                            <span className="statusNum">{finalizados.length}</span>
+                            <span className="statusNum">{docsPorStatus.finalizados.length}</span>
                             <span className="statusLabel">Finalizados</span>
                         </div>
 
@@ -300,7 +266,7 @@ export default function Inicio() {
                             onClick={() => navigate("/Listagem?status=assinado")}
                             style={{ cursor: "pointer" }}
                         >
-                            <span className="statusNum">{assinados.length}</span>
+                            <span className="statusNum">{docsPorStatus.assinados.length}</span>
                             <span className="statusLabel">Assinados</span>
                         </div>
                     </div>
@@ -308,10 +274,12 @@ export default function Inicio() {
                     <div className="proximaEntregas">
                         <h3>Próximas Entregas</h3>
 
-                        {proximas.map((doc, index) => (
+                        {proximasEntregas.map((doc, index) => (
                             <div
                                 key={doc.idDocumento}
-                                className={`entregaCard ${index === 0 ? "entregaVermelho" : index === 1 ? "entregaMarrom" : "entregaBege"}`}
+                                className={`entregaCard ${index === 0 ? "entregaVermelho" :
+                                    index === 1 ? "entregaMarrom" :
+                                        "entregaBege"}`}
                             >
                                 <span className="entregaNum">
                                     {new Date(doc.prazo).getDate()}
@@ -375,7 +343,6 @@ export default function Inicio() {
                                     />
                                     <label htmlFor="anexarPdf">Deseja anexar o arquivo PDF agora?</label>
                                 </div>
-
 
                                 {anexarPdf && (
                                     <div className="anexoContainer">

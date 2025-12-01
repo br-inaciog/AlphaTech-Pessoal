@@ -41,6 +41,25 @@ namespace CollabTechFile.Repositories
             }
         }
 
+        public async Task<bool> DeletarRegraCompletaAsync(int idRegraDoc)
+        {
+            var regraDoc = await _context.RegrasDocs.FindAsync(idRegraDoc);
+
+            if (regraDoc == null)
+                return false;
+
+            var regra = await _context.Regras.FindAsync(regraDoc.IdRegras);
+
+            _context.RegrasDocs.Remove(regraDoc);
+
+            if (regra != null)
+                _context.Regras.Remove(regra);
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+    
+
         public void Editar(int id, Regra regra)
         {
             try

@@ -43,6 +43,24 @@ namespace CollabTechFile.Repositories
             }
         }
 
+        public async Task<bool> DeletarRequisitoCompletoAsync(int idRequisitoDoc)
+        {
+            var reqDoc = await _context.ReqDocs.FindAsync(idRequisitoDoc);
+
+            if (reqDoc == null)
+                return false;
+
+            var requisito = await _context.Requisitos.FindAsync(reqDoc.IdRequisito);
+
+            _context.ReqDocs.Remove(reqDoc);
+
+            if (requisito != null)
+                _context.Requisitos.Remove(requisito);
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public void Editar(int id, Requisito requisito)
         {
             try

@@ -67,5 +67,23 @@ namespace CollabTechFile.Controllers
                 return BadRequest(error.Message);
             }
         }
+
+        [HttpGet("documento/{idDocumento}")]
+        public IActionResult ListarPorDocumento(int idDocumento)
+        {
+            try
+            {
+                var comentarios = _ComentarioRepository.ListarPorDocumento(idDocumento);
+
+                if (comentarios == null || comentarios.Count == 0)
+                    return NotFound("Nenhum comentário encontrado para este documento.");
+
+                return Ok(comentarios);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro.Message);
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@
     margin-bottom: 2%;
 }
 
-.tituloRN,
+/* .tituloRN,
 .tituloRF,
 .tituloRNF {
     display: flex;
@@ -22,24 +22,9 @@
     align-items: center;
     gap: 10px;
     margin-top: 5%;
-}
+} */
 
-.tituloRN h2 {
-    font-size: 30px;
-    font-weight: 500;
-}
-
-.tituloRF h2 {
-    font-size: 30px;
-    font-weight: 500;
-}
-
-.tituloRNF h2 {
-    font-size: 30px;
-    font-weight: 500;
-}
-
-.listaRN,
+/* .listaRN,
 .listaRF,
 .listaRNF {
     display: flex;
@@ -52,12 +37,12 @@
     padding: 2%;
     margin-top: 2%;
     width: 100%;
-}
+} */
 
-.listaRF p {
+/* .listaRF p {
     width: 80%;
     text-align: start;
-}
+} */
 
 .comentarioDisplay {
     display: flex;

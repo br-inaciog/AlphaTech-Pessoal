@@ -1,9 +1,10 @@
-﻿    using CollabTechFile.Interfaces;
+﻿using CollabTechFile.Interfaces;
 using CollabTechFile.Models;
 using CollabTechFile.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CollabTechFile.Controllers
 {
@@ -65,6 +66,17 @@ namespace CollabTechFile.Controllers
             {
                 return BadRequest(error.Message);
             }
+        }
+
+        [HttpDelete("regra-completa/{idRegraDoc}")]
+        public async Task<IActionResult> DeletarRegraCompleta(int idRegraDoc)
+        {
+            var ok = await _RegraRepository.DeletarRegraCompletaAsync(idRegraDoc);
+
+            if (!ok)
+                return NotFound();
+
+            return NoContent();
         }
 
         //[Authorize]

@@ -1,42 +1,91 @@
 import "./docAndamentoClie.css"
-
+import ModalComentarioCliente from "../../components/cometarioCliente/ModalComentarioCliente";
 import ModalPDF from "../../components/documento/Documento";
 
-
 import MenuLateral from "../../components/menuLateral/MenuLateral"
-
 import Comentar from "../../assets/img/Comentario.png"
 import Cabecalho from "../../components/cabecalho/Cabecalho"
 import Abrir from "../../assets/img/Abrir.png"
-import { useParams } from "react-router";
+
+import { data, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import api from "../../services/Service";
+import Swal from "sweetalert2";
+import secureLocalStorage from "react-secure-storage";
+import { userDecodeToken } from "../../auth/auth";
 
-export default function DocFinalizadoClie() {
+export default function DocAndamentoClie() {
     const { nomeDocumento, idDocumento } = useParams();
     const nomeCorrigido = nomeDocumento.replaceAll("-", " ");
 
-    const [listaRN, setListaRN] = useState([]);
-    const [listaReqFunc, setListaReqFunc] = useState([])
-    const [listaReqNaoFunc, setListaReqNaoFunc] = useState([])
+    const [documentoAtual, setDocumentoAtual] = useState(null);
+    const [reqFuncionais, setReqFuncionais] = useState([]);
+    const [reqNaoFuncionais, setReqNaoFuncionais] = useState([]);
+    const [comentarios, setComentarios] = useState([]);
 
-    const [showModal, setShowModal] = useState(false);
+
+    const [showComentarioModal, setShowComentarioModal] = useState(false);
 
     const [documentoInfo, setDocumentoInfo] = useState(null);
+
+    const alertar = (icone, mensagem) => {
+        Swal.fire({
+            icon: icone,
+            title: mensagem,
+            theme: 'dark',
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+        });
+    };
+
     async function buscarDocumento() {
         try {
             const resposta = await api.get(`Documentos/${idDocumento}`);
             const doc = resposta.data;
 
+            const nomeEmpresa = doc.empresaNavigation ? doc.empresaNavigation.nome : "Empresa não informada";
+
             setDocumentoInfo({
                 versaoAtual: doc.versaoAtual,
                 prazo: doc.prazo,
-                remetente: doc.cliente?.nome || "Sem destinatário"
+                empresa: nomeEmpresa,
             });
         } catch (error) {
             console.error("Erro ao buscar informações do documento:", error);
         }
     }
+
+    const abrirComentarioModal = () => setShowComentarioModal(true);
+    const fecharComentarioModal = () => setShowComentarioModal(false);
+
+    const publicarComentario = async (comentario) => {
+        const token = secureLocalStorage.getItem("token");
+        const user = userDecodeToken(token);
+
+        const dataCriacao = new Date();
+
+        const dadosComentario = {
+            idUsuario: parseInt(user.idUsuario),
+            idDocumento: parseInt(idDocumento),
+            texto: comentario,
+            dataCriacao: dataCriacao.toISOString()
+        };
+
+        try {
+            await api.post("Comentario", dadosComentario);
+
+            console.log(`Comentário publicado com sucesso!`, dadosComentario);
+            alertar("success", "Comentário cadastrado!")
+            fecharComentarioModal();
+            setComentarios();
+        } catch (error) {
+            console.error("Erro ao publicar comentário:", error);
+            alertar("error", "Erro ao enviar o comentário. Tente novamente.");
+        }
+    };
 
     const [pdfUrl, setPdfUrl] = useState(null);
 
@@ -52,100 +101,55 @@ export default function DocFinalizadoClie() {
             console.error("Erro ao abrir PDF", err);
         }
     }
-    function fecharPDF() {
+
+    const fecharPDF = () => {
         if (pdfUrl) URL.revokeObjectURL(pdfUrl);
         setPdfUrl(null);
     };
 
-
-    //Regras de Negócio
-    async function listarRN() {
+    async function carregarComentarios() {
         try {
-            const [regraDocs, regras] = await Promise.all([
-                api.get("regraDoc"),
-                api.get("Regra")
-            ]);
-
-            const regraNegocioDocAtual = regraDocs.data
-                .filter(r => r.idDocumento == idDocumento)
-                .map(r => {
-                    const regra = regras.data.find(x => x.idRegra === r.idRegra);
-                    return {
-                        ...r,
-                        nome: regra ? regra.nome : "Sem nome"
-                    };
-                });
-            console.log(regraNegocioDocAtual);
-
-            setListaRN(regraNegocioDocAtual.sort((a, b) => a.idRegrasDoc - b.idRegrasDoc))
+            const resposta = await api.get(`/Comentario/documento/${idDocumento}`);
+            setComentarios(resposta.data);
         } catch (error) {
-            console.log("Erro ao listar RN:", error);
+            console.error("Erro ao carregar comentários:", error);
         }
     }
 
-    //Requisito Funcional
-    async function listarReqFunc() {
+    async function buscarDadosDocumento() {
         try {
-            const [reqFuncDocs, requisitos] = await Promise.all([
-                api.get("ReqDoc"),
-                api.get("Requisito")
-            ]);
+            const response = await api.get(`/Documentos/${idDocumento}`);
+            const dados = response.data;
 
-            const rnfDoDocumentoAtual = reqFuncDocs.data
-                .filter(r => r.idDocumento == idDocumento)
-                .map(r => {
-                    const requisito = requisitos.data.find(x => x.idRequisito === r.idRequisito);
-                    return {
-                        ...r,
-                        textoReq: requisito ? requisito.textoReq : "Sem texto",
-                        tipo: requisito ? requisito.tipo : ""
-                    };
-                })
-                .filter(r => r.tipo === "RF");
+            setDocumentoAtual(dados);
 
-            setListaReqFunc(rnfDoDocumentoAtual.sort((a, b) => a.idRequisito - b.idRequisito));
-            console.log(rnfDoDocumentoAtual);
+            const reqs = dados.reqDocs || [];
+
+            const funcionais = reqs.filter(req =>
+                req.idRequisitoNavigation?.tipo?.toUpperCase().startsWith("RF") &&
+                !req.idRequisitoNavigation.tipo.toUpperCase().includes("RNF")
+            );
+
+            const naoFuncionais = reqs.filter(req =>
+                req.idRequisitoNavigation?.tipo?.toUpperCase().startsWith("RNF")
+            );
+
+            setReqFuncionais(funcionais);
+            setReqNaoFuncionais(naoFuncionais);
+
         } catch (error) {
-            console.log("Erro ao listar RNF:", error);
-        }
-    }
-
-    //Requisito Não Funcional
-    async function listarReqNaoFunc() {
-        try {
-            const [reqNaoFuncDocs, requisitos] = await Promise.all([
-                api.get("ReqDoc"),
-                api.get("Requisito")
-            ]);
-
-            const rnfDoDocumentoAtual = reqNaoFuncDocs.data
-                .filter(r => r.idDocumento == idDocumento)
-                .map(r => {
-                    const requisito = requisitos.data.find(x => x.idRequisito === r.idRequisito);
-                    return {
-                        ...r,
-                        textoReq: requisito ? requisito.textoReq : "Sem texto",
-                        tipo: requisito ? requisito.tipo : ""
-                    };
-                })
-                .filter(r => r.tipo === "RNF");
-
-            setListaReqNaoFunc(rnfDoDocumentoAtual.sort((a, b) => a.idRequisito - b.idRequisito));
-            console.log(rnfDoDocumentoAtual);
-        } catch (error) {
-            console.log("Erro ao listar RNF:", error);
+            console.log("Erro ao buscar documento:", error);
         }
     }
 
     useEffect(() => {
-        listarRN();
-        listarReqFunc();
-        listarReqNaoFunc();
+        carregarComentarios();
+        buscarDadosDocumento();
         buscarDocumento();
-    }, [])
+    }, []);
 
     return (
-        <div className="containerGeral'">
+        <div className="containerGeral">
             <MenuLateral />
             <main className="conteudoPrincipal">
                 <section className="areaTrabalho">
@@ -157,67 +161,91 @@ export default function DocFinalizadoClie() {
                         </div>
 
                         <button className="abrirDoc" onClick={abrirPDF}>
-                            <img src={Abrir} alt="" />
+                            <img src={Abrir} alt="Abrir Documento PDF" />
                             <p>Abrir PDF</p>
                         </button>
 
                         <div className="documento">
                             <div className="nomeDoc">
-                                <p>Nome: <span>{nomeCorrigido || "Carregando..."}</span></p>
+                                <p>Nome: <span>{nomeCorrigido}</span></p>
+                            </div>
+
+                            <div className="infDocumento">
+                                <div className="botaoSelectRementente">
+                                    <label>Rementente:</label>
+                                    <span>{documentoInfo?.empresa}</span>
+                                </div>
+
+                                <div className="prazoEntrega">
+                                    <label>Prazo:</label>
+                                    <span>{documentoInfo?.prazo}</span>
+                                </div>
+
+                                <div className="botaoFiltrarVersoesDoc">
+                                    <p>Versão Atual:</p>
+                                    <span>{documentoInfo?.versaoAtual}</span>
+                                </div>
                             </div>
 
                             <div className="regrasDeNegocio">
                                 <div className="tituloRN">
                                     <h2>Regras de Negócio</h2>
                                 </div>
-
                                 <section>
-                                    {listaRN.length > 0 ? (
-                                        listaRN.map((regra, index) => (
+                                    {documentoAtual?.regrasDocs && documentoAtual.regrasDocs.length > 0 ? (
+                                        documentoAtual.regrasDocs.map((regra, index) => (
                                             <div className="listaRN" key={regra.idRegrasDoc}>
-                                                <p>RN{String(index + 1).padStart(2, "0")}: <span>{regra.nome}</span></p>
+                                                <p>
+                                                    <span className="tagListaRnRnfRf">
+                                                        RN{String(index + 1).padStart(2, "0")}:
+                                                    </span>
+                                                    {regra.idRegrasNavigation?.nome}
+                                                </p>
                                             </div>
                                         ))
                                     ) : (
                                         <div className="listaRN">
-                                            <p>Nenhuma RN Cadastrada.</p>
+                                            <p>Nenhuma Regra de Negócio.</p>
                                         </div>
                                     )}
                                 </section>
                             </div>
 
-
                             <div className="requisitosFuncionais">
                                 <div className="tituloRF">
                                     <h2>Requisitos Funcionais</h2>
                                 </div>
-
                                 <section>
-                                    {listaReqFunc.length > 0 ? (
-                                        listaReqFunc.map((rnf, index) => (
-                                            <div className="listaRF" key={rnf.idRequisito}>
-                                                <p>RNF{String(index + 1).padStart(2, "0")}: <span>{rnf.textoReq}</span></p>
+                                    {reqFuncionais.length > 0 ? (
+                                        reqFuncionais.map((rf, index) => (
+                                            <div className="listaRF" key={rf.idReqDoc}>
+                                                <p>
+                                                    <span className="tagListaRnRnfRf">
+                                                        RF{String(index + 1).padStart(2, "0")}:
+                                                    </span>
+                                                    {rf.idRequisitoNavigation.textoReq}
+                                                </p>
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="listaRNF">
+                                        <div className="listaRF">
                                             <p>Nenhum RF cadastrado.</p>
                                         </div>
                                     )}
                                 </section>
                             </div>
 
-
                             <div className="requisitosNaoFuncionais">
                                 <div className="tituloRNF">
                                     <h2>Requisitos não Funcionais</h2>
                                 </div>
-
                                 <section>
-                                    {listaReqNaoFunc.length > 0 ? (
-                                        listaReqNaoFunc.map((rnf, index) => (
-                                            <div className="listaRNF" key={rnf.idRequisito}>
-                                                <p>RNF{String(index + 1).padStart(2, "0")}: <span>{rnf.textoReq}</span></p>
+                                    {reqNaoFuncionais.length > 0 ? (
+                                        reqNaoFuncionais.map((rnf, index) => ( // Usando 'rnf' para clareza
+                                            <div className="listaRNF" key={rnf.idReqDoc}>
+                                                <p>
+                                                    <span className="tagListaRnRnfRf">RNF{String(index + 1).padStart(2, "0")}:</span>{rnf.idRequisitoNavigation.textoReq}
+                                                </p>
                                             </div>
                                         ))
                                     ) : (
@@ -228,24 +256,55 @@ export default function DocFinalizadoClie() {
                                 </section>
                             </div>
 
-                            <div className="comentarioDisplay">
+                            <div className="comentarioDisplay" onClick={abrirComentarioModal}>
                                 <p>Comentar</p>
                                 <img src={Comentar} alt="Botão de Comentário" />
                             </div>
                         </div>
                     </section>
+
+                    <section className="areaComentarioDoc">
+                        <div className="comentariosDocDisplay">
+                            <div className="titulo">
+                                <h1>Comentários</h1>
+                            </div>
+                        </div>
+                        {comentarios && comentarios.length > 0 ? (
+                            comentarios.map((item) => {
+                                const data = new Date(item.dataCriacao); 
+                                const dataLocal = data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                                const horaLocal = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+                                return (
+                                    <div key={item.idComentario} className="cardFeedbackDoc">
+                                        <div className="cabecalhoFeedbackDoc">
+                                            <span className="nomeFeedbackDoc">{item.idUsuarioNavigation?.nome || "Usuário"}</span>
+                                            <div className="horarioDataComentario">
+                                                <span className="dataFeedbackDoc">{dataLocal}</span>
+                                                <span className="horarioFeedbackDoc">{horaLocal}</span>
+                                            </div>
+                                        </div>
+                                        <p className="mensagemFeedbackDoc">{item.texto}</p>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <div className="comentarioVazio">
+                                <p>Não há comentários ainda.</p>
+                            </div>
+                        )}
+
+                    </section>
                 </section>
-                {showModal && (
-                    <ModalSalvarDocumento
-                        nomeDocumento={nomeCorrigido}
-                        prazoEntrega={prazo}
-                        onCancel={() => setShowModal(false)}
-                        onPublish={modalSalvarDoc}
-                    />
-                )}
-                {pdfUrl && (
-                    <ModalPDF pdfUrl={pdfUrl} onClose={fecharPDF} />
-                )}
+
+                {pdfUrl && <ModalPDF pdfUrl={pdfUrl} onClose={fecharPDF} />}
+
+                <ModalComentarioCliente
+                    nomeDocumento={nomeCorrigido}
+                    aberto={showComentarioModal}
+                    aoCancelar={fecharComentarioModal}
+                    aoPublicar={publicarComentario}
+                />
             </main>
         </div>
     )

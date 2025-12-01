@@ -151,7 +151,12 @@
     box-shadow: inset 0px 0px 10px 0 rgba(20, 20, 20, 0.2);
 }
 
-/* .botaoLimparFiltro:hover {
-    background-color: #2f2f2f;
-    transform: scale(1.03);
-} */
+@media (max-width: 768px) {
+    .IcoLixo{
+        display: none;
+    }
+    .botaoLixeiraList {
+        padding: 15px;
+    }
+
+}

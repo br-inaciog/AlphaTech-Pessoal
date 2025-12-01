@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CollabTechFile.Models;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
-namespace CollabTechFile.Models;
 
 [Table("Comentario")]
 public partial class Comentario
@@ -20,6 +17,8 @@ public partial class Comentario
     [StringLength(2000)]
     [Unicode(false)]
     public string? Texto { get; set; }
+
+    public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
 
     [ForeignKey("IdDocumento")]
     [InverseProperty("Comentarios")]

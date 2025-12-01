@@ -19,7 +19,7 @@
     "Parameters": [
       {
         "Name": "comentario",
-        "Type": "CollabTechFile.Models.Comentario",
+        "Type": "Comentario",
         "IsRequired": true
       }
     ],
@@ -35,6 +35,22 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CollabTechFile.Controllers.ComentarioController",
+    "Method": "ListarPorDocumento",
+    "RelativePath": "api/Comentario/documento/{idDocumento}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idDocumento",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -106,6 +122,43 @@
   },
   {
     "ContainingType": "CollabTechFile.Controllers.DocumentosController",
+    "Method": "EditarOcr",
+    "RelativePath": "api/Documentos/{id}/editar-ocr",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "CollabTechFile.Controllers.DocumentosController\u002BEditarTextoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CollabTechFile.Controllers.DocumentosController",
+    "Method": "ObterTextoOcr",
+    "RelativePath": "api/Documentos/{id}/ocr",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CollabTechFile.Controllers.DocumentosController",
     "Method": "DownloadPdf",
     "RelativePath": "api/Documentos/{id}/pdf",
     "HttpMethod": "GET",
@@ -133,6 +186,22 @@
         "Type": "System.Int32",
         "IsRequired": true
       },
+      {
+        "Name": "arquivo",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CollabTechFile.Controllers.DocumentosController",
+    "Method": "Analisar",
+    "RelativePath": "api/Documentos/analisar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
         "Name": "arquivo",
         "Type": "Microsoft.AspNetCore.Http.IFormFile",
@@ -218,12 +287,12 @@
         "IsRequired": false
       },
       {
-        "Name": "documento.IdUsuario",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Name": "documento.IdEmpresa",
+        "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "documento.IdEmpresa",
+        "Name": "documento.IdUsuario",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
@@ -250,6 +319,11 @@
       {
         "Name": "documento.Arquivo",
         "Type": "System.Byte[]",
+        "IsRequired": false
+      },
+      {
+        "Name": "documento.TextoOcr",
+        "Type": "System.String",
         "IsRequired": false
       },
       {
@@ -324,7 +398,7 @@
       },
       {
         "Name": "documento.UsuarioNavigation.Comentarios",
-        "Type": "System.Collections.Generic.ICollection\u00601[[CollabTechFile.Models.Comentario, CollabTechFile, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.ICollection\u00601[[Comentario, CollabTechFile, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": false
       },
       {
@@ -409,7 +483,7 @@
       },
       {
         "Name": "documento.Comentarios",
-        "Type": "System.Collections.Generic.ICollection\u00601[[CollabTechFile.Models.Comentario, CollabTechFile, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.ICollection\u00601[[Comentario, CollabTechFile, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": false
       },
       {
@@ -578,6 +652,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CollabTechFile.Controllers.RegraController",
+    "Method": "DeletarRegraCompleta",
+    "RelativePath": "api/Regra/regra-completa/{idRegraDoc}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idRegraDoc",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CollabTechFile.Controllers.RegraDocController",
     "Method": "Get",
     "RelativePath": "api/RegraDoc",
@@ -760,6 +850,22 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CollabTechFile.Controllers.RequisitoController",
+    "Method": "DeletarRequisitoCompleto",
+    "RelativePath": "api/Requisito/requisito-completo/{idRequisitoDoc}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idRequisitoDoc",
         "Type": "System.Int32",
         "IsRequired": true
       }

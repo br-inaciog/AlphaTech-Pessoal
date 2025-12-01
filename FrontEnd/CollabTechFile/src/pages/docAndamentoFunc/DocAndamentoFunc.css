@@ -45,7 +45,6 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin-bottom: 4%;
 }
 
 .botaoFiltrarVersoesDoc {
@@ -115,12 +114,12 @@
 .cadRN {
     display: flex;
     align-items: center;
-    width: 60%;
+    width: 70%;
 }
 
 .cadRN input {
     border: none;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid #001f3f;
     background-color: transparent;
     height: 40px;
     width: 100%;
@@ -136,44 +135,22 @@
 .tituloRF,
 .tituloRNF {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
     gap: 10px;
     width: 100%;
 }
 
-.tituloRF,
-.tituloRNF {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 5%;
-}
-
-.tituloRN h2 {
-    font-size: 48px;
-    font-weight: 500;
-}
-
-.tituloRN button {
-    border: none;
-    background: transparent;
-}
-
+.tituloRN h2,
+.tituloRNF h2,
 .tituloRF h2 {
-    font-size: 48px;
+    margin-top: 5%;
+    font-size: 30px;
     font-weight: 500;
 }
 
-.tituloRF button {
-    border: none;
-    background: transparent;
-}
-
-.tituloRNF h2 {
-    font-size: 48px;
-    font-weight: 500;
-}
-
+.tituloRN button,
+.tituloRF button,
 .tituloRNF button {
     border: none;
     background: transparent;
@@ -183,22 +160,29 @@
 .listaRF,
 .listaRNF {
     display: flex;
+    text-align: start;
     justify-content: space-between;
     align-items: center;
+    width: 50%;
 
-    background-color: rgb(88, 129, 163);
-    box-shadow: inset 0px 0px 10px 0 rgba(20, 20, 20, 0.2);
-    color: white;
+    color: black;
+    /* border-bottom: 2px solid black; */
 
-    border-radius: 10px;
-    padding: 2%;
+    font-size: 1.1rem;
+
+    padding: 1%;
     margin-top: 2%;
     width: 100%;
 }
 
-.listaRF p {
-    width: 80%;
-    text-align: start;
+.listaRN p,
+.listaRF p,
+.listaRNF p {
+    width: 90%;
+}
+
+.tagListaRnRnfRf {
+    font-weight: 600;
 }
 
 .iconeRequisitosERegra {
@@ -254,9 +238,10 @@
 
 .areaComentarioDoc {
     width: 100%;
-    border-radius: 20px;
+    /* border-radius: 20px; */
     background-color: aliceblue;
     padding: 2%;
+    margin-top: 4%;
 }
 
 .cardFeedbackDoc {
@@ -294,8 +279,18 @@
     margin: 10px 0 0 0;
     color: #333;
     font-size: 1rem;
-    line-height: 1.5;
+    width: 100%;
 }
+
+.comentarioVazio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
 /* ======== RESPONSIVIDADE GERAL ======== */
 
 /* Tablets (até 1024px) */
@@ -337,8 +332,8 @@
 @media (max-width: 768px) {
     .infDocumento {
         flex-direction: column;
-        align-items: center;
-        gap: 30px;
+        /* align-items: center;
+        gap: 30px; */
     }
 
     .botaoFiltrarVersoesDoc,
@@ -397,6 +392,7 @@
 
 /* Celulares pequenos (até 480px) */
 @media (max-width: 480px) {
+
     .tituloRN h2,
     .tituloRF h2,
     .tituloRNF h2 {
@@ -422,7 +418,8 @@
         width: 28px;
     }
 }
- /* ======== RESPONSIVIDADE COMENTÁRIOS ======== */
+
+/* ======== RESPONSIVIDADE COMENTÁRIOS ======== */
 
 /* Tablets até 1024px */
 @media (max-width: 1024px) {
@@ -476,10 +473,11 @@
         padding: 4%;
     }
 
-    .titulo h1{
+    .titulo h1 {
         font-size: 30px;
     }
-    .titulo{
+
+    .titulo {
         margin-bottom: 30px;
     }
 }

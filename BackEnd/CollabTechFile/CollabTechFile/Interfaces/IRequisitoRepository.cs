@@ -8,5 +8,6 @@ namespace CollabTechFile.Interfaces
         void Deletar (int id);
         void Editar(int id, Requisito requisito);
         List<Requisito> Listar ();
+        public Task<bool> DeletarRequisitoCompletoAsync(int idRequisitoDoc);
     }
 }

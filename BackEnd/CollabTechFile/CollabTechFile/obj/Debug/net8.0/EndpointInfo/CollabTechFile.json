@@ -69,6 +69,29 @@
         }
       }
     },
+    "/api/Comentario/documento/{idDocumento}": {
+      "get": {
+        "tags": [
+          "Comentario"
+        ],
+        "parameters": [
+          {
+            "name": "idDocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Documentos": {
       "get": {
         "tags": [
@@ -273,11 +296,11 @@
                     "type": "integer",
                     "format": "int32"
                   },
-                  "documento.IdUsuario": {
+                  "documento.IdEmpresa": {
                     "type": "integer",
                     "format": "int32"
                   },
-                  "documento.IdEmpresa": {
+                  "documento.IdUsuario": {
                     "type": "integer",
                     "format": "int32"
                   },
@@ -300,6 +323,9 @@
                   "documento.Arquivo": {
                     "type": "string",
                     "format": "byte"
+                  },
+                  "documento.TextoOcr": {
+                    "type": "string"
                   },
                   "documento.MimeType": {
                     "maxLength": 100,
@@ -481,10 +507,10 @@
                 "documento.IdDocumento": {
                   "style": "form"
                 },
-                "documento.IdUsuario": {
+                "documento.IdEmpresa": {
                   "style": "form"
                 },
-                "documento.IdEmpresa": {
+                "documento.IdUsuario": {
                   "style": "form"
                 },
                 "documento.Nome": {
@@ -500,6 +526,9 @@
                   "style": "form"
                 },
                 "documento.Arquivo": {
+                  "style": "form"
+                },
+                "documento.TextoOcr": {
                   "style": "form"
                 },
                 "documento.MimeType": {
@@ -634,6 +663,103 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/{id}/ocr": {
+      "get": {
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/analisar": {
+      "post": {
+        "tags": [
+          "Documentos"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "arquivo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "arquivo": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Documentos/{id}/editar-ocr": {
+      "put": {
+        "tags": [
+          "Documentos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditarTextoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditarTextoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditarTextoDTO"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -917,6 +1043,29 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Regra/regra-completa/{idRegraDoc}": {
+      "delete": {
+        "tags": [
+          "Regra"
+        ],
+        "parameters": [
+          {
+            "name": "idRegraDoc",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1236,6 +1385,29 @@
         }
       }
     },
+    "/api/Requisito/requisito-completo/{idRequisitoDoc}": {
+      "delete": {
+        "tags": [
+          "Requisito"
+        ],
+        "parameters": [
+          {
+            "name": "idRequisitoDoc",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Suporte": {
       "post": {
         "tags": [
@@ -1520,6 +1692,10 @@
             "type": "string",
             "nullable": true
           },
+          "dataCriacao": {
+            "type": "string",
+            "format": "date-time"
+          },
           "idDocumentoNavigation": {
             "$ref": "#/components/schemas/Documento"
           },
@@ -1536,12 +1712,11 @@
             "type": "integer",
             "format": "int32"
           },
-          "idUsuario": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
           "idEmpresa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idUsuario": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -1567,6 +1742,10 @@
           "arquivo": {
             "type": "string",
             "format": "byte",
+            "nullable": true
+          },
+          "textoOcr": {
+            "type": "string",
             "nullable": true
           },
           "mimeType": {
@@ -1659,6 +1838,16 @@
           "dataCriacao": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EditarTextoDTO": {
+        "type": "object",
+        "properties": {
+          "texto": {
+            "type": "string",
             "nullable": true
           }
         },

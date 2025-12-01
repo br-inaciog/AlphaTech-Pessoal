@@ -21,16 +21,19 @@ export default function DocAndamentoFunc() {
     const [versaoSelecionadaId, setVersaoSelecionadaId] = useState(null);
     const [pdfUrl, setPdfUrl] = useState(null);
 
-    const [listaRN, setListaRN] = useState([]);
     const [regraDeNegocio, setRegraDeNegocio] = useState("");
 
-    const [listaReqFunc, setListaReqFunc] = useState([])
     const [requisitoFuncional] = useState("RF")
-    const [reqFuncionalText] = useState("Edite seu Requisito Funcional.")
+    const [reqFuncionalText, setReqFuncionalText] = useState("")
 
-    const [listaReqNaoFunc, setListaReqNaoFunc] = useState([])
-    const [reqNaoFuncional] = useState("RNF")
-    const [reqNaoFuncionalText] = useState("Edite seu Requisito Não Funcional.")
+    const [requisitoNaoFuncional] = useState("RNF")
+    const [reqNaoFuncionalText, setReqNaoFuncionalText] = useState("")
+
+    const [documentoAtual, setDocumentoAtual] = useState(null);
+    const [reqFuncionais, setReqFuncionais] = useState([]);
+    const [reqNaoFuncionais, setReqNaoFuncionais] = useState([]);
+
+    const [comentarios, setComentarios] = useState([]);
 
     const [showModal, setShowModal] = useState(false);
 
@@ -129,10 +132,6 @@ export default function DocAndamentoFunc() {
 
             buscarDocumento();
             listarVersoes();
-            listarRN();
-            listarReqFunc();
-            listarReqNaoFunc();
-
         } catch (error) {
             alertar("error", "Erro ao salvar o documento!");
             console.error(error);
@@ -167,33 +166,10 @@ export default function DocAndamentoFunc() {
     };
 
     //Regras de Negócio
-    async function listarRN() {
-        try {
-            const [regraDocs, regras] = await Promise.all([
-                api.get("regraDoc"),
-                api.get("Regra")
-            ]);
-
-            const regraNegocioDocAtual = regraDocs.data
-                .filter(r => r.idDocumento == idDocumento)
-                .map(r => {
-                    const regra = regras.data.find(x => x.idRegra === r.idRegra);
-                    return {
-                        ...r,
-                        nome: regra ? regra.nome : "Sem nome"
-                    };
-                });
-
-            setListaRN(regraNegocioDocAtual.sort((a, b) => a.idRegrasDoc - b.idRegrasDoc))
-        } catch (error) {
-            console.log("Erro ao listar RN:", error);
-        }
-    }
-
     async function cadastrarRN(e) {
         e.preventDefault();
 
-        if (!regraDeNegocio) {
+        if (!regraDeNegocio || !regraDeNegocio.trim()) {
             alertar("warning", "Preencha o campo de Cadastro!")
             return;
         }
@@ -210,7 +186,7 @@ export default function DocAndamentoFunc() {
 
             alertar("success", "Regra cadastrada no documento!");
             setRegraDeNegocio("");
-            listarRN();
+            await buscarDadosDocumento();
         } catch (error) {
             alertar("error", "Erro ao cadastrar!");
             console.log(error);
@@ -231,9 +207,9 @@ export default function DocAndamentoFunc() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await api.delete(`regraDoc/${regra.idRegrasDoc}`);
+                    await api.delete(`Regra/regra-completa/${regra.idRegrasDoc}`);
                     alertar("success", "Regra Excluída!");
-                    listarRN();
+                    await buscarDadosDocumento();
                 } catch (error) {
                     console.log(error);
                     alertar("error", "Erro ao Excluir!");
@@ -272,7 +248,7 @@ export default function DocAndamentoFunc() {
                 });
 
                 alertar("success", "Regra atualizada com sucesso!");
-                listarRN();
+                await buscarDadosDocumento();
             }
         } catch (error) {
             console.log(error);
@@ -281,33 +257,13 @@ export default function DocAndamentoFunc() {
     }
 
     //Requisito Funcional
-    async function listarReqFunc() {
-        try {
-            const [reqFuncDocs, requisitos] = await Promise.all([
-                api.get("ReqDoc"),
-                api.get("Requisito")
-            ]);
-
-            const rnfDoDocumentoAtual = reqFuncDocs.data
-                .filter(r => r.idDocumento == idDocumento)
-                .map(r => {
-                    const requisito = requisitos.data.find(x => x.idRequisito === r.idRequisito);
-                    return {
-                        ...r,
-                        textoReq: requisito ? requisito.textoReq : "Sem texto",
-                        tipo: requisito ? requisito.tipo : ""
-                    };
-                })
-                .filter(r => r.tipo === "RF");
-
-            setListaReqFunc(rnfDoDocumentoAtual.sort((a, b) => a.idRequisito - b.idRequisito));
-        } catch (error) {
-            console.log("Erro ao listar RNF:", error);
-        }
-    }
-
     async function cadastrarReqFuncional(e) {
         e.preventDefault()
+
+        if (!reqFuncionalText || !reqFuncionalText.trim()) {
+            alertar("warning", "Preencha o campo de Cadastro!")
+            return;
+        }
 
         try {
             const novaRequisito = await api.post("Requisito", {
@@ -321,7 +277,8 @@ export default function DocAndamentoFunc() {
             });
 
             alertar("success", "Requisito cadastrado no documento!");
-            listarReqFunc();
+            setReqFuncionalText("");
+            await buscarDadosDocumento();
         } catch (error) {
             alertar("error", "Erro ao cadastrar!");
             console.log(error);
@@ -329,37 +286,17 @@ export default function DocAndamentoFunc() {
     }
 
     //Requisito Não Funcional
-    async function listarReqNaoFunc() {
-        try {
-            const [reqNaoFuncDocs, requisitos] = await Promise.all([
-                api.get("ReqDoc"),
-                api.get("Requisito")
-            ]);
-
-            const rnfDoDocumentoAtual = reqNaoFuncDocs.data
-                .filter(r => r.idDocumento == idDocumento)
-                .map(r => {
-                    const requisito = requisitos.data.find(x => x.idRequisito === r.idRequisito);
-                    return {
-                        ...r,
-                        textoReq: requisito ? requisito.textoReq : "Sem texto",
-                        tipo: requisito ? requisito.tipo : ""
-                    };
-                })
-                .filter(r => r.tipo === "RNF");
-
-            setListaReqNaoFunc(rnfDoDocumentoAtual.sort((a, b) => a.idRequisito - b.idRequisito));
-        } catch (error) {
-            console.log("Erro ao listar RNF:", error);
-        }
-    }
-
     async function cadastrardReqNaoFuncional(e) {
         e.preventDefault()
 
+        if (!reqNaoFuncionalText || !reqNaoFuncionalText.trim()) {
+            alertar("warning", "Preencha o campo de Cadastro!")
+            return;
+        }
+
         try {
             const novaRequisito = await api.post("Requisito", {
-                tipo: reqNaoFuncional,
+                tipo: requisitoNaoFuncional,
                 textoReq: reqNaoFuncionalText
             });
 
@@ -369,14 +306,15 @@ export default function DocAndamentoFunc() {
             });
 
             alertar("success", "Requisito cadastrado no documento!");
-            listarReqNaoFunc();
+            setReqNaoFuncionalText("");
+            await buscarDadosDocumento();
         } catch (error) {
             alertar("error", "Erro ao cadastrar!");
             console.log(error);
         }
     }
 
-    async function deletarReqNaoFunc(regra) {
+    async function deletarReqNaoFuncEReqFunc(requisito) {
         Swal.fire({
             theme: 'dark',
             title: 'Tem Certeza?',
@@ -390,9 +328,9 @@ export default function DocAndamentoFunc() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await api.delete(`ReqDoc/${regra.idReqDoc}`);
+                    await api.delete(`Requisito/requisito-completo/${requisito.idReqDoc}`);
                     alertar("success", "Requisito Excluído!");
-                    listarReqNaoFunc();
+                    await buscarDadosDocumento();
                 } catch (error) {
                     console.log(error);
                     alertar("error", "Erro ao Excluir!");
@@ -401,19 +339,68 @@ export default function DocAndamentoFunc() {
         });
     }
 
+    async function carregarComentarios() {
+        try {
+            const resposta = await api.get(`/Comentario/documento/${idDocumento}`);
+            setComentarios(resposta.data);
+        } catch (error) {
+            console.error("Erro ao carregar comentários:", error);
+        }
+    }
+
+    async function buscarDadosDocumento() {
+        try {
+            const response = await api.get(`/Documentos/${idDocumento}`);
+            const dados = response.data;
+
+            console.log("DOC ATUAL:", dados);
+
+            setDocumentoAtual(dados);
+
+            if (!dados || typeof dados !== "object") return;
+
+            const reqs = dados.reqDocs || [];
+
+            const funcionais = reqs.filter(req =>
+                req.idRequisitoNavigation?.tipo
+                    ?.toUpperCase()
+                    .startsWith("RF") &&
+                !req.idRequisitoNavigation.tipo
+                    .toUpperCase()
+                    .includes("RNF")
+            );
+
+            const naoFuncionais = reqs.filter(req =>
+                req.idRequisitoNavigation?.tipo
+                    ?.toUpperCase()
+                    .startsWith("RNF")
+            );
+
+            setReqFuncionais(funcionais);
+            setReqNaoFuncionais(naoFuncionais);
+        } catch (error) {
+            console.log("Erro ao buscar documento:", error);
+        }
+    }
+
+
+    useEffect(() => {
+        // listarCliente();
+        // listarVersoes();
+        // listarRN();
+        // listarReqFunc();
+        // listarReqNaoFunc();
+
+        carregarComentarios();
+        buscarDadosDocumento();
+        buscarDocumento();
+    }, [])
+
     //CadastrarDocumento
     async function cadDocumento(e) {
         e.preventDefault();
         setShowModal(true);
     }
-
-    useEffect(() => {
-        listarVersoes();
-        listarRN();
-        listarReqFunc();
-        listarReqNaoFunc();
-        buscarDocumento();
-    }, [])
 
     return (
         <div className="containerGeral'">
@@ -450,9 +437,9 @@ export default function DocAndamentoFunc() {
                             </div>
                         </div>
 
-                        <form action="" className="documento">
+                        <form className="documento">
                             <div className="nomeDoc">
-                                <p>Nome: <span>{nomeCorrigido || "Carregando..."}</span></p>
+                                <p>Nome: <span>{nomeCorrigido}</span></p>
                             </div>
 
                             <div className="infDocumento">
@@ -476,24 +463,30 @@ export default function DocAndamentoFunc() {
                                 <div className="tituloRN">
                                     <h2>Regras de Negócio</h2>
 
-                                    <form className="cadRN" onSubmit={cadastrarRN}>
+                                    <div className="cadRN">
                                         <input
                                             type="text"
                                             placeholder="Edite sua Regra de Negócio."
                                             value={regraDeNegocio}
                                             onChange={(e) => setRegraDeNegocio(e.target.value)}
                                         />
-                                        <button type="submit">
+                                        <button type="button" onClick={cadastrarRN}>
                                             <img className="botaoAdicionar" src={Adicionar} alt="Botao De Adicionar" />
                                         </button>
-                                    </form>
+                                    </div>
                                 </div>
 
                                 <section>
-                                    {listaRN.length > 0 ? (
-                                        listaRN.map((regra, index) => (
+                                    {documentoAtual?.regrasDocs && documentoAtual.regrasDocs.length > 0 ? (
+                                        documentoAtual.regrasDocs.map((regra, index) => (
                                             <div className="listaRN" key={regra.idRegrasDoc}>
-                                                <p>RN{String(index + 1).padStart(2, "0")}: <span>{regra.nome}</span></p>
+                                                <p>
+                                                    <span className="tagListaRnRnfRf">
+                                                        RN{String(index + 1).padStart(2, "0")}:
+                                                    </span>
+                                                    {regra.idRegrasNavigation?.nome}
+                                                </p>
+
                                                 <div className="iconeRequisitosERegra">
                                                     <img
                                                         onClick={() => deletarRN(regra)}
@@ -512,7 +505,7 @@ export default function DocAndamentoFunc() {
                                         ))
                                     ) : (
                                         <div className="listaRN">
-                                            <p>Cadastrar Regras de Negócio.</p>
+                                            <p>Nenhuma Regra de Negócio.</p>
                                         </div>
                                     )}
                                 </section>
@@ -521,25 +514,45 @@ export default function DocAndamentoFunc() {
                             <div className="requisitosFuncionais">
                                 <div className="tituloRNF">
                                     <h2>Requisitos Funcionais</h2>
-                                    <button type="button" onClick={(e) => cadastrarReqFuncional(e)}>
-                                        <img className="botaoAdicionar" src={Adicionar} alt="Botao De Adicionar" />
-                                    </button>
+                                    <div className="cadRN">
+                                        <input
+                                            type="text"
+                                            placeholder="Edite seu Requisito Funcional"
+                                            value={reqFuncionalText}
+                                            onChange={(e) => setReqFuncionalText(e.target.value)}
+                                        />
+                                        <button type="button" onClick={cadastrarReqFuncional}>
+                                            <img className="botaoAdicionar" src={Adicionar} alt="Botao De Adicionar" />
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <section>
-                                    {listaReqFunc.length > 0 ? (
-                                        listaReqFunc.map((rnf, index) => (
-                                            <div className="listaRF" key={rnf.idRequisito}>
-                                                <p>RF{String(index + 1).padStart(2, "0")}: <span>{rnf.textoReq}</span></p>
+                                    {reqFuncionais.length > 0 ? (
+                                        reqFuncionais.map((rf, index) => (
+                                            <div className="listaRF" key={rf.idReqDoc}>
+                                                <p>
+                                                    <span className="tagListaRnRnfRf">
+                                                        RF{String(index + 1).padStart(2, "0")}:
+                                                    </span>
+                                                    {rf.idRequisitoNavigation.textoReq}
+                                                </p>
 
                                                 <div className="iconeRequisitosERegra">
-                                                    <img onClick={() => deletarReqNaoFunc(rnf)} className="botaoExcluir" src={Deletar} alt="Lixeira" />
-                                                    <img className="botaoEditar" src={Editar} alt="Caneta de Editar" />
+                                                    <img
+                                                        onClick={() => deletarReqNaoFuncEReqFunc(rf)}
+                                                        className="botaoExcluir" src={Deletar}
+                                                        alt="Lixeira"
+                                                    />
+                                                    <img
+                                                        className="botaoEditar"
+                                                        src={Editar} alt="Caneta de Editar"
+                                                    />
                                                 </div>
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="listaRNF">
+                                        <div className="listaRF">
                                             <p>Nenhum RF cadastrado.</p>
                                         </div>
                                     )}
@@ -550,20 +563,39 @@ export default function DocAndamentoFunc() {
                             <div className="requisitosNaoFuncionais">
                                 <div className="tituloRF">
                                     <h2>Requisitos não Funcionais</h2>
-                                    <button type="button" onClick={(e) => cadastrardReqNaoFuncional(e)}>
-                                        <img className="botaoAdicionar" src={Adicionar} alt="Botao De Adicionar" />
-                                    </button>
+                                    <div className="cadRN">
+                                        <input
+                                            type="text"
+                                            placeholder="Edite seu Requisito Não Funcional"
+                                            value={reqNaoFuncionalText}
+                                            onChange={(e) => setReqNaoFuncionalText(e.target.value)}
+                                        />
+                                        <button type="button" onClick={cadastrardReqNaoFuncional}>
+                                            <img className="botaoAdicionar" src={Adicionar} alt="Botao De Adicionar" />
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <section>
-                                    {listaReqNaoFunc.length > 0 ? (
-                                        listaReqNaoFunc.map((rnf, index) => (
-                                            <div className="listaRNF" key={rnf.idRequisito}>
-                                                <p>RNF{String(index + 1).padStart(2, "0")}: <span>{rnf.textoReq}</span></p>
+                                    {reqNaoFuncionais.length > 0 ? (
+                                        reqNaoFuncionais.map((rnf, index) => ( // Usando 'rnf' para clareza
+                                            <div className="listaRNF" key={rnf.idReqDoc}>
+                                                <p>
+                                                    <span className="tagListaRnRnfRf">RNF{String(index + 1).padStart(2, "0")}:</span>{rnf.idRequisitoNavigation.textoReq}
+                                                </p>
 
                                                 <div className="iconeRequisitosERegra">
-                                                    <img onClick={() => deletarReqNaoFunc(rnf)} className="botaoExcluir" src={Deletar} alt="Lixeira" />
-                                                    <img className="botaoEditar" src={Editar} alt="Caneta de Editar" />
+                                                    <img
+                                                        onClick={() => deletarReqNaoFuncEReqFunc(rnf)}
+                                                        className="botaoExcluir"
+                                                        src={Deletar}
+                                                        alt="Lixeira"
+                                                    />
+                                                    <img
+                                                        className="botaoEditar"
+                                                        src={Editar}
+                                                        alt="Caneta de Editar"
+                                                    />
                                                 </div>
                                             </div>
                                         ))
@@ -590,18 +622,28 @@ export default function DocAndamentoFunc() {
                                 <h1>Comentários</h1>
                             </div>
                         </div>
-
-                        <div className="cardFeedbackDoc">
-                            <div className="cabecalhoFeedbackDoc">
-                                <span className="nomeFeedbackDoc">Tirulipa</span>
-
-                                <div className="horarioDataComentario">
-                                    <span className="dataFeedbackDoc">11/09/2001</span>
-                                    <span className="horarioFeedbackDoc">12:03PM</span>
+                        {comentarios && comentarios.length > 0 ? (
+                            comentarios.map((item) => (
+                                <div key={item.idComentario} className="cardFeedbackDoc">
+                                    <div className="cabecalhoFeedbackDoc">
+                                        <span className="nomeFeedbackDoc">{item.idUsuarioNavigation.nome}</span>
+                                        <div className="horarioDataComentario">
+                                            <span className="dataFeedbackDoc">
+                                                {new Date(item.dataCriacao).toLocaleDateString()}
+                                            </span>
+                                            <span className="horarioFeedbackDoc">
+                                                {new Date(item.dataCriacao).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <p className="mensagemFeedbackDoc">{item.texto}</p>
                                 </div>
+                            ))
+                        ) : (
+                            <div className="comentarioVazio">
+                                <p>Não há comentários ainda.</p>
                             </div>
-                            <p className="mensagemFeedbackDoc">Poderia Alterar a Terceira Linha da Regra de Negócios fgdhsjhgfvdsbjucdgbvdnjviudhebdnvjiudhwgbdvnjduwshgbdvnjugrfehj9dfivbedjbfhj.</p>
-                        </div>
+                        )}
                     </section>
                 </section>
                 {showModal && (

@@ -85,5 +85,17 @@ namespace CollabTechFile.Controllers
             }
         }
 
+        [HttpDelete("requisito-completo/{idRequisitoDoc}")]
+        public async Task<IActionResult> DeletarRequisitoCompleto(int idRequisitoDoc)
+        {
+            var ok = await _RequisitoRepository.DeletarRequisitoCompletoAsync(idRequisitoDoc);
+
+            if (!ok)
+                return NotFound();
+
+            return NoContent();
+        }
+
+
     }
 }
