@@ -25,27 +25,35 @@ export default function SenhaCliente() {
 
   const navigate = useNavigate();
 
-  function toast(icon, title) {
-    const T = Swal.mixin({
+  function alertar(icone, mensagem) {
+    const Toast = Swal.mixin({
+      theme: 'dark',
       toast: true,
       position: "top-end",
       showConfirmButton: false,
-      timer: 2500,
+      timer: 3000,
       timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
     });
-    T.fire({ icon, title });
+    Toast.fire({
+      icon: icone,
+      title: mensagem,
+    });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     if (novaSenha.length < 6 || novaSenha.length > 8) {
-      toast("warning", "A senha deve ter entre 6 e 8 caracteres.");
+      alertar("warning", "A senha deve ter entre 6 e 8 caracteres.");
       return;
     }
 
     if (novaSenha !== confirmarSenha) {
-      toast("error", "As senhas não coincidem.");
+      alertar("error", "As senhas não coincidem.");
       return;
     }
 
@@ -61,7 +69,7 @@ export default function SenhaCliente() {
       });
 
       if (!response.ok) {
-        toast("error", "Erro ao redefinir senha.");
+        alertar("error", "Erro ao redefinir senha.");
         return;
       }
 
@@ -72,7 +80,7 @@ export default function SenhaCliente() {
       }, 1500);
 
     } catch (error) {
-      toast("error", "Erro de conexão com o servidor.");
+      alertar("error", "Erro de conexão com o servidor.");
     }
   }
 

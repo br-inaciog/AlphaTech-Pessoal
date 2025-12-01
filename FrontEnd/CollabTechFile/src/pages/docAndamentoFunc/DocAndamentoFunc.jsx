@@ -623,11 +623,6 @@ export default function DocAndamentoFunc() {
     }
 
     useEffect(() => {
-        // listarCliente();
-        // listarRN();
-        // listarReqFunc();
-        // listarReqNaoFunc();
-
         listarVersoes();
         carregarComentarios();
         buscarDadosDocumento();
