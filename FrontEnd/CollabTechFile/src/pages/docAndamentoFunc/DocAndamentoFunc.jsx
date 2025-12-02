@@ -338,7 +338,7 @@ export default function DocAndamentoFunc() {
                 title: "Editar Requisito!",
                 html: `
                 <input id="campo1" class="swal2-input" placeholder="Título" 
-                value="${rf.idRequisitoNavigation?.nome || ''}">
+                value="${rf.idRequisitoNavigation?.textoReq || ''}">
             `,
                 theme: "dark",
                 showCancelButton: true,

@@ -267,7 +267,7 @@ export default function ListagemDoc() {
                                         <img src={Pdf} alt="Icone de Pdf" />
                                         <div className="cardInformacoes">
                                             <h1>{doc.nome || "Sem título"}</h1>
-                                            <p>Prazo: <span>{new Date(doc.criadoEm).toLocaleDateString('pt-BR') || "Sem data"}</span></p>
+                                            <p>Prazo: <span>{new Date(doc.prazo).toLocaleDateString('pt-BR') || "Sem data"}</span></p>
                                             <p>Versão: <span>{doc.versaoAtual || "Sem Versão"}</span></p>
                                             <p>Autor: <span>{doc.usuarioNavigation?.nome || "Autor desconhecido"}</span></p>
                                         </div>
